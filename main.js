@@ -51,13 +51,15 @@ const observer = new IntersectionObserver((entries) => {
 
 document.querySelectorAll('[data-animate]').forEach(el => observer.observe(el));
 
-// Contact form
-document.getElementById('contact-form').addEventListener('submit', function (e) {
+// Contact form — Formspree via fetch
+document.getElementById('contact-form').addEventListener('submit', async function (e) {
     e.preventDefault();
+    const status = document.getElementById('form-status');
+    const submitBtn = this.querySelector('[type="submit"]');
+
     const name    = this.querySelector('#f-name').value.trim();
     const email   = this.querySelector('#f-email').value.trim();
     const message = this.querySelector('#f-message').value.trim();
-    const status  = document.getElementById('form-status');
 
     if (!name || !email || !message) {
         status.textContent = 'Preencha todos os campos.';
@@ -65,11 +67,30 @@ document.getElementById('contact-form').addEventListener('submit', function (e) 
         return;
     }
 
-    const subject = encodeURIComponent(`Mensagem de ${name} via portfólio`);
-    const body    = encodeURIComponent(`De: ${name}\nEmail: ${email}\n\n${message}`);
-    window.location.href = `mailto:victor.olv00@gmail.com?subject=${subject}&body=${body}`;
+    submitBtn.disabled = true;
+    status.textContent = 'Enviando...';
+    status.className = 'form-status';
 
-    status.textContent = 'Abrindo seu cliente de e-mail...';
-    status.className = 'form-status ok';
-    setTimeout(() => { status.textContent = ''; }, 4000);
+    try {
+        const res = await fetch(this.action, {
+            method: 'POST',
+            body: new FormData(this),
+            headers: { 'Accept': 'application/json' }
+        });
+
+        if (res.ok) {
+            status.textContent = 'Mensagem enviada!';
+            status.className = 'form-status ok';
+            this.reset();
+        } else {
+            const data = await res.json();
+            throw new Error(data.error || 'Erro ao enviar.');
+        }
+    } catch (err) {
+        status.textContent = err.message || 'Algo deu errado. Tente novamente.';
+        status.className = 'form-status err';
+    } finally {
+        submitBtn.disabled = false;
+        setTimeout(() => { status.textContent = ''; }, 5000);
+    }
 });
