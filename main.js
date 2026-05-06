@@ -83,11 +83,11 @@ document.getElementById('contact-form').addEventListener('submit', async functio
             status.className = 'form-status ok';
             this.reset();
         } else {
-            const data = await res.json();
-            throw new Error(data.error || 'Erro ao enviar.');
+            status.textContent = 'Erro ao enviar. Tente novamente.';
+            status.className = 'form-status err';
         }
-    } catch (err) {
-        status.textContent = err.message || 'Algo deu errado. Tente novamente.';
+    } catch (_) {
+        status.textContent = 'Algo deu errado. Verifique sua conexão.';
         status.className = 'form-status err';
     } finally {
         submitBtn.disabled = false;
