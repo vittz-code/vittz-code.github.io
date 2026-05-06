@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Victor Oliveira — Dev Front-End & Game Designer</title>
+    <meta name="description" content="Portfólio de Victor Oliveira — desenvolvedor front-end e game designer. Projetos web e jogos independentes.">
+    <link rel="icon" type="image/svg+xml" href="assets/logo.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- NAV -->
+    <nav class="nav">
+        <a href="#" class="nav__logo" aria-label="Início">
+            <svg class="logo-svg" width="36" height="36" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <rect class="logo-shadow" x="7" y="7" width="86" height="86"/>
+                <rect class="logo-bg" x="2" y="2" width="86" height="86" stroke-width="3.5"/>
+                <text class="logo-text" x="45" y="68" text-anchor="middle" font-family="Arial Black, Impact, sans-serif" font-size="46" font-weight="900">VO</text>
+            </svg>
+        </a>
+        <div class="nav__right">
+            <ul class="nav__links">
+                <li><a href="#projetos">Projetos</a></li>
+                <li><a href="#habilidades">Habilidades</a></li>
+                <li><a href="#contato">Contato</a></li>
+            </ul>
+            <button class="theme-toggle" id="themeToggle" aria-label="Alternar modo escuro" title="Alternar modo escuro">◐</button>
+        </div>
+    </nav>
+
+    <!-- HERO -->
+    <section class="hero">
+        <div class="hero__watermark" aria-hidden="true">VO</div>
+        <div class="hero__content">
+            <div class="hero__roles">
+                <span class="hero__tag">Dev Front-End</span>
+                <span class="hero__tag">Game Designer</span>
+            </div>
+            <a href="#nineties-fall" class="hero__more">quer saber mais? clica aqui ↓</a>
+            <h1 class="hero__name">Victor<br>Oliveira</h1>
+            <p class="hero__desc">Construo interfaces web e mundos jogáveis. Este é o meu hub — projetos passados, presentes e futuros.</p>
+            <div class="hero__actions">
+                <a href="#projetos" class="btn btn--primary">Ver Projetos</a>
+                <a href="https://github.com/victorolv00" target="_blank" rel="noopener noreferrer" class="btn btn--outline">GitHub ↗</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- PROJETOS -->
+    <section class="section" id="projetos">
+        <div class="container">
+            <h2 class="section__title" data-animate>Projetos</h2>
+            <div class="projects__grid">
+
+                <!-- 90s Fall — destaque -->
+                <article class="project-card project-card--game" id="nineties-fall" data-animate>
+                    <div class="project-card__header">
+                        <span class="project-card__index">01</span>
+                        <div class="project-card__tags">
+                            <span class="tag tag--wip">Em Desenvolvimento</span>
+                            <span class="tag">s&amp;box</span>
+                            <span class="tag">C#</span>
+                        </div>
+                    </div>
+                    <h3 class="project-card__title">90s Fall</h3>
+                    <p class="project-card__desc">Jogo 3D de exploração ambientado em uma cidade oriental fictícia dos anos 90. Você explora um mundo misterioso, sendo dono de uma loja de conveniência secreta, um sistema de construção de gôndolas e câmera que alterna entre primeira pessoa e isométrica. Desenvolvido em s&amp;box.</p>
+                    <div class="project-card__game-note">
+                        <a href="#contato" class="btn btn--outline btn--sm">Quer jogar e me ajudar a testar? →</a>
+                    </div>
+                </article>
+
+                <!-- Site Institucional -->
+                <article class="project-card" data-animate>
+                    <div class="project-card__header">
+                        <span class="project-card__index">02</span>
+                        <div class="project-card__tags">
+                            <span class="tag">HTML</span>
+                            <span class="tag">CSS</span>
+                            <span class="tag">JS</span>
+                        </div>
+                    </div>
+                    <h3 class="project-card__title">Site Institucional</h3>
+                    <p class="project-card__desc">Site completo para empresa do setor de serviços, com galeria de projetos, formulário de contato com validação, navegação responsiva e layout mobile-first.</p>
+                </article>
+
+                <!-- Portfolio ldelboux -->
+                <article class="project-card" data-animate>
+                    <div class="project-card__header">
+                        <span class="project-card__index">03</span>
+                        <div class="project-card__tags">
+                            <span class="tag">HTML</span>
+                            <span class="tag">CSS</span>
+                            <span class="tag">JS</span>
+                        </div>
+                    </div>
+                    <h3 class="project-card__title">Portfólio ldelboux</h3>
+                    <p class="project-card__desc">Site de portfólio desenvolvido para terceiros, com seções de projetos, habilidades e contato. Foco em apresentação visual limpa e organizada com HTML, CSS e JavaScript vanilla.</p>
+                    <a href="https://github.com/victorolv00/portfolio-ldelboux" target="_blank" rel="noopener noreferrer" class="project-card__link">Ver repositório ↗</a>
+                </article>
+
+            </div>
+
+            <!-- Projetos Pequenos -->
+            <details class="small-projects" data-animate>
+                <summary class="small-projects__toggle">
+                    <span>Projetos Pequenos</span>
+                    <span class="small-projects__icon">+</span>
+                </summary>
+                <div class="small-projects__grid">
+                    <a href="https://github.com/victorolv00/gerenciador-de-clientes" target="_blank" rel="noopener noreferrer" class="small-card">
+                        <span class="small-card__title">Gerenciador de Clientes</span>
+                        <span class="small-card__tags">HTML · CSS · JS</span>
+                        <span class="small-card__arrow">↗</span>
+                    </a>
+                    <a href="https://github.com/victorolv00/parquimetro" target="_blank" rel="noopener noreferrer" class="small-card">
+                        <span class="small-card__title">Parquímetro</span>
+                        <span class="small-card__tags">JS · CSS · HTML</span>
+                        <span class="small-card__arrow">↗</span>
+                    </a>
+                    <a href="https://github.com/victorolv00/jogo-de-adivinhacao-js" target="_blank" rel="noopener noreferrer" class="small-card">
+                        <span class="small-card__title">Jogo de Adivinhação</span>
+                        <span class="small-card__tags">JS · CSS · HTML</span>
+                        <span class="small-card__arrow">↗</span>
+                    </a>
+                    <a href="https://github.com/victorolv00/banco" target="_blank" rel="noopener noreferrer" class="small-card">
+                        <span class="small-card__title">Banco</span>
+                        <span class="small-card__tags">CSS · JS · HTML</span>
+                        <span class="small-card__arrow">↗</span>
+                    </a>
+                    <a href="https://github.com/victorolv00/lista-de-tarefas" target="_blank" rel="noopener noreferrer" class="small-card">
+                        <span class="small-card__title">Lista de Tarefas</span>
+                        <span class="small-card__tags">HTML · CSS</span>
+                        <span class="small-card__arrow">↗</span>
+                    </a>
+                    <a href="https://github.com/victorolv00/calculadora-de-imc" target="_blank" rel="noopener noreferrer" class="small-card">
+                        <span class="small-card__title">Calculadora de IMC</span>
+                        <span class="small-card__tags">CSS · HTML</span>
+                        <span class="small-card__arrow">↗</span>
+                    </a>
+                </div>
+            </details>
+        </div>
+    </section>
+
+    <!-- HABILIDADES -->
+    <section class="section section--alt" id="habilidades">
+        <div class="container">
+            <h2 class="section__title" data-animate>Habilidades</h2>
+            <div class="skills-grid" data-animate>
+                <div class="skill-group">
+                    <h3 class="skill-group__title">Desenvolvimento Web</h3>
+                    <div class="skill-tags">
+                        <span class="tag">HTML5</span>
+                        <span class="tag">CSS3</span>
+                        <span class="tag">JavaScript</span>
+                        <span class="tag">Responsividade</span>
+                        <span class="tag">Git</span>
+                        <span class="tag">GitHub</span>
+                        <span class="tag">VS Code</span>
+                    </div>
+                </div>
+                <div class="skill-group">
+                    <h3 class="skill-group__title">Game Design</h3>
+                    <div class="skill-tags">
+                        <span class="tag">s&amp;box</span>
+                        <span class="tag">Game Design</span>
+                        <span class="tag">Level Design</span>
+                        <span class="tag">Prototipagem</span>
+                        <span class="tag">Unity 3D</span>
+                        <span class="tag">C# (iniciante)</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTATO -->
+    <section class="section" id="contato">
+        <div class="container">
+            <h2 class="section__title" data-animate>Contato</h2>
+            <div class="contact-layout" data-animate>
+                <div class="contact-info">
+                    <p class="contact-info__text">Tem um projeto em mente ou quer trocar uma ideia? Me manda uma mensagem.</p>
+                    <div class="contact-info__links">
+                        <a href="mailto:victor.olv00@gmail.com" class="contact-info__link">
+                            <span class="contact-info__label">Email</span>
+                            <span>victor.olv00@gmail.com ↗</span>
+                        </a>
+                        <a href="https://github.com/victorolv00" target="_blank" rel="noopener noreferrer" class="contact-info__link">
+                            <span class="contact-info__label">GitHub</span>
+                            <span>github.com/victorolv00 ↗</span>
+                        </a>
+                    </div>
+                </div>
+                <form id="contact-form" class="contact-form" novalidate>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label" for="f-name">Nome</label>
+                            <input class="form-input" type="text" id="f-name" name="name" required placeholder="Seu nome" autocomplete="name">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="f-email">Email</label>
+                            <input class="form-input" type="email" id="f-email" name="email" required placeholder="seu@email.com" autocomplete="email">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="f-message">Mensagem</label>
+                        <textarea class="form-input form-textarea" id="f-message" name="message" rows="5" required placeholder="Sua mensagem..."></textarea>
+                    </div>
+                    <div class="form-footer">
+                        <button type="submit" class="btn btn--primary">Enviar Mensagem ↗</button>
+                        <span class="form-status" id="form-status"></span>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer__inner">
+                <svg class="logo-svg" width="28" height="28" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <rect class="logo-shadow" x="7" y="7" width="86" height="86"/>
+                    <rect class="logo-bg" x="2" y="2" width="86" height="86" stroke-width="3.5"/>
+                    <text class="logo-text" x="45" y="68" text-anchor="middle" font-family="Arial Black, Impact, sans-serif" font-size="46" font-weight="900">VO</text>
+                </svg>
+                <span class="footer__copy">© 2026 Victor Oliveira</span>
+            </div>
+        </div>
+    </footer>
+
+    <!-- FLOATING CTA -->
+    <a href="#nineties-fall" class="floating-cta" aria-label="Saiba mais sobre o jogo">
+        <span class="floating-cta__pulse" aria-hidden="true"></span>
+        <span class="floating-cta__content">
+            <span class="floating-cta__icon">&#9679;</span>
+            <span class="floating-cta__text">Estou fazendo um jogo — quer descobrir e me ajudar a testá-lo?</span>
+        </span>
+    </a>
+
+    <script src="main.js"></script>
+</body>
+</html>
