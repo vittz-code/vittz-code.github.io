@@ -1,6 +1,5 @@
 // Dark mode
-const root = document.documentElement;
-const btn  = document.getElementById('themeToggle');
+const root  = document.documentElement;
 const saved = localStorage.getItem('theme');
 
 if (saved) {
@@ -9,10 +8,35 @@ if (saved) {
     root.setAttribute('data-theme', 'dark');
 }
 
-btn.addEventListener('click', () => {
+document.getElementById('themeToggle').addEventListener('click', () => {
     const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
     root.setAttribute('data-theme', next);
     localStorage.setItem('theme', next);
+});
+
+// Hamburger menu
+const nav       = document.querySelector('.nav');
+const hamburger = document.getElementById('navHamburger');
+
+hamburger.addEventListener('click', () => {
+    const isOpen = nav.classList.toggle('nav--open');
+    hamburger.setAttribute('aria-expanded', String(isOpen));
+});
+
+// Close menu when a nav link is clicked
+document.querySelectorAll('#navLinks a').forEach(link => {
+    link.addEventListener('click', () => {
+        nav.classList.remove('nav--open');
+        hamburger.setAttribute('aria-expanded', 'false');
+    });
+});
+
+// Close menu on outside tap
+document.addEventListener('click', (e) => {
+    if (nav.classList.contains('nav--open') && !nav.contains(e.target)) {
+        nav.classList.remove('nav--open');
+        hamburger.setAttribute('aria-expanded', 'false');
+    }
 });
 
 // Scroll animations
@@ -23,7 +47,7 @@ const observer = new IntersectionObserver((entries) => {
             observer.unobserve(entry.target);
         }
     });
-}, { threshold: 0.12 });
+}, { threshold: 0.1 });
 
 document.querySelectorAll('[data-animate]').forEach(el => observer.observe(el));
 
