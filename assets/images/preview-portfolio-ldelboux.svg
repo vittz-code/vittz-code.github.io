@@ -24,7 +24,7 @@
   <rect x="40" y="258" width="220" height="10" fill="#181818" opacity="0.1"/>
   <!-- Buttons -->
   <rect x="40" y="285" width="110" height="34" fill="#181818" opacity="0.2"/>
-  <rect x="162" y="285" width="110" height="34" fill="#181818" opacity="0.08" stroke="#181818" stroke-width="1.5" opacity="0.15"/>
+  <rect x="162" y="285" width="110" height="34" fill="none" stroke="#181818" stroke-width="1.5" opacity="0.4"/>
   <!-- Cards -->
   <rect x="40" y="355" width="220" height="70" fill="#181818" opacity="0.08"/>
   <rect x="276" y="355" width="220" height="70" fill="#181818" opacity="0.08"/>
