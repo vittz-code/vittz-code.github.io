@@ -15,12 +15,8 @@
   <!-- Building blocks suggestion -->
   <polygon points="400,120 550,210 400,300 250,210" fill="#2C2820" stroke="#C8B89A" stroke-width="1" opacity="0.6"/>
   <polygon points="400,120 550,210 550,270 400,360 250,270 250,210" fill="#221F19" stroke="#C8B89A" stroke-width="1" opacity="0.4"/>
-  <!-- VCR text style -->
-  <text x="400" y="52" text-anchor="middle" font-family="Courier New, monospace" font-size="13" fill="#C8B89A" letter-spacing="6" opacity="0.7">90S FALL</text>
-  <text x="400" y="390" text-anchor="middle" font-family="Courier New, monospace" font-size="10" fill="#C8B89A" letter-spacing="3" opacity="0.5">EM DESENVOLVIMENTO — s&amp;box</text>
   <!-- Konbini neon suggestion -->
   <rect x="320" y="160" width="160" height="100" fill="none" stroke="#C8B89A" stroke-width="1.5" opacity="0.3"/>
   <rect x="336" y="176" width="55" height="70" fill="#2A2620" opacity="0.8"/>
   <rect x="409" y="176" width="55" height="70" fill="#2A2620" opacity="0.8"/>
-  <text x="400" y="430" text-anchor="middle" font-family="Courier New, monospace" font-size="11" fill="#58554F" letter-spacing="2">ADICIONE UM PRINT DO JOGO — assets/images/preview-90s-fall.png</text>
 </svg>
