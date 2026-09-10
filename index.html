@@ -61,17 +61,21 @@
         /* letreiro de loja — placa sólida de dia, acende à noite (paleta do site) */
         .sign-board {
             display: inline-flex;
-            padding: 0.25em 0.85em;
-            border-radius: 0.55em;
-            border: 3px solid #7C8B5E;
-            background: rgba(217,199,156,0.18);
+            padding: 0.3em 0.9em;
+            border-radius: 0.35em;
+            border: 4px double #7C8B5E;
+            background: linear-gradient(180deg, rgba(217,199,156,0.22), rgba(217,199,156,0.1));
             color: #9C4A2E;
+            box-shadow: 0 10px 18px rgba(0,0,0,0.28), inset 0 0 0 1px rgba(255,255,255,0.06);
+            transform: rotate(-0.6deg);
         }
+        .sign-board:nth-of-type(2) { transform: rotate(0.5deg); }
         [data-theme="dark"] .sign-board {
             border-color: #C4703F;
             color: #F0C98A;
             text-shadow: 0 0 4px #F0C98A, 0 0 10px #E0964F, 0 0 22px #9C4A2E, 0 0 44px #9C4A2E;
-            animation: neon-flicker 4.5s infinite;
+            box-shadow: 0 12px 26px rgba(0,0,0,0.55), inset 0 0 0 1px rgba(255,255,255,0.08);
+            animation: neon-flicker 5s infinite;
         }
         .neon-name { color: #9C4A2E; }
         [data-theme="dark"] .neon-name {
@@ -131,7 +135,7 @@
                 <span class="font-mono inline-block px-3.5 py-1.5 rounded-full bg-surface dark:bg-nightsurf text-ink dark:text-mutedd text-xs font-semibold tracking-[0.03em] shadow-md">Game Designer</span>
             </div>
             <a href="#nineties-fall" class="font-mono inline-block text-[0.78rem] font-medium text-muted dark:text-mutedd hover:text-accent mb-7 py-2 transition-colors">quer saber mais? clica aqui ↓</a>
-            <h1 class="neon-name font-mono text-[clamp(2.6rem,9vw,7rem)] font-black leading-[0.95] tracking-normal mb-3">Victor<br>Oliveira.</h1>
+            <h1 style="animation-delay:-0.4s" class="neon-name font-mono text-[clamp(2.6rem,9vw,7rem)] font-black leading-[0.95] tracking-normal mb-3">Victor<br>Oliveira.</h1>
             <p class="text-[0.85rem] font-normal text-muted dark:text-mutedd mb-6">mas pode me chamar de vittz!</p>
             <p class="text-[1.05rem] text-ink/80 dark:text-mutedd/90 max-w-[420px] mb-10 leading-[1.75]">Construo interfaces web e mundos jogáveis. Este é o meu hub — projetos passados, presentes e futuros.</p>
             <div class="flex gap-4 flex-wrap justify-center">
@@ -145,7 +149,7 @@
     <section class="py-16 sm:py-20" id="projetos">
         <div class="max-w-[1100px] mx-auto px-5 sm:px-10">
             <h2 data-animate class="font-mono flex items-center justify-center text-[clamp(2rem,5vw,3.5rem)] font-bold tracking-normal leading-none mb-12 text-center">
-                <span class="sign-board font-black">Projetos</span>
+                <span class="sign-board font-black" style="animation-delay:-1.6s">Projetos</span>
             </h2>
 
             <!-- 90s-fall — destaque -->
@@ -220,7 +224,7 @@
     <section class="py-16 sm:py-20 bg-surface/60 dark:bg-nightsurf/50" id="habilidades">
         <div class="max-w-[1100px] mx-auto px-5 sm:px-10">
             <h2 data-animate class="font-mono flex items-center justify-center text-[clamp(2rem,5vw,3.5rem)] font-bold tracking-normal leading-none mb-12 text-center">
-                <span class="sign-board font-black">Habilidades</span>
+                <span class="sign-board font-black" style="animation-delay:-2.9s">Habilidades</span>
             </h2>
             <div data-animate class="grid grid-cols-1 sm:grid-cols-2 gap-10">
                 <div>
@@ -253,7 +257,7 @@
     <section class="py-16 sm:py-20" id="contato">
         <div class="max-w-[1100px] mx-auto px-5 sm:px-10">
             <h2 data-animate class="font-mono flex items-center justify-center text-[clamp(2rem,5vw,3.5rem)] font-bold tracking-normal leading-none mb-12 text-center">
-                <span class="sign-board font-black">Contato</span>
+                <span class="sign-board font-black" style="animation-delay:-3.7s">Contato</span>
             </h2>
             <div data-animate class="grid grid-cols-1 md:grid-cols-[1fr_1.6fr] gap-10 md:gap-16 items-start">
                 <div>
