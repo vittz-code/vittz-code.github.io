@@ -62,21 +62,22 @@
         .sign-board {
             display: inline-flex;
             padding: 0.3em 0.9em;
-            border-radius: 0.35em;
-            background: rgba(227,217,208,0.1);
+            border-radius: 0.2em;
+            background: #E3D9D0;
             color: #E63946;
-            box-shadow: 0 8px 16px rgba(0,0,0,0.22);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.28);
         }
         [data-theme="dark"] .sign-board {
+            background: #2A211E;
             color: #F0EAE0;
-            text-shadow: 0 0 4px #F0EAE0, 0 0 10px #E63946, 0 0 22px #E63946, 0 0 44px #E63946;
+            text-shadow: 0 0 2px #F0EAE0, 0 0 7px #E63946;
             box-shadow: 0 10px 22px rgba(0,0,0,0.5);
             animation: neon-flicker 5s infinite;
         }
         .neon-name { color: #E63946; }
         [data-theme="dark"] .neon-name {
             color: #F0EAE0;
-            text-shadow: 0 0 4px #F0EAE0, 0 0 12px #E63946, 0 0 26px #E63946, 0 0 54px #E63946;
+            text-shadow: 0 0 2px #F0EAE0, 0 0 8px #E63946;
             animation: neon-flicker 4.5s infinite;
         }
         @keyframes neon-flicker {
