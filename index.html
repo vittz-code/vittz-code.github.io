@@ -67,6 +67,15 @@
         .rgb-split-btn {
             text-shadow: -1.5px 0 0 rgba(62,124,107,0.55), 1.5px 0 0 rgba(156,74,46,0.55);
         }
+
+        /* caixa com brilho pulsante em volta dos títulos de seção */
+        .title-box {
+            animation: title-glow 2.6s ease-in-out infinite;
+        }
+        @keyframes title-glow {
+            0%, 100% { border-color: rgba(62,124,107,0.35); box-shadow: 0 0 0 rgba(62,124,107,0); }
+            50%      { border-color: rgba(62,124,107,0.9);  box-shadow: 0 0 22px rgba(62,124,107,0.4); }
+        }
     </style>
 </head>
 <body class="relative font-sans bg-paper dark:bg-night text-ink dark:text-mutedd transition-colors duration-300 overflow-x-hidden">
@@ -128,8 +137,8 @@
     <!-- PROJETOS -->
     <section class="py-16 sm:py-20" id="projetos">
         <div class="max-w-[1100px] mx-auto px-5 sm:px-10">
-            <h2 data-animate class="font-mono flex items-center justify-center gap-3 text-[clamp(2rem,5vw,3.5rem)] font-bold tracking-normal leading-none mb-12 text-accent text-center">
-                <span class="inline-block w-[0.55em] h-[0.85em] bg-accent2 animate-pulse shrink-0"></span>Projetos
+            <h2 data-animate class="font-mono flex items-center justify-center text-[clamp(2rem,5vw,3.5rem)] font-bold tracking-normal leading-none mb-12 text-center">
+                <span class="title-box inline-block border-2 rounded-xl px-5 py-1 text-accent">Projetos</span>
             </h2>
 
             <!-- 90s-fall — destaque -->
@@ -203,8 +212,8 @@
     <!-- HABILIDADES -->
     <section class="py-16 sm:py-20 bg-surface/60 dark:bg-nightsurf/50" id="habilidades">
         <div class="max-w-[1100px] mx-auto px-5 sm:px-10">
-            <h2 data-animate class="font-mono flex items-center justify-center gap-3 text-[clamp(2rem,5vw,3.5rem)] font-bold tracking-normal leading-none mb-12 text-accent text-center">
-                <span class="inline-block w-[0.55em] h-[0.85em] bg-accent2 animate-pulse shrink-0"></span>Habilidades
+            <h2 data-animate class="font-mono flex items-center justify-center text-[clamp(2rem,5vw,3.5rem)] font-bold tracking-normal leading-none mb-12 text-center">
+                <span class="title-box inline-block border-2 rounded-xl px-5 py-1 text-accent">Habilidades</span>
             </h2>
             <div data-animate class="grid grid-cols-1 sm:grid-cols-2 gap-10">
                 <div>
@@ -236,8 +245,8 @@
     <!-- CONTATO -->
     <section class="py-16 sm:py-20" id="contato">
         <div class="max-w-[1100px] mx-auto px-5 sm:px-10">
-            <h2 data-animate class="font-mono flex items-center justify-center gap-3 text-[clamp(2rem,5vw,3.5rem)] font-bold tracking-normal leading-none mb-12 text-accent text-center">
-                <span class="inline-block w-[0.55em] h-[0.85em] bg-accent2 animate-pulse shrink-0"></span>Contato
+            <h2 data-animate class="font-mono flex items-center justify-center text-[clamp(2rem,5vw,3.5rem)] font-bold tracking-normal leading-none mb-12 text-center">
+                <span class="title-box inline-block border-2 rounded-xl px-5 py-1 text-accent">Contato</span>
             </h2>
             <div data-animate class="grid grid-cols-1 md:grid-cols-[1fr_1.6fr] gap-10 md:gap-16 items-start">
                 <div>
