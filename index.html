@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt-BR" data-theme="light">
+<html lang="pt-BR" data-theme="light" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,184 +8,225 @@
     <link rel="icon" type="image/svg+xml" href="assets/logo.svg">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: ['selector', '[data-theme="dark"]'],
+            theme: {
+                extend: {
+                    colors: {
+                        ink:       '#33281C',
+                        paper:     '#EFE3C4',
+                        surface:   '#D9C79C',
+                        night:     '#211C12',
+                        nightsurf: '#332A1B',
+                        olive:     '#7C8B5E',
+                        accent:    '#9C4A2E',
+                        accent2:   '#3E7C6B',
+                        tagbg:     '#E8C9A0',
+                        muted:     '#7A6B50',
+                        mutedd:    '#C2B48F',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'ui-monospace', 'monospace'],
+                    },
+                },
+            },
+        };
+    </script>
+    <style>
+        [data-animate] { opacity: 0; transform: translateY(18px); transition: opacity .55s ease, transform .55s ease; }
+        [data-animate].visible { opacity: 1; transform: translateY(0); }
 
-    <!-- NAV -->
-    <nav class="nav">
-        <a href="#" class="nav__logo" aria-label="Início">
-            <svg class="logo-svg" width="36" height="36" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                <rect class="logo-shadow" x="7" y="7" width="86" height="86"/>
-                <rect class="logo-bg" x="2" y="2" width="86" height="86" stroke-width="3.5"/>
-                <text class="logo-text" x="45" y="68" text-anchor="middle" font-family="Arial Black, Impact, sans-serif" font-size="46" font-weight="900">VO</text>
-            </svg>
-        </a>
-        <div class="nav__right">
-            <ul class="nav__links" id="navLinks">
-                <li><a href="#projetos">Projetos</a></li>
-                <li><a href="#habilidades">Habilidades</a></li>
-                <li><a href="#contato">Contato</a></li>
+        /* grain texture — old-CRT/old-PC feel */
+        body::before {
+            content: '';
+            position: fixed; inset: 0; z-index: 9999; pointer-events: none;
+            opacity: .035; mix-blend-mode: multiply;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+        }
+        [data-theme="dark"] body::before { opacity: .06; mix-blend-mode: overlay; }
+
+        /* scanlines */
+        body::after {
+            content: '';
+            position: fixed; inset: 0; z-index: 9998; pointer-events: none;
+            opacity: .3;
+            background-image: repeating-linear-gradient(rgba(0,0,0,0.35) 0px, rgba(0,0,0,0.35) 1px, transparent 1px, transparent 3px);
+        }
+        [data-theme="dark"] body::after { opacity: .18; }
+
+        /* chromatic aberration — old monitor ghosting, on big headings */
+        .rgb-split {
+            text-shadow: -2px 0 0 rgba(220,40,90,0.45), 2px 0 0 rgba(198,255,61,0.4);
+        }
+
+        /* chromatic aberration — verde/laranja, pros botões */
+        .rgb-split-btn {
+            text-shadow: -1.5px 0 0 rgba(62,124,107,0.55), 1.5px 0 0 rgba(156,74,46,0.55);
+        }
+    </style>
+</head>
+<body class="relative font-sans bg-paper dark:bg-night text-ink dark:text-mutedd transition-colors duration-300 overflow-x-hidden">
+
+    <!-- NAV — titlebar de app antigo -->
+    <nav class="nav font-mono sticky top-0 z-[100] flex items-center justify-between gap-4 px-5 sm:px-10 py-3 bg-olive text-paper shadow-[0_2px_10px_rgba(0,0,0,0.25)]">
+        <div class="flex items-center gap-3">
+            <span class="flex gap-1.5" aria-hidden="true">
+                <span class="w-2.5 h-2.5 rounded-full bg-paper/40"></span>
+                <span class="w-2.5 h-2.5 rounded-full bg-paper/40"></span>
+                <span class="w-2.5 h-2.5 rounded-full bg-paper/40"></span>
+            </span>
+            <a href="#" aria-label="Início" class="flex items-center opacity-100 hover:opacity-70 transition-opacity">
+                <svg width="30" height="30" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <rect x="4" y="4" width="92" height="92" rx="18" fill="#EFE3C4"/>
+                    <text x="50" y="66" text-anchor="middle" font-family="Arial Black, Impact, sans-serif" font-size="42" font-weight="900" fill="#9C4A2E">VO</text>
+                </svg>
+            </a>
+            <span class="text-xs font-semibold tracking-[0.04em] opacity-80 hidden sm:inline">vittz-code.github.io</span>
+        </div>
+        <div class="flex items-center gap-3 sm:gap-8">
+            <ul id="navLinks" class="hidden sm:flex gap-7 list-none">
+                <li><a href="#projetos" class="text-[0.8rem] font-semibold tracking-[0.04em] opacity-85 hover:opacity-100 transition-opacity py-1">Projetos</a></li>
+                <li><a href="#habilidades" class="text-[0.8rem] font-semibold tracking-[0.04em] opacity-85 hover:opacity-100 transition-opacity py-1">Habilidades</a></li>
+                <li><a href="#contato" class="text-[0.8rem] font-semibold tracking-[0.04em] opacity-85 hover:opacity-100 transition-opacity py-1">Contato</a></li>
             </ul>
-            <button class="theme-toggle" id="themeToggle" aria-label="Alternar modo escuro" title="Alternar modo escuro">◐</button>
-            <button class="nav__hamburger" id="navHamburger" aria-label="Abrir menu" aria-expanded="false">
-                <span></span>
-                <span></span>
-                <span></span>
+            <button id="themeToggle" aria-label="Alternar modo escuro" title="Alternar modo escuro"
+                class="w-9 h-9 rounded-full flex items-center justify-center shrink-0 bg-paper/15 text-paper hover:bg-paper/25 transition-colors">◐</button>
+            <button id="navHamburger" aria-label="Abrir menu" aria-expanded="false"
+                class="nav__hamburger sm:hidden flex flex-col gap-[5px] w-9 h-9 items-center justify-center shrink-0">
+                <span class="block w-[20px] h-[2px] rounded-full bg-paper transition-transform duration-200"></span>
+                <span class="block w-[20px] h-[2px] rounded-full bg-paper transition-all duration-200"></span>
+                <span class="block w-[20px] h-[2px] rounded-full bg-paper transition-transform duration-200"></span>
             </button>
         </div>
     </nav>
 
-    <!-- HERO -->
-    <section class="hero">
-        <div class="hero__watermark" aria-hidden="true">VO</div>
-        <div class="hero__content">
-            <div class="hero__roles">
-                <span class="hero__tag">Dev Front-End</span>
-                <span class="hero__tag">Game Designer</span>
+    <!-- HERO — centralizado -->
+    <section class="relative flex flex-col items-center justify-center text-center px-5 sm:px-10 py-20 sm:py-28 overflow-hidden min-h-[calc(100vh-58px)]">
+        <div aria-hidden="true" class="pointer-events-none select-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 font-black leading-none text-transparent text-[45vw] sm:text-[30vw] whitespace-nowrap
+            [-webkit-text-stroke:2px_rgba(156,74,46,0.09)] dark:[-webkit-text-stroke:2px_rgba(156,74,46,0.18)]" style="font-family: 'Arial Black', Impact, sans-serif; letter-spacing:-0.03em;">VO</div>
+
+        <div class="relative z-[1] max-w-[680px] flex flex-col items-center">
+            <div class="flex flex-wrap justify-center gap-2 mb-3">
+                <span class="font-mono inline-block px-3.5 py-1.5 rounded-full bg-surface dark:bg-nightsurf text-ink dark:text-mutedd text-xs font-semibold tracking-[0.03em] shadow-md">Dev Front-End</span>
+                <span class="font-mono inline-block px-3.5 py-1.5 rounded-full bg-surface dark:bg-nightsurf text-ink dark:text-mutedd text-xs font-semibold tracking-[0.03em] shadow-md">Game Designer</span>
             </div>
-            <a href="#nineties-fall" class="hero__more">quer saber mais? clica aqui ↓</a>
-            <h1 class="hero__name">Victor<br>Oliveira. <span class="hero__alias">mas pode me chamar de vittz!</span></h1>
-            <p class="hero__desc">Construo interfaces web e mundos jogáveis. Este é o meu hub — projetos passados, presentes e futuros.</p>
-            <div class="hero__actions">
-                <a href="#projetos" class="btn btn--primary">Ver Projetos</a>
-                <a href="https://wa.me/5581988684392" target="_blank" rel="noopener noreferrer" class="btn btn--outline">WhatsApp →</a>
+            <a href="#nineties-fall" class="font-mono inline-block text-[0.78rem] font-medium text-muted dark:text-mutedd hover:text-accent mb-7 py-2 transition-colors">quer saber mais? clica aqui ↓</a>
+            <h1 class="rgb-split font-mono text-[clamp(2.6rem,9vw,7rem)] font-bold leading-[0.95] tracking-normal mb-3 text-accent">Victor<br>Oliveira.</h1>
+            <p class="text-[0.85rem] font-normal text-muted dark:text-mutedd mb-6">mas pode me chamar de vittz!</p>
+            <p class="text-[1.05rem] text-ink/80 dark:text-mutedd/90 max-w-[420px] mb-10 leading-[1.75]">Construo interfaces web e mundos jogáveis. Este é o meu hub — projetos passados, presentes e futuros.</p>
+            <div class="flex gap-4 flex-wrap justify-center">
+                <a href="#projetos" class="font-mono inline-flex items-center justify-center min-h-[44px] px-6 py-3 rounded-xl font-semibold text-sm bg-accent text-paper shadow-lg shadow-accent/25 hover:shadow-xl hover:-translate-y-0.5 transition-all">Ver Projetos</a>
+                <a href="https://wa.me/5581988684392" target="_blank" rel="noopener noreferrer" class="font-mono inline-flex items-center justify-center min-h-[44px] px-6 py-3 rounded-xl font-semibold text-sm bg-surface dark:bg-nightsurf text-ink dark:text-mutedd shadow-md hover:shadow-lg hover:-translate-y-0.5 transition-all">WhatsApp →</a>
             </div>
         </div>
     </section>
 
     <!-- PROJETOS -->
-    <section class="section" id="projetos">
-        <div class="container">
-            <h2 class="section__title" data-animate>Projetos</h2>
-            <!-- 90s Fall — destaque -->
-            <article class="project-card project-card--game" id="nineties-fall" data-animate>
-                <div class="project-card__preview project-card__preview--game">
-                    <img src="assets/images/preview-90s-fall.svg" alt="Preview do jogo 90s Fall" loading="lazy">
+    <section class="py-16 sm:py-20" id="projetos">
+        <div class="max-w-[1100px] mx-auto px-5 sm:px-10">
+            <h2 data-animate class="font-mono flex items-center justify-center gap-3 text-[clamp(2rem,5vw,3.5rem)] font-bold tracking-normal leading-none mb-12 text-accent text-center">
+                <span class="inline-block w-[0.55em] h-[0.85em] bg-accent2 animate-pulse shrink-0"></span>Projetos
+            </h2>
+
+            <!-- 90s-fall — destaque -->
+            <article id="nineties-fall" data-animate class="flex flex-col sm:flex-row rounded-2xl bg-surface dark:bg-nightsurf text-ink dark:text-mutedd shadow-lg hover:shadow-2xl hover:-translate-y-0.5 transition-all overflow-hidden mb-6">
+                <div class="sm:w-[45%] aspect-video sm:aspect-auto shrink-0 overflow-hidden bg-[#1C1A16]">
+                    <img src="assets/images/preview-90s-fall.svg?v=10" alt="Preview do jogo 90s-fall" loading="lazy" class="w-full h-full object-cover">
                 </div>
-                <div class="project-card__body">
-                    <div class="project-card__header">
-                        <span class="project-card__index">01</span>
-                        <div class="project-card__tags">
-                            <span class="tag tag--wip">Em Desenvolvimento</span>
-                            <span class="tag">s&amp;box</span>
-                            <span class="tag">C#</span>
+                <div class="flex-1 flex flex-col gap-4 p-7">
+                    <div class="flex items-start justify-between gap-3">
+                        <span class="font-mono text-xs font-bold text-muted mt-0.5">01</span>
+                        <div class="flex flex-wrap gap-1.5 justify-end">
+                            <span class="font-mono px-2.5 py-1 rounded-full bg-accent2 text-paper text-[0.65rem] font-bold tracking-[0.03em]">Em Desenvolvimento</span>
+                            <span class="font-mono px-2.5 py-1 rounded-full bg-paper dark:bg-night text-ink dark:text-mutedd text-[0.65rem] font-bold tracking-[0.03em]">s&amp;box</span>
+                            <span class="font-mono px-2.5 py-1 rounded-full bg-paper dark:bg-night text-ink dark:text-mutedd text-[0.65rem] font-bold tracking-[0.03em]">C#</span>
                         </div>
                     </div>
-                    <h3 class="project-card__title">90s Fall</h3>
-                    <p class="project-card__desc">Jogo 3D de exploração ambientado em uma cidade oriental fictícia dos anos 90. Você explora um mundo misterioso, sendo dono de uma loja de conveniência secreta, um sistema de construção de gôndolas e câmera que alterna entre primeira pessoa e isométrica. Desenvolvido em s&amp;box.</p>
-                    <div class="project-card__game-note">
-                        <a href="#contato" class="btn btn--outline btn--sm">Quer jogar e me ajudar a testar? →</a>
+                    <h3 class="font-mono text-2xl font-bold tracking-normal text-accent">90s-fall</h3>
+                    <p class="text-sm text-ink/75 dark:text-mutedd/85 leading-[1.7] flex-1">Jogo 3D de exploração ambientado em uma cidade oriental fictícia dos anos 90. Você explora um mundo misterioso, sendo dono de uma loja de conveniência secreta, um sistema de construção de gôndolas e câmera que alterna entre primeira pessoa e isométrica. Desenvolvido em s&amp;box.</p>
+                    <div class="pt-1">
+                        <a href="#contato" class="font-mono inline-flex items-center justify-center min-h-[40px] px-4 py-2 rounded-xl font-semibold text-[0.8rem] bg-paper dark:bg-night text-ink dark:text-mutedd shadow-md hover:shadow-lg hover:-translate-y-0.5 transition-all">Quer jogar e me ajudar a testar? →</a>
                     </div>
                 </div>
             </article>
 
-            <div class="projects__grid">
+            <div class="flex flex-wrap justify-center gap-6">
 
                 <!-- Site Institucional -->
-                <article class="project-card" data-animate>
-                    <div class="project-card__preview">
-                        <img src="assets/images/preview-site-institucional.svg" alt="Preview do site institucional" loading="lazy">
+                <article data-animate class="flex-[0_1_420px] min-w-[280px] flex flex-col rounded-2xl bg-surface dark:bg-nightsurf text-ink dark:text-mutedd shadow-lg hover:shadow-2xl hover:-translate-y-0.5 transition-all overflow-hidden">
+                    <div class="aspect-video overflow-hidden bg-[#1C1A16] shrink-0">
+                        <img src="assets/images/preview-site-institucional.svg?v=6" alt="Preview do site institucional" loading="lazy" class="w-full h-full object-cover">
                     </div>
-                    <div class="project-card__body">
-                        <div class="project-card__header">
-                            <span class="project-card__index">02</span>
-                            <div class="project-card__tags">
-                                <span class="tag">HTML</span>
-                                <span class="tag">CSS</span>
-                                <span class="tag">JS</span>
+                    <div class="flex-1 flex flex-col gap-3.5 p-7">
+                        <div class="flex items-start justify-between gap-3">
+                            <span class="font-mono text-xs font-bold text-muted mt-0.5">02</span>
+                            <div class="flex flex-wrap gap-1.5 justify-end">
+                                <span class="font-mono px-2.5 py-1 rounded-full bg-paper dark:bg-night text-ink dark:text-mutedd text-[0.65rem] font-bold tracking-[0.03em]">HTML</span>
+                                <span class="font-mono px-2.5 py-1 rounded-full bg-paper dark:bg-night text-ink dark:text-mutedd text-[0.65rem] font-bold tracking-[0.03em]">CSS</span>
+                                <span class="font-mono px-2.5 py-1 rounded-full bg-paper dark:bg-night text-ink dark:text-mutedd text-[0.65rem] font-bold tracking-[0.03em]">JS</span>
                             </div>
                         </div>
-                        <h3 class="project-card__title">Site Institucional</h3>
-                        <p class="project-card__desc">Site para empresa de serviços digitais — navegação responsiva, galeria de projetos e formulário de contato. Layout mobile-first com design neo-brutalista.</p>
-                        <a href="https://vittz-code.github.io/site-institucional/" target="_blank" rel="noopener noreferrer" class="project-card__link">Ver site →</a>
+                        <h3 class="font-mono text-xl font-bold tracking-normal leading-[1.2] text-accent">Site Institucional</h3>
+                        <p class="text-sm text-ink/75 dark:text-mutedd/85 leading-[1.7] flex-1">Site para empresa de serviços digitais — navegação responsiva, galeria de projetos e formulário de contato.</p>
+                        <a href="https://vittz-code.github.io/site-institucional/" target="_blank" rel="noopener noreferrer" class="inline-flex items-end self-start min-h-[44px] text-[0.82rem] font-semibold text-accent2 hover:opacity-60 transition-opacity py-1">Ver site →</a>
                     </div>
                 </article>
 
                 <!-- Portfolio ldelboux -->
-                <article class="project-card" data-animate>
-                    <div class="project-card__preview">
-                        <img src="assets/images/preview-portfolio-ldelboux.svg" alt="Preview do portfólio ldelboux" loading="lazy">
+                <article data-animate class="flex-[0_1_420px] min-w-[280px] flex flex-col rounded-2xl bg-surface dark:bg-nightsurf text-ink dark:text-mutedd shadow-lg hover:shadow-2xl hover:-translate-y-0.5 transition-all overflow-hidden">
+                    <div class="aspect-video overflow-hidden bg-[#1C1A16] shrink-0">
+                        <img src="assets/images/preview-portfolio-ldelboux.svg?v=7" alt="Preview do portfólio ldelboux" loading="lazy" class="w-full h-full object-cover">
                     </div>
-                    <div class="project-card__body">
-                        <div class="project-card__header">
-                            <span class="project-card__index">03</span>
-                            <div class="project-card__tags">
-                                <span class="tag">HTML</span>
-                                <span class="tag">CSS</span>
-                                <span class="tag">JS</span>
+                    <div class="flex-1 flex flex-col gap-3.5 p-7">
+                        <div class="flex items-start justify-between gap-3">
+                            <span class="font-mono text-xs font-bold text-muted mt-0.5">03</span>
+                            <div class="flex flex-wrap gap-1.5 justify-end">
+                                <span class="font-mono px-2.5 py-1 rounded-full bg-paper dark:bg-night text-ink dark:text-mutedd text-[0.65rem] font-bold tracking-[0.03em]">HTML</span>
+                                <span class="font-mono px-2.5 py-1 rounded-full bg-paper dark:bg-night text-ink dark:text-mutedd text-[0.65rem] font-bold tracking-[0.03em]">CSS</span>
+                                <span class="font-mono px-2.5 py-1 rounded-full bg-paper dark:bg-night text-ink dark:text-mutedd text-[0.65rem] font-bold tracking-[0.03em]">JS</span>
                             </div>
                         </div>
-                        <h3 class="project-card__title">Portifólio — Editor de Vídeos</h3>
-                        <p class="project-card__desc">Portifólio desenvolvido para profissional de edição de vídeos — apresentação de projetos, habilidades e contato. Visual limpo e direto, construído com HTML, CSS e JavaScript puro.</p>
-                        <a href="https://leodelboux.github.io" target="_blank" rel="noopener noreferrer" class="project-card__link">Ver site →</a>
+                        <h3 class="font-mono text-xl font-bold tracking-normal leading-[1.2] text-accent">Portifólio — Editor de Vídeos</h3>
+                        <p class="text-sm text-ink/75 dark:text-mutedd/85 leading-[1.7] flex-1">Portifólio desenvolvido para profissional de edição de vídeos — apresentação de projetos, habilidades e contato.</p>
+                        <a href="https://leodelboux.github.io" target="_blank" rel="noopener noreferrer" class="inline-flex items-end self-start min-h-[44px] text-[0.82rem] font-semibold text-accent2 hover:opacity-60 transition-opacity py-1">Ver site →</a>
                     </div>
                 </article>
 
             </div>
-
-            <!-- Projetos Pequenos -->
-            <details class="small-projects" data-animate>
-                <summary class="small-projects__toggle">
-                    <span>Projetos Pequenos</span>
-                    <span class="small-projects__icon">+</span>
-                </summary>
-                <div class="small-projects__grid">
-                    <div class="small-card">
-                        <span class="small-card__title">Gerenciador de Clientes</span>
-                        <span class="small-card__tags">HTML · CSS · JS</span>
-                    </div>
-                    <div class="small-card">
-                        <span class="small-card__title">Parquímetro</span>
-                        <span class="small-card__tags">JS · CSS · HTML</span>
-                    </div>
-                    <div class="small-card">
-                        <span class="small-card__title">Jogo de Adivinhação</span>
-                        <span class="small-card__tags">JS · CSS · HTML</span>
-                    </div>
-                    <div class="small-card">
-                        <span class="small-card__title">Banco</span>
-                        <span class="small-card__tags">CSS · JS · HTML</span>
-                    </div>
-                    <div class="small-card">
-                        <span class="small-card__title">Lista de Tarefas</span>
-                        <span class="small-card__tags">HTML · CSS</span>
-                    </div>
-                    <div class="small-card">
-                        <span class="small-card__title">Calculadora de IMC</span>
-                        <span class="small-card__tags">CSS · HTML</span>
-                    </div>
-                </div>
-            </details>
         </div>
     </section>
 
     <!-- HABILIDADES -->
-    <section class="section section--alt" id="habilidades">
-        <div class="container">
-            <h2 class="section__title" data-animate>Habilidades</h2>
-            <div class="skills-grid" data-animate>
-                <div class="skill-group">
-                    <h3 class="skill-group__title">Desenvolvimento Web</h3>
-                    <div class="skill-tags">
-                        <span class="tag">HTML5</span>
-                        <span class="tag">CSS3</span>
-                        <span class="tag">JavaScript</span>
-                        <span class="tag">Responsividade</span>
-                        <span class="tag">Git</span>
-                        <span class="tag">VS Code</span>
+    <section class="py-16 sm:py-20 bg-surface/60 dark:bg-nightsurf/50" id="habilidades">
+        <div class="max-w-[1100px] mx-auto px-5 sm:px-10">
+            <h2 data-animate class="font-mono flex items-center justify-center gap-3 text-[clamp(2rem,5vw,3.5rem)] font-bold tracking-normal leading-none mb-12 text-accent text-center">
+                <span class="inline-block w-[0.55em] h-[0.85em] bg-accent2 animate-pulse shrink-0"></span>Habilidades
+            </h2>
+            <div data-animate class="grid grid-cols-1 sm:grid-cols-2 gap-10">
+                <div>
+                    <h3 class="text-xs font-bold tracking-[0.06em] uppercase text-muted dark:text-mutedd mb-4">Desenvolvimento Web</h3>
+                    <div class="grid grid-cols-2 sm:grid-cols-3 gap-2">
+                        <span class="font-mono text-center px-3 py-2 rounded-lg bg-tagbg dark:bg-night text-ink dark:text-mutedd shadow-sm text-[0.78rem] font-semibold">HTML5</span>
+                        <span class="font-mono text-center px-3 py-2 rounded-lg bg-tagbg dark:bg-night text-ink dark:text-mutedd shadow-sm text-[0.78rem] font-semibold">CSS3</span>
+                        <span class="font-mono text-center px-3 py-2 rounded-lg bg-tagbg dark:bg-night text-ink dark:text-mutedd shadow-sm text-[0.78rem] font-semibold">JavaScript</span>
+                        <span class="font-mono text-center px-3 py-2 rounded-lg bg-tagbg dark:bg-night text-ink dark:text-mutedd shadow-sm text-[0.78rem] font-semibold">Responsivo</span>
+                        <span class="font-mono text-center px-3 py-2 rounded-lg bg-tagbg dark:bg-night text-ink dark:text-mutedd shadow-sm text-[0.78rem] font-semibold">Git</span>
+                        <span class="font-mono text-center px-3 py-2 rounded-lg bg-tagbg dark:bg-night text-ink dark:text-mutedd shadow-sm text-[0.78rem] font-semibold">VS Code</span>
                     </div>
                 </div>
-                <div class="skill-group">
-                    <h3 class="skill-group__title">Game Design</h3>
-                    <div class="skill-tags">
-                        <span class="tag">s&amp;box</span>
-                        <span class="tag">Game Design</span>
-                        <span class="tag">Level Design</span>
-                        <span class="tag">Prototipagem</span>
-                        <span class="tag">Unity 3D</span>
-                        <span class="tag">C# (iniciante)</span>
+                <div>
+                    <h3 class="text-xs font-bold tracking-[0.06em] uppercase text-muted dark:text-mutedd mb-4">Game Design</h3>
+                    <div class="grid grid-cols-2 sm:grid-cols-3 gap-2">
+                        <span class="font-mono text-center px-3 py-2 rounded-lg bg-tagbg dark:bg-night text-ink dark:text-mutedd shadow-sm text-[0.78rem] font-semibold">s&amp;box</span>
+                        <span class="font-mono text-center px-3 py-2 rounded-lg bg-tagbg dark:bg-night text-ink dark:text-mutedd shadow-sm text-[0.78rem] font-semibold">Game Design</span>
+                        <span class="font-mono text-center px-3 py-2 rounded-lg bg-tagbg dark:bg-night text-ink dark:text-mutedd shadow-sm text-[0.78rem] font-semibold">Level Design</span>
+                        <span class="font-mono text-center px-3 py-2 rounded-lg bg-tagbg dark:bg-night text-ink dark:text-mutedd shadow-sm text-[0.78rem] font-semibold">Prototipagem</span>
+                        <span class="font-mono text-center px-3 py-2 rounded-lg bg-tagbg dark:bg-night text-ink dark:text-mutedd shadow-sm text-[0.78rem] font-semibold">Unity 3D</span>
+                        <span class="font-mono text-center px-3 py-2 rounded-lg bg-tagbg dark:bg-night text-ink dark:text-mutedd shadow-sm text-[0.78rem] font-semibold">C#</span>
                     </div>
                 </div>
             </div>
@@ -193,41 +234,43 @@
     </section>
 
     <!-- CONTATO -->
-    <section class="section" id="contato">
-        <div class="container">
-            <h2 class="section__title" data-animate>Contato</h2>
-            <div class="contact-layout" data-animate>
-                <div class="contact-info">
-                    <p class="contact-info__text">Tem um projeto em mente ou quer trocar uma ideia? Me manda uma mensagem.</p>
-                    <div class="contact-info__links">
-                        <a href="mailto:victor.olv00@gmail.com" class="contact-info__link">
-                            <span class="contact-info__label">Email</span>
-                            <span>victor.olv00@gmail.com →</span>
+    <section class="py-16 sm:py-20" id="contato">
+        <div class="max-w-[1100px] mx-auto px-5 sm:px-10">
+            <h2 data-animate class="font-mono flex items-center justify-center gap-3 text-[clamp(2rem,5vw,3.5rem)] font-bold tracking-normal leading-none mb-12 text-accent text-center">
+                <span class="inline-block w-[0.55em] h-[0.85em] bg-accent2 animate-pulse shrink-0"></span>Contato
+            </h2>
+            <div data-animate class="grid grid-cols-1 md:grid-cols-[1fr_1.6fr] gap-10 md:gap-16 items-start">
+                <div>
+                    <p class="text-base text-ink/75 dark:text-mutedd/85 leading-[1.75] mb-8">Tem um projeto em mente ou quer trocar uma ideia? Me manda uma mensagem.</p>
+                    <div class="flex flex-col gap-3">
+                        <a href="mailto:victor.olv00@gmail.com" class="flex flex-col justify-center gap-0.5 rounded-xl bg-surface dark:bg-nightsurf p-4 shadow-md hover:shadow-lg hover:-translate-y-0.5 transition-all">
+                            <span class="text-[0.68rem] font-bold tracking-[0.06em] uppercase text-muted dark:text-mutedd">Email</span>
+                            <span class="text-[0.9rem] font-semibold">victor.olv00@gmail.com →</span>
                         </a>
-                        <a href="https://wa.me/5581988684392" target="_blank" rel="noopener noreferrer" class="contact-info__link">
-                            <span class="contact-info__label">WhatsApp</span>
-                            <span>+55 81 98868-4392 →</span>
+                        <a href="https://wa.me/5581988684392" target="_blank" rel="noopener noreferrer" class="flex flex-col justify-center gap-0.5 rounded-xl bg-surface dark:bg-nightsurf p-4 shadow-md hover:shadow-lg hover:-translate-y-0.5 transition-all">
+                            <span class="text-[0.68rem] font-bold tracking-[0.06em] uppercase text-muted dark:text-mutedd">WhatsApp</span>
+                            <span class="text-[0.9rem] font-semibold">+55 81 98868-4392 →</span>
                         </a>
                     </div>
                 </div>
-                <form id="contact-form" class="contact-form" action="https://formspree.io/f/xvzlqqbl" method="POST" novalidate>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label class="form-label" for="f-name">Nome</label>
-                            <input class="form-input" type="text" id="f-name" name="name" required placeholder="Seu nome" autocomplete="name">
+                <form id="contact-form" action="https://formspree.io/f/xvzlqqbl" method="POST" novalidate class="flex flex-col gap-5">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                        <div class="flex flex-col gap-1.5">
+                            <label class="text-xs font-bold tracking-[0.04em] text-muted dark:text-mutedd" for="f-name">Nome</label>
+                            <input class="font-sans text-base px-4 py-3 min-h-[48px] w-full rounded-xl bg-surface dark:bg-nightsurf text-ink dark:text-mutedd shadow-inner focus:outline-none focus:shadow-md transition-shadow placeholder:text-muted" type="text" id="f-name" name="name" required placeholder="Seu nome" autocomplete="name">
                         </div>
-                        <div class="form-group">
-                            <label class="form-label" for="f-email">Email</label>
-                            <input class="form-input" type="email" id="f-email" name="email" required placeholder="seu@email.com" autocomplete="email">
+                        <div class="flex flex-col gap-1.5">
+                            <label class="text-xs font-bold tracking-[0.04em] text-muted dark:text-mutedd" for="f-email">Email</label>
+                            <input class="font-sans text-base px-4 py-3 min-h-[48px] w-full rounded-xl bg-surface dark:bg-nightsurf text-ink dark:text-mutedd shadow-inner focus:outline-none focus:shadow-md transition-shadow placeholder:text-muted" type="email" id="f-email" name="email" required placeholder="seu@email.com" autocomplete="email">
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label class="form-label" for="f-message">Mensagem</label>
-                        <textarea class="form-input form-textarea" id="f-message" name="message" rows="5" required placeholder="Sua mensagem..."></textarea>
+                    <div class="flex flex-col gap-1.5">
+                        <label class="text-xs font-bold tracking-[0.04em] text-muted dark:text-mutedd" for="f-message">Mensagem</label>
+                        <textarea class="font-sans text-base px-4 py-3 min-h-[130px] w-full rounded-xl bg-surface dark:bg-nightsurf text-ink dark:text-mutedd shadow-inner focus:outline-none focus:shadow-md transition-shadow resize-y placeholder:text-muted" id="f-message" name="message" rows="5" required placeholder="Sua mensagem..."></textarea>
                     </div>
-                    <div class="form-footer">
-                        <button type="submit" class="btn btn--primary">Enviar Mensagem →</button>
-                        <span class="form-status" id="form-status"></span>
+                    <div class="flex items-center gap-5 flex-wrap">
+                        <button type="submit" class="font-mono inline-flex items-center justify-center min-h-[44px] px-6 py-3 rounded-xl font-semibold text-sm bg-accent text-paper shadow-lg shadow-accent/25 hover:shadow-xl hover:-translate-y-0.5 transition-all">Enviar Mensagem →</button>
+                        <span id="form-status" class="text-[0.82rem] font-semibold text-muted"></span>
                     </div>
                 </form>
             </div>
@@ -235,25 +278,23 @@
     </section>
 
     <!-- FOOTER -->
-    <footer class="footer">
-        <div class="container">
-            <div class="footer__inner">
-                <svg class="logo-svg" width="28" height="28" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                    <rect class="logo-shadow" x="7" y="7" width="86" height="86"/>
-                    <rect class="logo-bg" x="2" y="2" width="86" height="86" stroke-width="3.5"/>
-                    <text class="logo-text" x="45" y="68" text-anchor="middle" font-family="Arial Black, Impact, sans-serif" font-size="46" font-weight="900">VO</text>
-                </svg>
-                <span class="footer__copy">© 2026 Victor Oliveira</span>
-            </div>
+    <footer class="font-mono py-5 bg-olive text-paper">
+        <div class="max-w-[1100px] mx-auto px-5 sm:px-10 flex items-center justify-center gap-3">
+            <svg width="24" height="24" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <rect x="4" y="4" width="92" height="92" rx="18" fill="#EFE3C4"/>
+                <text x="50" y="66" text-anchor="middle" font-family="Arial Black, Impact, sans-serif" font-size="42" font-weight="900" fill="#9C4A2E">VO</text>
+            </svg>
+            <span class="text-[0.78rem] font-medium opacity-80">© 2026 Victor Oliveira</span>
         </div>
     </footer>
 
     <!-- FLOATING CTA -->
-    <a href="#contato" class="floating-cta" aria-label="Ir para o formulário de contato">
-        <span class="floating-cta__pulse" aria-hidden="true"></span>
-        <span class="floating-cta__text">Estou fazendo um jogo — quer descobrir e me ajudar a testá-lo?</span>
+    <a href="#contato" aria-label="Ir para o formulário de contato"
+        class="fixed bottom-7 right-7 z-[200] flex items-center max-w-[280px] rounded-2xl bg-surface dark:bg-nightsurf text-ink dark:text-mutedd shadow-xl hover:shadow-2xl hover:-translate-y-0.5 px-4 py-3 text-[0.78rem] font-semibold leading-[1.4] transition-all">
+        <span aria-hidden="true" class="absolute -top-1.5 -right-1.5 w-3.5 h-3.5 bg-accent2 rounded-full animate-pulse"></span>
+        <span>Estou fazendo um jogo — quer descobrir e me ajudar a testá-lo?</span>
     </a>
 
-    <script src="main.js"></script>
+<script src="main.js"></script>
 </body>
 </html>

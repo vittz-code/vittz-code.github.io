@@ -1,22 +1,76 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" width="800" height="450">
-  <rect width="800" height="450" fill="#1C1A16"/>
-  <!-- CRT scanlines effect -->
-  <rect width="800" height="450" fill="url(#scanlines)" opacity="0.3"/>
-  <defs>
-    <pattern id="scanlines" x="0" y="0" width="800" height="4" patternUnits="userSpaceOnUse">
-      <rect x="0" y="0" width="800" height="2" fill="#000" opacity="0.4"/>
-    </pattern>
-  </defs>
-  <!-- Game UI mockup — isometric grid suggestion -->
-  <line x1="400" y1="80" x2="100" y2="250" stroke="#C8B89A" stroke-width="1" opacity="0.2"/>
-  <line x1="400" y1="80" x2="700" y2="250" stroke="#C8B89A" stroke-width="1" opacity="0.2"/>
-  <line x1="100" y1="250" x2="400" y2="420" stroke="#C8B89A" stroke-width="1" opacity="0.2"/>
-  <line x1="700" y1="250" x2="400" y2="420" stroke="#C8B89A" stroke-width="1" opacity="0.2"/>
-  <!-- Building blocks suggestion -->
-  <polygon points="400,120 550,210 400,300 250,210" fill="#2C2820" stroke="#C8B89A" stroke-width="1" opacity="0.6"/>
-  <polygon points="400,120 550,210 550,270 400,360 250,270 250,210" fill="#221F19" stroke="#C8B89A" stroke-width="1" opacity="0.4"/>
-  <!-- Konbini neon suggestion -->
-  <rect x="320" y="160" width="160" height="100" fill="none" stroke="#C8B89A" stroke-width="1.5" opacity="0.3"/>
-  <rect x="336" y="176" width="55" height="70" fill="#2A2620" opacity="0.8"/>
-  <rect x="409" y="176" width="55" height="70" fill="#2A2620" opacity="0.8"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" width="800" height="450" shape-rendering="crispEdges">
+  <rect width="800" height="450" fill="#1B160E"/>
+
+  <!-- moon, centered -->
+  <circle cx="400" cy="70" r="40" fill="#E8C9A0" shape-rendering="geometricPrecision"/>
+
+  <!-- stars, mirrored pairs -->
+  <rect x="320" y="35" width="6" height="6" fill="#E8C9A0" opacity="0.6"/>
+  <rect x="474" y="35" width="6" height="6" fill="#E8C9A0" opacity="0.6"/>
+  <rect x="250" y="50" width="6" height="6" fill="#E8C9A0" opacity="0.5"/>
+  <rect x="544" y="50" width="6" height="6" fill="#E8C9A0" opacity="0.5"/>
+  <rect x="180" y="130" width="6" height="6" fill="#E8C9A0" opacity="0.5"/>
+  <rect x="614" y="130" width="6" height="6" fill="#E8C9A0" opacity="0.5"/>
+
+  <!-- ground -->
+  <rect x="0" y="380" width="800" height="70" fill="#3A3020"/>
+  <rect x="0" y="380" width="800" height="6" fill="#D9C79C" opacity="0.5"/>
+  <rect x="60" y="392" width="2" height="58" fill="#221C12" opacity="0.35"/>
+  <rect x="200" y="392" width="2" height="58" fill="#221C12" opacity="0.35"/>
+  <rect x="600" y="392" width="2" height="58" fill="#221C12" opacity="0.35"/>
+  <rect x="740" y="392" width="2" height="58" fill="#221C12" opacity="0.35"/>
+
+  <!-- lampposts, mirrored -->
+  <rect x="164" y="260" width="12" height="120" fill="#1B160E"/>
+  <rect x="150" y="236" width="40" height="24" fill="#3E7C6B" opacity="0.85"/>
+  <circle cx="170" cy="248" r="34" fill="#3E7C6B" opacity="0.12"/>
+
+  <rect x="624" y="260" width="12" height="120" fill="#1B160E"/>
+  <rect x="610" y="236" width="40" height="24" fill="#3E7C6B" opacity="0.85"/>
+  <circle cx="630" cy="248" r="34" fill="#3E7C6B" opacity="0.12"/>
+
+  <!-- antenna -->
+  <rect x="398" y="148" width="4" height="24" fill="#D9C79C"/>
+  <rect x="388" y="146" width="24" height="4" fill="#D9C79C"/>
+
+  <!-- building -->
+  <rect x="250" y="200" width="300" height="180" fill="#4E5A3B"/>
+
+  <!-- awning, striped -->
+  <rect x="230" y="170" width="340" height="30" fill="#9C4A2E"/>
+  <rect x="230" y="170" width="34" height="30" fill="#C4703F"/>
+  <rect x="298" y="170" width="34" height="30" fill="#C4703F"/>
+  <rect x="366" y="170" width="34" height="30" fill="#C4703F"/>
+  <rect x="434" y="170" width="34" height="30" fill="#C4703F"/>
+  <rect x="502" y="170" width="34" height="30" fill="#C4703F"/>
+  <rect x="230" y="170" width="340" height="6" fill="#E8C9A0" opacity="0.4"/>
+
+  <!-- sign -->
+  <rect x="350" y="138" width="100" height="30" fill="#3E7C6B"/>
+  <rect x="362" y="148" width="76" height="10" fill="#E8C9A0" opacity="0.8"/>
+
+  <!-- upper windows, 3 symmetric -->
+  <rect x="310" y="214" width="30" height="22" fill="#E8C9A0" opacity="0.75"/>
+  <rect x="385" y="214" width="30" height="22" fill="#E8C9A0" opacity="0.75"/>
+  <rect x="460" y="214" width="30" height="22" fill="#E8C9A0" opacity="0.75"/>
+
+  <!-- main windows, mirrored pair -->
+  <rect x="295" y="255" width="60" height="60" fill="#E8C9A0"/>
+  <rect x="322" y="255" width="4" height="60" fill="#4E5A3B"/>
+  <rect x="295" y="283" width="60" height="4" fill="#4E5A3B"/>
+
+  <rect x="445" y="255" width="60" height="60" fill="#E8C9A0"/>
+  <rect x="472" y="255" width="4" height="60" fill="#4E5A3B"/>
+  <rect x="445" y="283" width="60" height="4" fill="#4E5A3B"/>
+
+  <!-- door -->
+  <rect x="376" y="316" width="48" height="64" fill="#1B160E"/>
+  <rect x="376" y="316" width="48" height="6" fill="#E8C9A0" opacity="0.4"/>
+
+  <!-- flower pots, mirrored -->
+  <rect x="336" y="358" width="24" height="18" fill="#9C4A2E"/>
+  <rect x="340" y="346" width="16" height="14" fill="#7C8B5E"/>
+
+  <rect x="440" y="358" width="24" height="18" fill="#9C4A2E"/>
+  <rect x="444" y="346" width="16" height="14" fill="#7C8B5E"/>
 </svg>

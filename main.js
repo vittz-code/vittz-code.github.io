@@ -14,28 +14,49 @@ document.getElementById('themeToggle').addEventListener('click', () => {
     localStorage.setItem('theme', next);
 });
 
-// Hamburger menu
+// Hamburger menu (mobile drawer)
 const nav       = document.querySelector('.nav');
 const hamburger = document.getElementById('navHamburger');
+const navLinks  = document.getElementById('navLinks');
+const hamSpans  = hamburger.querySelectorAll('span');
+
+function setMenu(isOpen) {
+    navLinks.classList.toggle('hidden', !isOpen);
+    navLinks.classList.toggle('flex', isOpen);
+    navLinks.classList.toggle('flex-col', isOpen);
+    navLinks.classList.toggle('fixed', isOpen);
+    navLinks.classList.toggle('top-[66px]', isOpen);
+    navLinks.classList.toggle('left-0', isOpen);
+    navLinks.classList.toggle('right-0', isOpen);
+    navLinks.classList.toggle('bg-paper', isOpen);
+    navLinks.classList.toggle('dark:bg-night', isOpen);
+    navLinks.classList.toggle('border-b-[3px]', isOpen);
+    navLinks.classList.toggle('border-ink', isOpen);
+    navLinks.classList.toggle('dark:border-cream', isOpen);
+    navLinks.classList.toggle('p-5', isOpen);
+    navLinks.classList.toggle('z-[99]', isOpen);
+
+    hamSpans[0].style.transform = isOpen ? 'rotate(45deg) translate(5.5px, 5.5px)' : '';
+    hamSpans[1].style.opacity   = isOpen ? '0' : '1';
+    hamSpans[1].style.transform = isOpen ? 'scaleX(0)' : '';
+    hamSpans[2].style.transform = isOpen ? 'rotate(-45deg) translate(5.5px, -5.5px)' : '';
+
+    hamburger.setAttribute('aria-expanded', String(isOpen));
+}
 
 hamburger.addEventListener('click', () => {
-    const isOpen = nav.classList.toggle('nav--open');
-    hamburger.setAttribute('aria-expanded', String(isOpen));
+    setMenu(navLinks.classList.contains('hidden'));
 });
 
 // Close menu when a nav link is clicked
-document.querySelectorAll('#navLinks a').forEach(link => {
-    link.addEventListener('click', () => {
-        nav.classList.remove('nav--open');
-        hamburger.setAttribute('aria-expanded', 'false');
-    });
+navLinks.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => setMenu(false));
 });
 
 // Close menu on outside tap
 document.addEventListener('click', (e) => {
-    if (nav.classList.contains('nav--open') && !nav.contains(e.target)) {
-        nav.classList.remove('nav--open');
-        hamburger.setAttribute('aria-expanded', 'false');
+    if (!navLinks.classList.contains('hidden') && !nav.contains(e.target)) {
+        setMenu(false);
     }
 });
 
