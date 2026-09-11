@@ -53,6 +53,13 @@
         .btn-whatsapp { border: 3px solid #01344F; box-shadow: 6px 6px 0 0 #01344F; }
         [data-theme="dark"] .btn-whatsapp { border-color: #141414; box-shadow: 6px 6px 0 0 #FAE3AC; }
 
+        /* seção Projetos, dark mode: fundo off-white (fixo), borda escura, sombra off-white */
+        .brutal-flip { border: 3px solid #01344F; box-shadow: 6px 6px 0 0 #01344F; }
+        [data-theme="dark"] .brutal-flip { border-color: #141414; box-shadow: 6px 6px 0 0 #FAE3AC; }
+
+        .brutal-flip-sm { border: 2px solid #01344F; box-shadow: 4px 4px 0 0 #01344F; }
+        [data-theme="dark"] .brutal-flip-sm { border-color: #141414; box-shadow: 4px 4px 0 0 #FAE3AC; }
+
         /* animação de hover/clique — só nos botões (.btn-anim)
            box-shadow direto: tentei a técnica de ::after parado + transform (mais leve
            em teoria), mas transform cria contexto de empilhamento próprio no elemento,
@@ -71,6 +78,11 @@
         .btn-anim.brutal-sm:active { box-shadow: 2px 2px 0 0 #01344F; }
         [data-theme="dark"] .btn-anim.brutal-sm:hover  { box-shadow: 6px 6px 0 0 #FAE3AC; }
         [data-theme="dark"] .btn-anim.brutal-sm:active { box-shadow: 2px 2px 0 0 #FAE3AC; }
+
+        .btn-anim.brutal-flip-sm:hover  { box-shadow: 6px 6px 0 0 #01344F; }
+        .btn-anim.brutal-flip-sm:active { box-shadow: 2px 2px 0 0 #01344F; }
+        [data-theme="dark"] .btn-anim.brutal-flip-sm:hover  { box-shadow: 6px 6px 0 0 #FAE3AC; }
+        [data-theme="dark"] .btn-anim.brutal-flip-sm:active { box-shadow: 2px 2px 0 0 #FAE3AC; }
 
         .btn-anim.brutal-onaccent:hover  { box-shadow: 8px 8px 0 0 #01344F; }
         .btn-anim.brutal-onaccent:active { box-shadow: 3px 3px 0 0 #01344F; }
@@ -174,7 +186,7 @@
         </div>
 
         <!-- legenda vertical, margem editorial -->
-        <div aria-hidden="true" class="hidden lg:flex absolute left-8 top-1/2 -translate-y-1/2 flex-col items-center gap-4">
+        <div aria-hidden="true" class="hidden sm:flex absolute left-8 top-1/2 -translate-y-1/2 flex-col items-center gap-4">
             <span class="w-px h-20 bg-ink/40 dark:bg-mutedd/40"></span>
             <span class="vlabel font-mono text-[0.66rem] font-semibold tracking-[0.35em] uppercase text-ink/70 dark:text-mutedd/70">Portfólio — Est. 2026</span>
         </div>
@@ -191,7 +203,7 @@
             <p class="text-[0.85rem] font-normal text-ink/70 dark:text-mutedd/70 mb-6">mas pode me chamar de vittz!</p>
             <p class="text-[1.05rem] text-ink/80 dark:text-mutedd/90 max-w-[420px] mb-10 leading-[1.75]">Construo interfaces web e mundos jogáveis. Este é o meu hub — projetos passados, presentes e futuros.</p>
             <div class="flex gap-4 flex-wrap justify-center">
-                <a href="#projetos" class="brutal btn-anim relative font-mono inline-flex items-center justify-center min-h-[44px] px-6 py-3 font-bold uppercase text-sm bg-paper text-ink dark:bg-night dark:text-mutedd">Ver Projetos</a>
+                <a href="#projetos" class="brutal-onaccent btn-anim relative font-mono inline-flex items-center justify-center min-h-[44px] px-6 py-3 font-bold uppercase text-sm bg-paper text-ink dark:text-night">Ver Projetos</a>
                 <a href="https://wa.me/5581988684392" target="_blank" rel="noopener noreferrer" class="btn-whatsapp btn-anim relative font-mono inline-flex items-center justify-center min-h-[44px] px-6 py-3 font-bold uppercase text-sm bg-[#25D366] text-ink dark:text-night">WhatsApp →</a>
             </div>
         </div>
@@ -207,23 +219,23 @@
             </h2>
 
             <!-- 90s-fall — destaque -->
-            <article id="nineties-fall" class="brutal flex flex-col sm:flex-row bg-paper dark:bg-night text-ink dark:text-mutedd overflow-hidden mb-8">
-                <div class="sm:w-[45%] aspect-video sm:aspect-auto shrink-0 overflow-hidden border-b-[3px] sm:border-b-0 sm:border-r-[3px] border-ink dark:border-mutedd bg-[#161211]">
+            <article id="nineties-fall" class="brutal-flip flex flex-col sm:flex-row bg-paper text-ink dark:text-night overflow-hidden mb-8">
+                <div class="sm:w-[45%] aspect-video sm:aspect-auto shrink-0 overflow-hidden border-b-[3px] sm:border-b-0 sm:border-r-[3px] border-ink dark:border-night bg-[#161211]">
                     <img src="assets/images/preview-90s-fall.svg?v=13" alt="Preview do jogo 90s-fall" loading="lazy" class="w-full h-full object-cover">
                 </div>
                 <div class="flex-1 flex flex-col gap-4 p-7">
                     <div class="flex items-start justify-between gap-3">
                         <span class="font-mono text-lg font-black text-accent dark:text-accentd mt-0.5">①</span>
                         <div class="flex flex-wrap gap-1.5 justify-end">
-                            <span class="font-mono px-2.5 py-1 bg-ink dark:bg-mutedd text-paper dark:text-night text-[0.65rem] font-bold uppercase tracking-[0.03em]">Em Desenvolvimento</span>
-                            <span class="font-mono px-2.5 py-1 border-2 border-ink dark:border-mutedd text-ink dark:text-mutedd text-[0.65rem] font-bold tracking-[0.03em]">s&amp;box</span>
-                            <span class="font-mono px-2.5 py-1 border-2 border-ink dark:border-mutedd text-ink dark:text-mutedd text-[0.65rem] font-bold tracking-[0.03em]">C#</span>
+                            <span class="font-mono px-2.5 py-1 bg-ink dark:bg-night text-paper dark:text-mutedd text-[0.65rem] font-bold uppercase tracking-[0.03em]">Em Desenvolvimento</span>
+                            <span class="font-mono px-2.5 py-1 border-2 border-ink dark:border-night text-ink dark:text-night text-[0.65rem] font-bold tracking-[0.03em]">s&amp;box</span>
+                            <span class="font-mono px-2.5 py-1 border-2 border-ink dark:border-night text-ink dark:text-night text-[0.65rem] font-bold tracking-[0.03em]">C#</span>
                         </div>
                     </div>
                     <h3 class="font-mono text-2xl font-black uppercase tracking-tight text-accent dark:text-accentd">90s-fall</h3>
-                    <p class="text-sm text-ink/75 dark:text-mutedd/85 leading-[1.7] flex-1">Jogo 3D de exploração ambientado em uma cidade oriental fictícia dos anos 90. Você explora um mundo misterioso, sendo dono de uma loja de conveniência secreta, um sistema de construção de gôndolas e câmera que alterna entre primeira pessoa e isométrica. Desenvolvido em s&amp;box.</p>
+                    <p class="text-sm text-ink/75 dark:text-night/75 leading-[1.7] flex-1">Jogo 3D de exploração ambientado em uma cidade oriental fictícia dos anos 90. Você explora um mundo misterioso, sendo dono de uma loja de conveniência secreta, um sistema de construção de gôndolas e câmera que alterna entre primeira pessoa e isométrica. Desenvolvido em s&amp;box.</p>
                     <div class="pt-1">
-                        <a href="#contato" data-animate class="brutal-sm btn-anim relative font-mono inline-flex items-center justify-center min-h-[40px] px-4 py-2 font-bold text-[0.8rem] bg-paper dark:bg-night text-ink dark:text-mutedd">Quer jogar e me ajudar a testar? →</a>
+                        <a href="#contato" data-animate class="brutal-flip-sm btn-anim relative font-mono inline-flex items-center justify-center min-h-[40px] px-4 py-2 font-bold text-[0.8rem] bg-paper text-ink dark:text-night">Quer jogar e me ajudar a testar? →</a>
                     </div>
                 </div>
             </article>
@@ -231,42 +243,42 @@
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
 
                 <!-- Site Institucional -->
-                <article class="brutal flex flex-col bg-paper dark:bg-night text-ink dark:text-mutedd overflow-hidden">
-                    <div class="aspect-video overflow-hidden border-b-[3px] border-ink dark:border-mutedd bg-[#161211] shrink-0">
+                <article class="brutal-flip flex flex-col bg-paper text-ink dark:text-night overflow-hidden">
+                    <div class="aspect-video overflow-hidden border-b-[3px] border-ink dark:border-night bg-[#161211] shrink-0">
                         <img src="assets/images/preview-site-institucional.svg?v=9" alt="Preview do site institucional" loading="lazy" class="w-full h-full object-cover">
                     </div>
                     <div class="flex-1 flex flex-col gap-3.5 p-7">
                         <div class="flex items-start justify-between gap-3">
                             <span class="font-mono text-lg font-black text-accent dark:text-accentd mt-0.5">②</span>
                             <div class="flex flex-wrap gap-1.5 justify-end">
-                                <span class="font-mono px-2.5 py-1 border-2 border-ink dark:border-mutedd text-ink dark:text-mutedd text-[0.65rem] font-bold tracking-[0.03em]">HTML</span>
-                                <span class="font-mono px-2.5 py-1 border-2 border-ink dark:border-mutedd text-ink dark:text-mutedd text-[0.65rem] font-bold tracking-[0.03em]">CSS</span>
-                                <span class="font-mono px-2.5 py-1 border-2 border-ink dark:border-mutedd text-ink dark:text-mutedd text-[0.65rem] font-bold tracking-[0.03em]">JS</span>
+                                <span class="font-mono px-2.5 py-1 border-2 border-ink dark:border-night text-ink dark:text-night text-[0.65rem] font-bold tracking-[0.03em]">HTML</span>
+                                <span class="font-mono px-2.5 py-1 border-2 border-ink dark:border-night text-ink dark:text-night text-[0.65rem] font-bold tracking-[0.03em]">CSS</span>
+                                <span class="font-mono px-2.5 py-1 border-2 border-ink dark:border-night text-ink dark:text-night text-[0.65rem] font-bold tracking-[0.03em]">JS</span>
                             </div>
                         </div>
                         <h3 class="font-mono text-xl font-black uppercase tracking-tight leading-[1.2] text-accent dark:text-accentd">Site Institucional</h3>
-                        <p class="text-sm text-ink/75 dark:text-mutedd/85 leading-[1.7] flex-1">Site para empresa de serviços digitais — navegação responsiva, galeria de projetos e formulário de contato.</p>
-                        <a href="https://vittz-code.github.io/site-institucional/" target="_blank" rel="noopener noreferrer" data-animate class="brutal-sm btn-anim relative self-start font-mono inline-flex items-center justify-center min-h-[40px] px-4 py-2 font-bold text-[0.8rem] uppercase bg-paper dark:bg-night text-ink dark:text-mutedd">Ver site →</a>
+                        <p class="text-sm text-ink/75 dark:text-night/75 leading-[1.7] flex-1">Site para empresa de serviços digitais — navegação responsiva, galeria de projetos e formulário de contato.</p>
+                        <a href="https://vittz-code.github.io/site-institucional/" target="_blank" rel="noopener noreferrer" data-animate class="brutal-flip-sm btn-anim relative self-start font-mono inline-flex items-center justify-center min-h-[40px] px-4 py-2 font-bold text-[0.8rem] uppercase bg-paper text-ink dark:text-night">Ver site →</a>
                     </div>
                 </article>
 
                 <!-- Portfolio ldelboux -->
-                <article class="brutal flex flex-col bg-paper dark:bg-night text-ink dark:text-mutedd overflow-hidden">
-                    <div class="aspect-video overflow-hidden border-b-[3px] border-ink dark:border-mutedd bg-[#161211] shrink-0">
+                <article class="brutal-flip flex flex-col bg-paper text-ink dark:text-night overflow-hidden">
+                    <div class="aspect-video overflow-hidden border-b-[3px] border-ink dark:border-night bg-[#161211] shrink-0">
                         <img src="assets/images/preview-portfolio-ldelboux.svg?v=10" alt="Preview do portfólio ldelboux" loading="lazy" class="w-full h-full object-cover">
                     </div>
                     <div class="flex-1 flex flex-col gap-3.5 p-7">
                         <div class="flex items-start justify-between gap-3">
                             <span class="font-mono text-lg font-black text-accent dark:text-accentd mt-0.5">③</span>
                             <div class="flex flex-wrap gap-1.5 justify-end">
-                                <span class="font-mono px-2.5 py-1 border-2 border-ink dark:border-mutedd text-ink dark:text-mutedd text-[0.65rem] font-bold tracking-[0.03em]">HTML</span>
-                                <span class="font-mono px-2.5 py-1 border-2 border-ink dark:border-mutedd text-ink dark:text-mutedd text-[0.65rem] font-bold tracking-[0.03em]">CSS</span>
-                                <span class="font-mono px-2.5 py-1 border-2 border-ink dark:border-mutedd text-ink dark:text-mutedd text-[0.65rem] font-bold tracking-[0.03em]">JS</span>
+                                <span class="font-mono px-2.5 py-1 border-2 border-ink dark:border-night text-ink dark:text-night text-[0.65rem] font-bold tracking-[0.03em]">HTML</span>
+                                <span class="font-mono px-2.5 py-1 border-2 border-ink dark:border-night text-ink dark:text-night text-[0.65rem] font-bold tracking-[0.03em]">CSS</span>
+                                <span class="font-mono px-2.5 py-1 border-2 border-ink dark:border-night text-ink dark:text-night text-[0.65rem] font-bold tracking-[0.03em]">JS</span>
                             </div>
                         </div>
                         <h3 class="font-mono text-xl font-black uppercase tracking-tight leading-[1.2] text-accent dark:text-accentd">Portifólio — Editor de Vídeos</h3>
-                        <p class="text-sm text-ink/75 dark:text-mutedd/85 leading-[1.7] flex-1">Portifólio desenvolvido para profissional de edição de vídeos — apresentação de projetos, habilidades e contato.</p>
-                        <a href="https://leodelboux.github.io" target="_blank" rel="noopener noreferrer" data-animate class="brutal-sm btn-anim relative self-start font-mono inline-flex items-center justify-center min-h-[40px] px-4 py-2 font-bold text-[0.8rem] uppercase bg-paper dark:bg-night text-ink dark:text-mutedd">Ver site →</a>
+                        <p class="text-sm text-ink/75 dark:text-night/75 leading-[1.7] flex-1">Portifólio desenvolvido para profissional de edição de vídeos — apresentação de projetos, habilidades e contato.</p>
+                        <a href="https://leodelboux.github.io" target="_blank" rel="noopener noreferrer" data-animate class="brutal-flip-sm btn-anim relative self-start font-mono inline-flex items-center justify-center min-h-[40px] px-4 py-2 font-bold text-[0.8rem] uppercase bg-paper text-ink dark:text-night">Ver site →</a>
                     </div>
                 </article>
 
