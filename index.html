@@ -39,12 +39,13 @@
 
         /* bloco neo-brutalista: borda grossa + sombra "offset" dura, sem blur — só cores da paleta */
         /* estático por padrão (cards, cabeçalhos) — sem custo de animação nenhum */
-        /* dark mode: regra única — borda escura, sombra off-white, em tudo */
+        /* dark mode: fundo desses elementos = cor da página (preto), então a borda
+           precisa ser clara pra existir visualmente; sombra sempre off-white */
         .brutal { border: 3px solid #01344F; box-shadow: 6px 6px 0 0 #01344F; }
-        [data-theme="dark"] .brutal { border-color: #141414; box-shadow: 6px 6px 0 0 #FAE3AC; }
+        [data-theme="dark"] .brutal { border-color: #FAE3AC; box-shadow: 6px 6px 0 0 #FAE3AC; }
 
         .brutal-sm { border: 2px solid #01344F; box-shadow: 4px 4px 0 0 #01344F; }
-        [data-theme="dark"] .brutal-sm { border-color: #141414; box-shadow: 4px 4px 0 0 #FAE3AC; }
+        [data-theme="dark"] .brutal-sm { border-color: #FAE3AC; box-shadow: 4px 4px 0 0 #FAE3AC; }
 
         .brutal-onaccent { border: 3px solid #01344F; box-shadow: 6px 6px 0 0 #01344F; }
         [data-theme="dark"] .brutal-onaccent { border-color: #141414; box-shadow: 6px 6px 0 0 #FAE3AC; }
@@ -106,7 +107,7 @@
 <body class="relative font-sans bg-paper dark:bg-night text-ink dark:text-mutedd transition-colors duration-300 overflow-x-hidden">
 
     <!-- NAV -->
-    <nav class="nav font-mono sticky top-0 z-[100] flex items-center justify-between gap-4 px-5 sm:px-10 py-3 bg-ink dark:bg-mutedd text-paper dark:text-night border-b-[3px] border-ink dark:border-night">
+    <nav class="nav font-mono sticky top-0 z-[100] flex items-center justify-between gap-4 px-5 sm:px-10 py-3 bg-ink dark:bg-mutedd text-paper dark:text-night border-b-[3px] border-ink dark:border-mutedd">
         <div class="flex items-center gap-3">
             <span class="flex gap-1.5" aria-hidden="true">
                 <span class="w-2.5 h-2.5 bg-accent dark:bg-accentd"></span>
@@ -132,7 +133,7 @@
                 <li><a href="#contato" class="text-[0.8rem] font-bold uppercase tracking-[0.06em] opacity-85 hover:opacity-100 hover:text-accent dark:hover:text-accentd transition-colors py-1">Contato</a></li>
             </ul>
             <button id="themeToggle" aria-label="Alternar modo escuro" title="Alternar modo escuro"
-                class="w-9 h-9 flex items-center justify-center shrink-0 border-2 border-paper/40 dark:border-night/40 text-paper dark:text-night hover:bg-paper/15 dark:hover:bg-night/15 transition-colors">◐</button>
+                class="w-9 h-9 flex items-center justify-center shrink-0 border-2 border-paper/40 dark:border-mutedd/40 text-paper dark:text-night hover:bg-paper/15 dark:hover:bg-night/15 transition-colors">◐</button>
             <button id="navHamburger" aria-label="Abrir menu" aria-expanded="false"
                 class="nav__hamburger sm:hidden flex flex-col gap-[5px] w-9 h-9 items-center justify-center shrink-0">
                 <span class="block w-[20px] h-[2px] bg-paper dark:bg-night transition-transform duration-200"></span>
@@ -180,8 +181,8 @@
 
         <div class="relative z-[1] max-w-[680px] flex flex-col items-center">
             <div class="flex flex-wrap justify-center gap-2 mb-3">
-                <span class="font-mono inline-block px-3.5 py-1.5 border-2 border-ink dark:border-night bg-paper dark:bg-night text-ink dark:text-mutedd text-xs font-bold uppercase tracking-[0.05em]">Dev Front-End</span>
-                <span class="font-mono inline-block px-3.5 py-1.5 border-2 border-ink dark:border-night bg-paper dark:bg-night text-ink dark:text-mutedd text-xs font-bold uppercase tracking-[0.05em]">Game Designer</span>
+                <span class="font-mono inline-block px-3.5 py-1.5 border-2 border-ink dark:border-mutedd bg-paper dark:bg-night text-ink dark:text-mutedd text-xs font-bold uppercase tracking-[0.05em]">Dev Front-End</span>
+                <span class="font-mono inline-block px-3.5 py-1.5 border-2 border-ink dark:border-mutedd bg-paper dark:bg-night text-ink dark:text-mutedd text-xs font-bold uppercase tracking-[0.05em]">Game Designer</span>
             </div>
             <a href="#nineties-fall" class="font-mono inline-block text-[0.78rem] font-bold uppercase tracking-[0.04em] text-ink/70 dark:text-mutedd/70 hover:text-accent dark:hover:text-accentd mb-7 py-2 transition-colors">quer saber mais? clica aqui ↓</a>
 
@@ -207,7 +208,7 @@
 
             <!-- 90s-fall — destaque -->
             <article id="nineties-fall" class="brutal flex flex-col sm:flex-row bg-paper dark:bg-night text-ink dark:text-mutedd overflow-hidden mb-8">
-                <div class="sm:w-[45%] aspect-video sm:aspect-auto shrink-0 overflow-hidden border-b-[3px] sm:border-b-0 sm:border-r-[3px] border-ink dark:border-night bg-[#161211]">
+                <div class="sm:w-[45%] aspect-video sm:aspect-auto shrink-0 overflow-hidden border-b-[3px] sm:border-b-0 sm:border-r-[3px] border-ink dark:border-mutedd bg-[#161211]">
                     <img src="assets/images/preview-90s-fall.svg?v=13" alt="Preview do jogo 90s-fall" loading="lazy" class="w-full h-full object-cover">
                 </div>
                 <div class="flex-1 flex flex-col gap-4 p-7">
@@ -215,8 +216,8 @@
                         <span class="font-mono text-lg font-black text-accent dark:text-accentd mt-0.5">①</span>
                         <div class="flex flex-wrap gap-1.5 justify-end">
                             <span class="font-mono px-2.5 py-1 bg-ink dark:bg-mutedd text-paper dark:text-night text-[0.65rem] font-bold uppercase tracking-[0.03em]">Em Desenvolvimento</span>
-                            <span class="font-mono px-2.5 py-1 border-2 border-ink dark:border-night text-ink dark:text-mutedd text-[0.65rem] font-bold tracking-[0.03em]">s&amp;box</span>
-                            <span class="font-mono px-2.5 py-1 border-2 border-ink dark:border-night text-ink dark:text-mutedd text-[0.65rem] font-bold tracking-[0.03em]">C#</span>
+                            <span class="font-mono px-2.5 py-1 border-2 border-ink dark:border-mutedd text-ink dark:text-mutedd text-[0.65rem] font-bold tracking-[0.03em]">s&amp;box</span>
+                            <span class="font-mono px-2.5 py-1 border-2 border-ink dark:border-mutedd text-ink dark:text-mutedd text-[0.65rem] font-bold tracking-[0.03em]">C#</span>
                         </div>
                     </div>
                     <h3 class="font-mono text-2xl font-black uppercase tracking-tight text-accent dark:text-accentd">90s-fall</h3>
@@ -231,16 +232,16 @@
 
                 <!-- Site Institucional -->
                 <article class="brutal flex flex-col bg-paper dark:bg-night text-ink dark:text-mutedd overflow-hidden">
-                    <div class="aspect-video overflow-hidden border-b-[3px] border-ink dark:border-night bg-[#161211] shrink-0">
+                    <div class="aspect-video overflow-hidden border-b-[3px] border-ink dark:border-mutedd bg-[#161211] shrink-0">
                         <img src="assets/images/preview-site-institucional.svg?v=9" alt="Preview do site institucional" loading="lazy" class="w-full h-full object-cover">
                     </div>
                     <div class="flex-1 flex flex-col gap-3.5 p-7">
                         <div class="flex items-start justify-between gap-3">
                             <span class="font-mono text-lg font-black text-accent dark:text-accentd mt-0.5">②</span>
                             <div class="flex flex-wrap gap-1.5 justify-end">
-                                <span class="font-mono px-2.5 py-1 border-2 border-ink dark:border-night text-ink dark:text-mutedd text-[0.65rem] font-bold tracking-[0.03em]">HTML</span>
-                                <span class="font-mono px-2.5 py-1 border-2 border-ink dark:border-night text-ink dark:text-mutedd text-[0.65rem] font-bold tracking-[0.03em]">CSS</span>
-                                <span class="font-mono px-2.5 py-1 border-2 border-ink dark:border-night text-ink dark:text-mutedd text-[0.65rem] font-bold tracking-[0.03em]">JS</span>
+                                <span class="font-mono px-2.5 py-1 border-2 border-ink dark:border-mutedd text-ink dark:text-mutedd text-[0.65rem] font-bold tracking-[0.03em]">HTML</span>
+                                <span class="font-mono px-2.5 py-1 border-2 border-ink dark:border-mutedd text-ink dark:text-mutedd text-[0.65rem] font-bold tracking-[0.03em]">CSS</span>
+                                <span class="font-mono px-2.5 py-1 border-2 border-ink dark:border-mutedd text-ink dark:text-mutedd text-[0.65rem] font-bold tracking-[0.03em]">JS</span>
                             </div>
                         </div>
                         <h3 class="font-mono text-xl font-black uppercase tracking-tight leading-[1.2] text-accent dark:text-accentd">Site Institucional</h3>
@@ -251,16 +252,16 @@
 
                 <!-- Portfolio ldelboux -->
                 <article class="brutal flex flex-col bg-paper dark:bg-night text-ink dark:text-mutedd overflow-hidden">
-                    <div class="aspect-video overflow-hidden border-b-[3px] border-ink dark:border-night bg-[#161211] shrink-0">
+                    <div class="aspect-video overflow-hidden border-b-[3px] border-ink dark:border-mutedd bg-[#161211] shrink-0">
                         <img src="assets/images/preview-portfolio-ldelboux.svg?v=10" alt="Preview do portfólio ldelboux" loading="lazy" class="w-full h-full object-cover">
                     </div>
                     <div class="flex-1 flex flex-col gap-3.5 p-7">
                         <div class="flex items-start justify-between gap-3">
                             <span class="font-mono text-lg font-black text-accent dark:text-accentd mt-0.5">③</span>
                             <div class="flex flex-wrap gap-1.5 justify-end">
-                                <span class="font-mono px-2.5 py-1 border-2 border-ink dark:border-night text-ink dark:text-mutedd text-[0.65rem] font-bold tracking-[0.03em]">HTML</span>
-                                <span class="font-mono px-2.5 py-1 border-2 border-ink dark:border-night text-ink dark:text-mutedd text-[0.65rem] font-bold tracking-[0.03em]">CSS</span>
-                                <span class="font-mono px-2.5 py-1 border-2 border-ink dark:border-night text-ink dark:text-mutedd text-[0.65rem] font-bold tracking-[0.03em]">JS</span>
+                                <span class="font-mono px-2.5 py-1 border-2 border-ink dark:border-mutedd text-ink dark:text-mutedd text-[0.65rem] font-bold tracking-[0.03em]">HTML</span>
+                                <span class="font-mono px-2.5 py-1 border-2 border-ink dark:border-mutedd text-ink dark:text-mutedd text-[0.65rem] font-bold tracking-[0.03em]">CSS</span>
+                                <span class="font-mono px-2.5 py-1 border-2 border-ink dark:border-mutedd text-ink dark:text-mutedd text-[0.65rem] font-bold tracking-[0.03em]">JS</span>
                             </div>
                         </div>
                         <h3 class="font-mono text-xl font-black uppercase tracking-tight leading-[1.2] text-accent dark:text-accentd">Portifólio — Editor de Vídeos</h3>
@@ -274,7 +275,7 @@
     </section>
 
     <!-- HABILIDADES -->
-    <section class="py-16 sm:py-20 border-y-[3px] border-ink dark:border-night" id="habilidades">
+    <section class="py-16 sm:py-20 border-y-[3px] border-ink dark:border-mutedd" id="habilidades">
         <div class="max-w-[1100px] mx-auto px-5 sm:px-10">
             <h2 data-animate class="sec-head font-mono uppercase tracking-tight">
                 <span class="n">02</span>
@@ -285,23 +286,23 @@
                 <div>
                     <h3 class="text-xs font-bold tracking-[0.1em] uppercase text-ink/70 dark:text-mutedd/70 mb-4">Desenvolvimento Web</h3>
                     <div class="grid grid-cols-2 sm:grid-cols-3 gap-2">
-                        <span class="font-mono text-center px-3 py-2 border-2 border-ink dark:border-night bg-paper dark:bg-night text-ink dark:text-mutedd text-[0.78rem] font-bold">HTML5</span>
-                        <span class="font-mono text-center px-3 py-2 border-2 border-ink dark:border-night bg-paper dark:bg-night text-ink dark:text-mutedd text-[0.78rem] font-bold">CSS3</span>
-                        <span class="font-mono text-center px-3 py-2 border-2 border-ink dark:border-night bg-paper dark:bg-night text-ink dark:text-mutedd text-[0.78rem] font-bold">JavaScript</span>
-                        <span class="font-mono text-center px-3 py-2 border-2 border-ink dark:border-night bg-paper dark:bg-night text-ink dark:text-mutedd text-[0.78rem] font-bold">Responsivo</span>
-                        <span class="font-mono text-center px-3 py-2 border-2 border-ink dark:border-night bg-paper dark:bg-night text-ink dark:text-mutedd text-[0.78rem] font-bold">Git</span>
-                        <span class="font-mono text-center px-3 py-2 border-2 border-ink dark:border-night bg-paper dark:bg-night text-ink dark:text-mutedd text-[0.78rem] font-bold">VS Code</span>
+                        <span class="font-mono text-center px-3 py-2 border-2 border-ink dark:border-mutedd bg-paper dark:bg-night text-ink dark:text-mutedd text-[0.78rem] font-bold">HTML5</span>
+                        <span class="font-mono text-center px-3 py-2 border-2 border-ink dark:border-mutedd bg-paper dark:bg-night text-ink dark:text-mutedd text-[0.78rem] font-bold">CSS3</span>
+                        <span class="font-mono text-center px-3 py-2 border-2 border-ink dark:border-mutedd bg-paper dark:bg-night text-ink dark:text-mutedd text-[0.78rem] font-bold">JavaScript</span>
+                        <span class="font-mono text-center px-3 py-2 border-2 border-ink dark:border-mutedd bg-paper dark:bg-night text-ink dark:text-mutedd text-[0.78rem] font-bold">Responsivo</span>
+                        <span class="font-mono text-center px-3 py-2 border-2 border-ink dark:border-mutedd bg-paper dark:bg-night text-ink dark:text-mutedd text-[0.78rem] font-bold">Git</span>
+                        <span class="font-mono text-center px-3 py-2 border-2 border-ink dark:border-mutedd bg-paper dark:bg-night text-ink dark:text-mutedd text-[0.78rem] font-bold">VS Code</span>
                     </div>
                 </div>
                 <div>
                     <h3 class="text-xs font-bold tracking-[0.1em] uppercase text-ink/70 dark:text-mutedd/70 mb-4">Game Design</h3>
                     <div class="grid grid-cols-2 sm:grid-cols-3 gap-2">
-                        <span class="font-mono text-center px-3 py-2 border-2 border-ink dark:border-night bg-paper dark:bg-night text-ink dark:text-mutedd text-[0.78rem] font-bold">s&amp;box</span>
-                        <span class="font-mono text-center px-3 py-2 border-2 border-ink dark:border-night bg-paper dark:bg-night text-ink dark:text-mutedd text-[0.78rem] font-bold">Game Design</span>
-                        <span class="font-mono text-center px-3 py-2 border-2 border-ink dark:border-night bg-paper dark:bg-night text-ink dark:text-mutedd text-[0.78rem] font-bold">Level Design</span>
-                        <span class="font-mono text-center px-3 py-2 border-2 border-ink dark:border-night bg-paper dark:bg-night text-ink dark:text-mutedd text-[0.78rem] font-bold">Prototipagem</span>
-                        <span class="font-mono text-center px-3 py-2 border-2 border-ink dark:border-night bg-paper dark:bg-night text-ink dark:text-mutedd text-[0.78rem] font-bold">Unity 3D</span>
-                        <span class="font-mono text-center px-3 py-2 border-2 border-ink dark:border-night bg-paper dark:bg-night text-ink dark:text-mutedd text-[0.78rem] font-bold">C#</span>
+                        <span class="font-mono text-center px-3 py-2 border-2 border-ink dark:border-mutedd bg-paper dark:bg-night text-ink dark:text-mutedd text-[0.78rem] font-bold">s&amp;box</span>
+                        <span class="font-mono text-center px-3 py-2 border-2 border-ink dark:border-mutedd bg-paper dark:bg-night text-ink dark:text-mutedd text-[0.78rem] font-bold">Game Design</span>
+                        <span class="font-mono text-center px-3 py-2 border-2 border-ink dark:border-mutedd bg-paper dark:bg-night text-ink dark:text-mutedd text-[0.78rem] font-bold">Level Design</span>
+                        <span class="font-mono text-center px-3 py-2 border-2 border-ink dark:border-mutedd bg-paper dark:bg-night text-ink dark:text-mutedd text-[0.78rem] font-bold">Prototipagem</span>
+                        <span class="font-mono text-center px-3 py-2 border-2 border-ink dark:border-mutedd bg-paper dark:bg-night text-ink dark:text-mutedd text-[0.78rem] font-bold">Unity 3D</span>
+                        <span class="font-mono text-center px-3 py-2 border-2 border-ink dark:border-mutedd bg-paper dark:bg-night text-ink dark:text-mutedd text-[0.78rem] font-bold">C#</span>
                     </div>
                 </div>
             </div>
@@ -334,16 +335,16 @@
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
                         <div class="flex flex-col gap-1.5">
                             <label class="text-xs font-bold tracking-[0.05em] uppercase text-ink/70 dark:text-mutedd/70" for="f-name">Nome</label>
-                            <input class="font-sans text-base px-4 py-3 min-h-[48px] w-full border-2 border-ink dark:border-night bg-paper dark:bg-night text-ink dark:text-mutedd focus:outline-none focus:shadow-[4px_4px_0_0_#01344F] dark:focus:shadow-[4px_4px_0_0_#FAE3AC] transition-shadow placeholder:text-ink/45 dark:placeholder:text-mutedd/45" type="text" id="f-name" name="name" required placeholder="Seu nome" autocomplete="name">
+                            <input class="font-sans text-base px-4 py-3 min-h-[48px] w-full border-2 border-ink dark:border-mutedd bg-paper dark:bg-night text-ink dark:text-mutedd focus:outline-none focus:shadow-[4px_4px_0_0_#01344F] dark:focus:shadow-[4px_4px_0_0_#FAE3AC] transition-shadow placeholder:text-ink/45 dark:placeholder:text-mutedd/45" type="text" id="f-name" name="name" required placeholder="Seu nome" autocomplete="name">
                         </div>
                         <div class="flex flex-col gap-1.5">
                             <label class="text-xs font-bold tracking-[0.05em] uppercase text-ink/70 dark:text-mutedd/70" for="f-email">Email</label>
-                            <input class="font-sans text-base px-4 py-3 min-h-[48px] w-full border-2 border-ink dark:border-night bg-paper dark:bg-night text-ink dark:text-mutedd focus:outline-none focus:shadow-[4px_4px_0_0_#01344F] dark:focus:shadow-[4px_4px_0_0_#FAE3AC] transition-shadow placeholder:text-ink/45 dark:placeholder:text-mutedd/45" type="email" id="f-email" name="email" required placeholder="seu@email.com" autocomplete="email">
+                            <input class="font-sans text-base px-4 py-3 min-h-[48px] w-full border-2 border-ink dark:border-mutedd bg-paper dark:bg-night text-ink dark:text-mutedd focus:outline-none focus:shadow-[4px_4px_0_0_#01344F] dark:focus:shadow-[4px_4px_0_0_#FAE3AC] transition-shadow placeholder:text-ink/45 dark:placeholder:text-mutedd/45" type="email" id="f-email" name="email" required placeholder="seu@email.com" autocomplete="email">
                         </div>
                     </div>
                     <div class="flex flex-col gap-1.5">
                         <label class="text-xs font-bold tracking-[0.05em] uppercase text-ink/70 dark:text-mutedd/70" for="f-message">Mensagem</label>
-                        <textarea class="font-sans text-base px-4 py-3 min-h-[130px] w-full border-2 border-ink dark:border-night bg-paper dark:bg-night text-ink dark:text-mutedd focus:outline-none focus:shadow-[4px_4px_0_0_#01344F] dark:focus:shadow-[4px_4px_0_0_#FAE3AC] transition-shadow resize-y placeholder:text-ink/45 dark:placeholder:text-mutedd/45" id="f-message" name="message" rows="5" required placeholder="Sua mensagem..."></textarea>
+                        <textarea class="font-sans text-base px-4 py-3 min-h-[130px] w-full border-2 border-ink dark:border-mutedd bg-paper dark:bg-night text-ink dark:text-mutedd focus:outline-none focus:shadow-[4px_4px_0_0_#01344F] dark:focus:shadow-[4px_4px_0_0_#FAE3AC] transition-shadow resize-y placeholder:text-ink/45 dark:placeholder:text-mutedd/45" id="f-message" name="message" rows="5" required placeholder="Sua mensagem..."></textarea>
                     </div>
                     <div class="flex items-center gap-5 flex-wrap">
                         <button type="submit" class="brutal-onaccent btn-anim font-mono inline-flex items-center justify-center min-h-[44px] px-6 py-3 font-bold uppercase text-sm bg-accent text-paper dark:bg-accentd dark:text-mutedd">Enviar Mensagem →</button>
@@ -355,7 +356,7 @@
     </section>
 
     <!-- SKYLINE -->
-    <div class="w-full h-[110px] sm:h-[150px] overflow-hidden border-t-[3px] border-ink dark:border-night">
+    <div class="w-full h-[110px] sm:h-[150px] overflow-hidden border-t-[3px] border-ink dark:border-mutedd">
         <svg viewBox="0 0 1600 220" preserveAspectRatio="none" shape-rendering="crispEdges" aria-hidden="true" class="w-full h-full">
             <!-- silhuetas distantes -->
             <g class="fill-ink dark:fill-mutedd" opacity="0.4">
@@ -428,7 +429,7 @@
     <!-- FLOATING CTA -->
     <a href="#contato" aria-label="Ir para o formulário de contato"
         class="brutal btn-anim fixed bottom-7 right-7 z-[200] flex items-center max-w-[280px] bg-paper dark:bg-night text-ink dark:text-mutedd px-4 py-3 text-[0.78rem] font-semibold leading-[1.4]">
-        <span aria-hidden="true" class="absolute -top-2 -right-2 w-3.5 h-3.5 bg-accent dark:bg-accentd rounded-full animate-pulse border-2 border-ink dark:border-night"></span>
+        <span aria-hidden="true" class="absolute -top-2 -right-2 w-3.5 h-3.5 bg-accent dark:bg-accentd rounded-full animate-pulse border-2 border-ink dark:border-mutedd"></span>
         <span>Estou fazendo um jogo — quer descobrir e me ajudar a testá-lo?</span>
     </a>
 
