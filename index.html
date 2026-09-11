@@ -9,52 +9,81 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            darkMode: ['selector', '[data-theme="dark"]'],
-            theme: {
-                extend: {
-                    colors: {
-                        /* light — restrito à light-palette: vermelho / marinho / creme */
-                        paper:   '#FAE3AC',
-                        ink:     '#01344F',
-                        accent:  '#D12128',
-                        /* dark — preto + vermelho, com o mesmo off-white do tema claro */
-                        night:   '#141414',
-                        mutedd:  '#FAE3AC',
-                        accentd: '#D12128',
-                    },
-                    fontFamily: {
-                        sans: ['Inter', 'system-ui', 'sans-serif'],
-                        mono: ['JetBrains Mono', 'ui-monospace', 'monospace'],
-                    },
-                },
-            },
-        };
-    </script>
+    <!-- Tailwind pré-compilado (assets/tailwind.css, gerado por `npm run build:css` a partir de
+         tailwind.config.js) — antes vinha do CDN (cdn.tailwindcss.com), que compila as classes em
+         JS no navegador de quem visita. Isso causava flash/inconsistência de estilo (a própria
+         Tailwind avisa no console pra não usar o CDN em produção) — trocado por um arquivo .css
+         fixo, sem JS rodando na hora de carregar a página. -->
+    <link rel="stylesheet" href="assets/tailwind.css">
     <style>
         [data-animate] { opacity: 0; transform: translateY(18px); transition: opacity .55s ease, transform .55s ease; }
         [data-animate].visible { opacity: 1; transform: translateY(0); }
 
-        /* bloco neo-brutalista: borda grossa + sombra "offset" dura, sem blur — só cores da paleta.
-           Regra única, sem exceção por elemento (era isso que vinha quebrando):
-           - fundo escuro (cards, "Ver Projetos", CTA) → borda e sombra off-white, sempre visíveis
-           - fundo colorido (WhatsApp, Enviar Mensagem) → borda escura, sombra off-white */
+        /* bloco neo-brutalista estático (cards de projeto): borda grossa + sombra "offset"
+           dura via box-shadow direto — sem transform em cima, sem problema nenhum, não
+           precisa da estrutura de baixo.
+           #5A5142 no dark = cinza escuro puxado pro amarelo (mesmo tom do creme #FAE3AC,
+           só com L bem mais baixo) — pedido do Victor pra sombra combinar com a paleta
+           quente em vez de ficar um cinza neutro/azulado sem relação com o resto. */
         .brutal { border: 3px solid #01344F; box-shadow: 6px 6px 0 0 #01344F; }
-        .brutal-sm { border: 2px solid #01344F; box-shadow: 4px 4px 0 0 #01344F; }
-        [data-theme="dark"] .brutal { border-color: #FAE3AC; box-shadow: 6px 6px 0 0 #FAE3AC; }
-        [data-theme="dark"] .brutal-sm { border-color: #FAE3AC; box-shadow: 4px 4px 0 0 #FAE3AC; }
+        [data-theme="dark"] .brutal { border-color: #FAE3AC; box-shadow: 6px 6px 0 0 #5A5142; }
 
-        .brutal-onaccent, .btn-whatsapp { border: 3px solid #01344F; box-shadow: 6px 6px 0 0 #01344F; }
-        [data-theme="dark"] .brutal-onaccent, [data-theme="dark"] .btn-whatsapp { border-color: #141414; box-shadow: 6px 6px 0 0 #FAE3AC; }
+        /* botões que animam (.btn-anim): duas tentativas anteriores erraram por motivos
+           diferentes — box-shadow move junto com transform (preso na própria caixa), e
+           um ::after resolvia a sombra mas o TEXTO (conteúdo real do elemento) ficava
+           sempre parado com ela, "descolado" da borda que deslizava sozinha. Pseudo-
+           elemento não carrega texto, esse é o limite de tentar resolver com só 1 elemento.
+           Fix de verdade: 2 elementos reais empilhados por grid (mesma célula, um em
+           cima do outro) — .shadow-block (só cor, nunca se move) e .face-block (borda +
+           fundo + o texto TODO dentro dele — único que anima). O link/botão em si
+           (.btn-anim) só posiciona os dois; hover/active nele desloca só o .face-block.
+           Por padrão a face já fica -6px/-6px da sombra (dá pra ver ela saindo por
+           baixo); hover aumenta o deslocamento, active zera — a face cobre a sombra
+           inteira e ela some de vez (só transform anima, GPU, sem repaint). */
+        .btn-anim { display: inline-grid; }
+        .btn-anim > * { grid-area: 1 / 1; }
 
-        /* hover/clique — só transform anima (GPU, sem repaint); a sombra nunca muda de
-           tamanho, então não há nada pra interpolar e "borrar". O botão desliza por cima
-           de uma sombra fixa: some no active, aparece mais no hover. */
-        .btn-anim { transition: transform .12s ease-out; }
-        .btn-anim:hover  { transform: translate(-2px,-2px); }
-        .btn-anim:active { transform: translate(4px,4px); }
+        .shadow-block { background-color: #01344F; transition: background-color .3s; }
+        [data-theme="dark"] .shadow-block { background-color: #5A5142; }
+
+        .face-block {
+            border: 3px solid #01344F;
+            transform: translate(-6px,-6px);
+            transition: transform .12s ease-out, border-color .3s;
+        }
+        .btn-anim:hover  .face-block { transform: translate(-8px,-8px); }
+        .btn-anim:active .face-block { transform: translate(0,0); }
+        [data-theme="dark"] .face-block { border-color: #FAE3AC; }
+
+        .face-block.sm { border-width: 2px; transform: translate(-4px,-4px); }
+        .btn-anim:hover  .face-block.sm { transform: translate(-6px,-6px); }
+        .btn-anim:active .face-block.sm { transform: translate(0,0); }
+
+        /* fundo colorido próprio do botão (WhatsApp verde, Enviar Mensagem vermelho):
+           borda escura no dark também (off-white ficaria fraco em cima de cor viva).
+           Os outros (fundo = fundo da página) continuam com borda off-white acima —
+           reparei nisso agora: "Ver Projetos" tava classificado errado desde antes de
+           eu mexer (usava a variante de fundo colorido mesmo sentando no fundo escuro
+           normal), o que deixava a borda dele quase invisível no dark. Corrigido junto. */
+        [data-theme="dark"] .face-block.dark-border { border-color: #141414; }
+
+        /* o ponto final de "Oliveira." pesa uma célula inteira de largura no
+           monoespaçado — sem isso, a palavra fica ~32px puxada pra esquerda do centro
+           óptico (a caixa do h1 centraliza incluindo o ponto, mas o olho centraliza
+           pelas letras). -1ch cancela exatamente essa célula, então o ponto "pendura"
+           na margem em vez de contar na centralização — igual a hanging-punctuation
+           editorial, e acompanha o clamp() do tamanho da fonte automaticamente. */
+        .dot-hang { display: inline-block; margin-right: -1ch; }
+
+        /* respeita quem pediu menos movimento no SO — trava toda animação/transição
+           da página (inclusive as do Tailwind, tipo animate-pulse) numa passada só. */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
 
         /* legenda vertical, estilo margem editorial japonesa */
         .vlabel { writing-mode: vertical-rl; text-orientation: mixed; }
@@ -160,13 +189,19 @@
             </div>
             <a href="#nineties-fall" class="font-mono inline-block text-[0.78rem] font-bold uppercase tracking-[0.04em] text-ink/70 dark:text-mutedd/70 hover:text-accent dark:hover:text-accentd mb-7 py-2 transition-colors">quer saber mais? clica aqui ↓</a>
 
-            <h1 class="font-mono text-[clamp(2.6rem,9vw,7rem)] font-black leading-[0.92] tracking-tight uppercase mb-3 text-ink dark:text-mutedd">Victor<br><span class="text-accent dark:text-accentd">Oliveira.</span></h1>
+            <h1 class="font-mono text-[clamp(2.6rem,9vw,7rem)] font-black leading-[0.92] tracking-tight uppercase mb-3 text-ink dark:text-mutedd">Victor<br><span class="text-accent dark:text-accentd">Oliveira<span class="dot-hang">.</span></span></h1>
 
             <p class="text-[0.85rem] font-normal text-ink/70 dark:text-mutedd/70 mb-6">mas pode me chamar de vittz!</p>
             <p class="text-[1.05rem] text-ink/80 dark:text-mutedd/90 max-w-[420px] mb-10 leading-[1.75]">Construo interfaces web e mundos jogáveis. Este é o meu hub — projetos passados, presentes e futuros.</p>
             <div class="flex gap-4 flex-wrap justify-center">
-                <a href="#projetos" class="brutal-onaccent btn-anim relative font-mono inline-flex items-center justify-center min-h-[44px] px-6 py-3 font-bold uppercase text-sm bg-paper text-ink dark:bg-night dark:text-mutedd">Ver Projetos</a>
-                <a href="https://wa.me/5581988684392" target="_blank" rel="noopener noreferrer" class="btn-whatsapp btn-anim relative font-mono inline-flex items-center justify-center min-h-[44px] px-6 py-3 font-bold uppercase text-sm bg-[#25D366] text-ink dark:text-night">WhatsApp →</a>
+                <a href="#projetos" class="btn-anim">
+                    <span class="shadow-block" aria-hidden="true"></span>
+                    <span class="face-block font-mono inline-flex items-center justify-center min-h-[44px] px-6 py-3 font-bold uppercase text-sm bg-paper text-ink dark:bg-night dark:text-mutedd">Ver Projetos</span>
+                </a>
+                <a href="https://wa.me/5581988684392" target="_blank" rel="noopener noreferrer" class="btn-anim">
+                    <span class="shadow-block" aria-hidden="true"></span>
+                    <span class="face-block dark-border font-mono inline-flex items-center justify-center min-h-[44px] px-6 py-3 font-bold uppercase text-sm bg-[#25D366] text-ink dark:text-night">WhatsApp →</span>
+                </a>
             </div>
         </div>
     </section>
@@ -197,7 +232,10 @@
                     <h3 class="font-mono text-2xl font-black uppercase tracking-tight text-accent dark:text-accentd">90s-fall</h3>
                     <p class="text-sm text-ink/75 dark:text-mutedd/85 leading-[1.7] flex-1">Jogo 3D de exploração ambientado em uma cidade oriental fictícia dos anos 90. Você explora um mundo misterioso, sendo dono de uma loja de conveniência secreta, um sistema de construção de gôndolas e câmera que alterna entre primeira pessoa e isométrica. Desenvolvido em s&amp;box.</p>
                     <div class="pt-1">
-                        <a href="#contato" data-animate class="brutal-sm btn-anim relative font-mono inline-flex items-center justify-center min-h-[40px] px-4 py-2 font-bold text-[0.8rem] bg-paper dark:bg-night text-ink dark:text-mutedd">Quer jogar e me ajudar a testar? →</a>
+                        <a href="#contato" data-animate class="btn-anim">
+                            <span class="shadow-block" aria-hidden="true"></span>
+                            <span class="face-block sm font-mono inline-flex items-center justify-center min-h-[40px] px-4 py-2 font-bold text-[0.8rem] bg-paper dark:bg-night text-ink dark:text-mutedd">Quer jogar e me ajudar a testar? →</span>
+                        </a>
                     </div>
                 </div>
             </article>
@@ -220,7 +258,10 @@
                         </div>
                         <h3 class="font-mono text-xl font-black uppercase tracking-tight leading-[1.2] text-accent dark:text-accentd">Site Institucional</h3>
                         <p class="text-sm text-ink/75 dark:text-mutedd/85 leading-[1.7] flex-1">Site para empresa de serviços digitais — navegação responsiva, galeria de projetos e formulário de contato.</p>
-                        <a href="https://vittz-code.github.io/site-institucional/" target="_blank" rel="noopener noreferrer" data-animate class="brutal-sm btn-anim relative self-start font-mono inline-flex items-center justify-center min-h-[40px] px-4 py-2 font-bold text-[0.8rem] uppercase bg-paper dark:bg-night text-ink dark:text-mutedd">Ver site →</a>
+                        <a href="https://vittz-code.github.io/site-institucional/" target="_blank" rel="noopener noreferrer" data-animate class="btn-anim self-start">
+                            <span class="shadow-block" aria-hidden="true"></span>
+                            <span class="face-block sm font-mono inline-flex items-center justify-center min-h-[40px] px-4 py-2 font-bold text-[0.8rem] uppercase bg-paper dark:bg-night text-ink dark:text-mutedd">Ver site →</span>
+                        </a>
                     </div>
                 </article>
 
@@ -240,7 +281,10 @@
                         </div>
                         <h3 class="font-mono text-xl font-black uppercase tracking-tight leading-[1.2] text-accent dark:text-accentd">Portifólio — Editor de Vídeos</h3>
                         <p class="text-sm text-ink/75 dark:text-mutedd/85 leading-[1.7] flex-1">Portifólio desenvolvido para profissional de edição de vídeos — apresentação de projetos, habilidades e contato.</p>
-                        <a href="https://leodelboux.github.io" target="_blank" rel="noopener noreferrer" data-animate class="brutal-sm btn-anim relative self-start font-mono inline-flex items-center justify-center min-h-[40px] px-4 py-2 font-bold text-[0.8rem] uppercase bg-paper dark:bg-night text-ink dark:text-mutedd">Ver site →</a>
+                        <a href="https://leodelboux.github.io" target="_blank" rel="noopener noreferrer" data-animate class="btn-anim self-start">
+                            <span class="shadow-block" aria-hidden="true"></span>
+                            <span class="face-block sm font-mono inline-flex items-center justify-center min-h-[40px] px-4 py-2 font-bold text-[0.8rem] uppercase bg-paper dark:bg-night text-ink dark:text-mutedd">Ver site →</span>
+                        </a>
                     </div>
                 </article>
 
@@ -295,13 +339,19 @@
                 <div>
                     <p class="text-base text-ink/75 dark:text-mutedd/85 leading-[1.75] mb-8">Tem um projeto em mente ou quer trocar uma ideia? Me manda uma mensagem.</p>
                     <div class="flex flex-col gap-3">
-                        <a href="mailto:victor.olv00@gmail.com" class="brutal-sm btn-anim relative flex flex-col justify-center gap-0.5 bg-paper dark:bg-night p-4">
-                            <span class="text-[0.68rem] font-bold tracking-[0.08em] uppercase text-ink/70 dark:text-mutedd/70">Email</span>
-                            <span class="text-[0.9rem] font-semibold">victor.olv00@gmail.com →</span>
+                        <a href="mailto:victor.olv00@gmail.com" class="btn-anim">
+                            <span class="shadow-block" aria-hidden="true"></span>
+                            <span class="face-block sm flex flex-col justify-center gap-0.5 bg-paper dark:bg-night p-4">
+                                <span class="text-[0.68rem] font-bold tracking-[0.08em] uppercase text-ink/70 dark:text-mutedd/70">Email</span>
+                                <span class="text-[0.9rem] font-semibold">victor.olv00@gmail.com →</span>
+                            </span>
                         </a>
-                        <a href="https://wa.me/5581988684392" target="_blank" rel="noopener noreferrer" class="brutal-sm btn-anim relative flex flex-col justify-center gap-0.5 bg-paper dark:bg-night p-4">
-                            <span class="text-[0.68rem] font-bold tracking-[0.08em] uppercase text-ink/70 dark:text-mutedd/70">WhatsApp</span>
-                            <span class="text-[0.9rem] font-semibold">+55 81 98868-4392 →</span>
+                        <a href="https://wa.me/5581988684392" target="_blank" rel="noopener noreferrer" class="btn-anim">
+                            <span class="shadow-block" aria-hidden="true"></span>
+                            <span class="face-block sm flex flex-col justify-center gap-0.5 bg-paper dark:bg-night p-4">
+                                <span class="text-[0.68rem] font-bold tracking-[0.08em] uppercase text-ink/70 dark:text-mutedd/70">WhatsApp</span>
+                                <span class="text-[0.9rem] font-semibold">+55 81 98868-4392 →</span>
+                            </span>
                         </a>
                     </div>
                 </div>
@@ -321,7 +371,10 @@
                         <textarea class="font-sans text-base px-4 py-3 min-h-[130px] w-full border-2 border-ink dark:border-mutedd bg-paper dark:bg-night text-ink dark:text-mutedd focus:outline-none focus:shadow-[4px_4px_0_0_#01344F] dark:focus:shadow-[4px_4px_0_0_#FAE3AC] transition-shadow resize-y placeholder:text-ink/45 dark:placeholder:text-mutedd/45" id="f-message" name="message" rows="5" required placeholder="Sua mensagem..."></textarea>
                     </div>
                     <div class="flex items-center gap-5 flex-wrap">
-                        <button type="submit" class="brutal-onaccent btn-anim font-mono inline-flex items-center justify-center min-h-[44px] px-6 py-3 font-bold uppercase text-sm bg-accent text-paper dark:bg-accentd dark:text-mutedd">Enviar Mensagem →</button>
+                        <button type="submit" class="btn-anim">
+                            <span class="shadow-block" aria-hidden="true"></span>
+                            <span class="face-block dark-border font-mono inline-flex items-center justify-center min-h-[44px] px-6 py-3 font-bold uppercase text-sm bg-accent text-paper dark:bg-accentd dark:text-mutedd">Enviar Mensagem →</span>
+                        </button>
                         <span id="form-status" class="text-[0.82rem] font-semibold text-ink/70 dark:text-mutedd/70"></span>
                     </div>
                 </form>
@@ -401,10 +454,10 @@
     </footer>
 
     <!-- FLOATING CTA -->
-    <a href="#contato" aria-label="Ir para o formulário de contato"
-        class="brutal btn-anim fixed bottom-7 right-7 z-[200] flex items-center max-w-[280px] bg-paper dark:bg-night text-ink dark:text-mutedd px-4 py-3 text-[0.78rem] font-semibold leading-[1.4]">
+    <a href="#contato" aria-label="Ir para o formulário de contato" class="btn-anim fixed bottom-7 right-7 z-[200] max-w-[280px]">
+        <span class="shadow-block" aria-hidden="true"></span>
+        <span class="face-block flex items-center bg-paper dark:bg-night text-ink dark:text-mutedd px-4 py-3 text-[0.78rem] font-semibold leading-[1.4]">Estou fazendo um jogo — quer descobrir e me ajudar a testá-lo?</span>
         <span aria-hidden="true" class="absolute -top-2 -right-2 w-3.5 h-3.5 bg-accent dark:bg-accentd rounded-full animate-pulse border-2 border-ink dark:border-mutedd"></span>
-        <span>Estou fazendo um jogo — quer descobrir e me ajudar a testá-lo?</span>
     </a>
 
 <script src="main.js"></script>

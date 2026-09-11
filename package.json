@@ -1,0 +1,13 @@
+{
+  "name": "portfolio",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Portfólio de Victor Oliveira",
+  "scripts": {
+    "build:css": "tailwindcss -i ./assets/tailwind-input.css -o ./assets/tailwind.css --minify",
+    "watch:css": "tailwindcss -i ./assets/tailwind-input.css -o ./assets/tailwind.css --watch"
+  },
+  "devDependencies": {
+    "tailwindcss": "3.4.19"
+  }
+}
