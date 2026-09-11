@@ -10,11 +10,12 @@
 /* bloco neo-brutalista estático (cards de projeto): borda grossa + sombra "offset"
    dura via box-shadow direto — sem transform em cima, sem problema nenhum, não
    precisa da estrutura de baixo.
-   #5F5A3F no dark = cinza escuro puxado pro amarelo (mesmo tom do creme #FAE3AC,
+   #4A4632 no dark = cinza escuro puxado pro amarelo (mesmo matiz do creme #FAE3AC,
    só com L bem mais baixo) — pedido do Victor pra sombra combinar com a paleta
-   quente em vez de ficar um cinza neutro/azulado sem relação com o resto. */
+   quente em vez de ficar um cinza neutro/azulado sem relação com o resto.
+   Era #5F5A3F, escurecido mais uma vez a pedido dele (mesmo matiz, L menor). */
 .brutal { border: 3px solid #01344F; box-shadow: 6px 6px 0 0 #01344F; }
-[data-theme="dark"] .brutal { border-color: #FAE3AC; box-shadow: 6px 6px 0 0 #5F5A3F; }
+[data-theme="dark"] .brutal { border-color: #FAE3AC; box-shadow: 6px 6px 0 0 #4A4632; }
 
 /* botões que animam (.btn-anim): duas tentativas anteriores erraram por motivos
    diferentes — box-shadow move junto com transform (preso na própria caixa), e
@@ -32,7 +33,7 @@
 .btn-anim > * { grid-area: 1 / 1; }
 
 .shadow-block { background-color: #01344F; transition: background-color .3s; }
-[data-theme="dark"] .shadow-block { background-color: #5F5A3F; }
+[data-theme="dark"] .shadow-block { background-color: #4A4632; }
 
 .face-block {
     border: 3px solid #01344F;
