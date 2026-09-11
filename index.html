@@ -37,50 +37,24 @@
         [data-animate] { opacity: 0; transform: translateY(18px); transition: opacity .55s ease, transform .55s ease; }
         [data-animate].visible { opacity: 1; transform: translateY(0); }
 
-        /* bloco neo-brutalista: borda grossa + sombra "offset" dura, sem blur — só cores da paleta */
-        /* estático por padrão (cards, cabeçalhos) — sem custo de animação nenhum */
-        /* dark mode: fundo desses elementos = cor da página (preto), então a borda
-           precisa ser clara pra existir visualmente; sombra sempre off-white */
+        /* bloco neo-brutalista: borda grossa + sombra "offset" dura, sem blur — só cores da paleta.
+           Regra única, sem exceção por elemento (era isso que vinha quebrando):
+           - fundo escuro (cards, "Ver Projetos", CTA) → borda e sombra off-white, sempre visíveis
+           - fundo colorido (WhatsApp, Enviar Mensagem) → borda escura, sombra off-white */
         .brutal { border: 3px solid #01344F; box-shadow: 6px 6px 0 0 #01344F; }
-        [data-theme="dark"] .brutal { border-color: #141414; box-shadow: 6px 6px 0 0 #FAE3AC; }
-
         .brutal-sm { border: 2px solid #01344F; box-shadow: 4px 4px 0 0 #01344F; }
-        [data-theme="dark"] .brutal-sm { border-color: #141414; box-shadow: 4px 4px 0 0 #FAE3AC; }
+        [data-theme="dark"] .brutal { border-color: #FAE3AC; box-shadow: 6px 6px 0 0 #FAE3AC; }
+        [data-theme="dark"] .brutal-sm { border-color: #FAE3AC; box-shadow: 4px 4px 0 0 #FAE3AC; }
 
-        .brutal-onaccent { border: 3px solid #01344F; box-shadow: 6px 6px 0 0 #01344F; }
-        [data-theme="dark"] .brutal-onaccent { border-color: #141414; box-shadow: 6px 6px 0 0 #FAE3AC; }
+        .brutal-onaccent, .btn-whatsapp { border: 3px solid #01344F; box-shadow: 6px 6px 0 0 #01344F; }
+        [data-theme="dark"] .brutal-onaccent, [data-theme="dark"] .btn-whatsapp { border-color: #141414; box-shadow: 6px 6px 0 0 #FAE3AC; }
 
-        .btn-whatsapp { border: 3px solid #01344F; box-shadow: 6px 6px 0 0 #01344F; }
-        [data-theme="dark"] .btn-whatsapp { border-color: #141414; box-shadow: 6px 6px 0 0 #FAE3AC; }
-
-        /* animação de hover/clique — só nos botões (.btn-anim)
-           box-shadow direto: tentei a técnica de ::after parado + transform (mais leve
-           em teoria), mas transform cria contexto de empilhamento próprio no elemento,
-           o que quebra o truque de z-index negativo (o fundo do botão nunca fica na
-           frente do pseudo-elemento). Pra um punhado de botões isso não pesa nada. */
-        .btn-anim { transition: transform .15s ease; }
+        /* hover/clique — só transform anima (GPU, sem repaint); a sombra nunca muda de
+           tamanho, então não há nada pra interpolar e "borrar". O botão desliza por cima
+           de uma sombra fixa: some no active, aparece mais no hover. */
+        .btn-anim { transition: transform .12s ease-out; }
         .btn-anim:hover  { transform: translate(-2px,-2px); }
-        .btn-anim:active { transform: translate(2px,2px); }
-
-        .btn-anim.brutal:hover  { box-shadow: 8px 8px 0 0 #01344F; }
-        .btn-anim.brutal:active { box-shadow: 3px 3px 0 0 #01344F; }
-        [data-theme="dark"] .btn-anim.brutal:hover  { box-shadow: 8px 8px 0 0 #FAE3AC; }
-        [data-theme="dark"] .btn-anim.brutal:active { box-shadow: 3px 3px 0 0 #FAE3AC; }
-
-        .btn-anim.brutal-sm:hover  { box-shadow: 6px 6px 0 0 #01344F; }
-        .btn-anim.brutal-sm:active { box-shadow: 2px 2px 0 0 #01344F; }
-        [data-theme="dark"] .btn-anim.brutal-sm:hover  { box-shadow: 6px 6px 0 0 #FAE3AC; }
-        [data-theme="dark"] .btn-anim.brutal-sm:active { box-shadow: 2px 2px 0 0 #FAE3AC; }
-
-        .btn-anim.brutal-onaccent:hover  { box-shadow: 8px 8px 0 0 #01344F; }
-        .btn-anim.brutal-onaccent:active { box-shadow: 3px 3px 0 0 #01344F; }
-        [data-theme="dark"] .btn-anim.brutal-onaccent:hover  { box-shadow: 8px 8px 0 0 #FAE3AC; }
-        [data-theme="dark"] .btn-anim.brutal-onaccent:active { box-shadow: 3px 3px 0 0 #FAE3AC; }
-
-        .btn-anim.btn-whatsapp:hover  { box-shadow: 8px 8px 0 0 #01344F; }
-        .btn-anim.btn-whatsapp:active { box-shadow: 3px 3px 0 0 #01344F; }
-        [data-theme="dark"] .btn-anim.btn-whatsapp:hover  { box-shadow: 8px 8px 0 0 #FAE3AC; }
-        [data-theme="dark"] .btn-anim.btn-whatsapp:active { box-shadow: 3px 3px 0 0 #FAE3AC; }
+        .btn-anim:active { transform: translate(4px,4px); }
 
         /* legenda vertical, estilo margem editorial japonesa */
         .vlabel { writing-mode: vertical-rl; text-orientation: mixed; }
@@ -208,7 +182,7 @@
 
             <!-- 90s-fall — destaque -->
             <article id="nineties-fall" class="brutal flex flex-col sm:flex-row bg-paper dark:bg-night text-ink dark:text-mutedd overflow-hidden mb-8">
-                <div class="sm:w-[45%] aspect-video sm:aspect-auto shrink-0 overflow-hidden border-[3px] border-ink dark:border-mutedd bg-[#161211]">
+                <div class="sm:w-[45%] aspect-video sm:aspect-auto shrink-0 overflow-hidden border-b-[3px] sm:border-b-0 sm:border-r-[3px] border-ink dark:border-mutedd bg-[#161211]">
                     <img src="assets/images/preview-90s-fall.svg?v=13" alt="Preview do jogo 90s-fall" loading="lazy" class="w-full h-full object-cover">
                 </div>
                 <div class="flex-1 flex flex-col gap-4 p-7">
@@ -232,7 +206,7 @@
 
                 <!-- Site Institucional -->
                 <article class="brutal flex flex-col bg-paper dark:bg-night text-ink dark:text-mutedd overflow-hidden">
-                    <div class="aspect-video overflow-hidden border-[3px] border-ink dark:border-mutedd bg-[#161211] shrink-0">
+                    <div class="aspect-video overflow-hidden border-b-[3px] border-ink dark:border-mutedd bg-[#161211] shrink-0">
                         <img src="assets/images/preview-site-institucional.svg?v=9" alt="Preview do site institucional" loading="lazy" class="w-full h-full object-cover">
                     </div>
                     <div class="flex-1 flex flex-col gap-3.5 p-7">
@@ -252,7 +226,7 @@
 
                 <!-- Portfolio ldelboux -->
                 <article class="brutal flex flex-col bg-paper dark:bg-night text-ink dark:text-mutedd overflow-hidden">
-                    <div class="aspect-video overflow-hidden border-[3px] border-ink dark:border-mutedd bg-[#161211] shrink-0">
+                    <div class="aspect-video overflow-hidden border-b-[3px] border-ink dark:border-mutedd bg-[#161211] shrink-0">
                         <img src="assets/images/preview-portfolio-ldelboux.svg?v=10" alt="Preview do portfólio ldelboux" loading="lazy" class="w-full h-full object-cover">
                     </div>
                     <div class="flex-1 flex flex-col gap-3.5 p-7">
