@@ -1,10 +1,10 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" width="800" height="450">
   <rect width="800" height="450" fill="#1A1816"/>
   <!-- bold composition: layout blocks, flat color, poster-like -->
-  <rect x="90" y="90" width="290" height="130" fill="#E63946"/>
-  <rect x="400" y="90" width="310" height="60" fill="#E3D9D0"/>
+  <rect x="90" y="90" width="290" height="130" fill="#D12128"/>
+  <rect x="400" y="90" width="310" height="60" fill="#FAE3AC"/>
   <rect x="400" y="160" width="200" height="60" fill="#3A1418"/>
-  <rect x="90" y="240" width="620" height="120" fill="#E3D9D0"/>
+  <rect x="90" y="240" width="620" height="120" fill="#FAE3AC"/>
   <circle cx="150" cy="300" r="26" fill="#1A1816"/>
   <rect x="210" y="288" width="90" height="10" fill="#1A1816" opacity="0.55"/>
   <rect x="210" y="306" width="140" height="10" fill="#1A1816" opacity="0.3"/>

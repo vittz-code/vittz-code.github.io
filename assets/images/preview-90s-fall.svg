@@ -2,19 +2,19 @@
   <rect width="800" height="450" fill="#161211"/>
 
   <!-- moon, centered -->
-  <circle cx="400" cy="70" r="40" fill="#E3D9D0" shape-rendering="geometricPrecision"/>
+  <circle cx="400" cy="70" r="40" fill="#FAE3AC" shape-rendering="geometricPrecision"/>
 
   <!-- stars, mirrored pairs -->
-  <rect x="320" y="35" width="6" height="6" fill="#E3D9D0" opacity="0.6"/>
-  <rect x="474" y="35" width="6" height="6" fill="#E3D9D0" opacity="0.6"/>
-  <rect x="250" y="50" width="6" height="6" fill="#E3D9D0" opacity="0.5"/>
-  <rect x="544" y="50" width="6" height="6" fill="#E3D9D0" opacity="0.5"/>
-  <rect x="180" y="130" width="6" height="6" fill="#E3D9D0" opacity="0.5"/>
-  <rect x="614" y="130" width="6" height="6" fill="#E3D9D0" opacity="0.5"/>
+  <rect x="320" y="35" width="6" height="6" fill="#FAE3AC" opacity="0.6"/>
+  <rect x="474" y="35" width="6" height="6" fill="#FAE3AC" opacity="0.6"/>
+  <rect x="250" y="50" width="6" height="6" fill="#FAE3AC" opacity="0.5"/>
+  <rect x="544" y="50" width="6" height="6" fill="#FAE3AC" opacity="0.5"/>
+  <rect x="180" y="130" width="6" height="6" fill="#FAE3AC" opacity="0.5"/>
+  <rect x="614" y="130" width="6" height="6" fill="#FAE3AC" opacity="0.5"/>
 
   <!-- ground -->
   <rect x="0" y="380" width="800" height="70" fill="#3A3020"/>
-  <rect x="0" y="380" width="800" height="6" fill="#E3D9D0" opacity="0.5"/>
+  <rect x="0" y="380" width="800" height="6" fill="#FAE3AC" opacity="0.5"/>
   <rect x="60" y="392" width="2" height="58" fill="#1A1816" opacity="0.35"/>
   <rect x="200" y="392" width="2" height="58" fill="#1A1816" opacity="0.35"/>
   <rect x="600" y="392" width="2" height="58" fill="#1A1816" opacity="0.35"/>
@@ -22,55 +22,55 @@
 
   <!-- lampposts, mirrored -->
   <rect x="164" y="260" width="12" height="120" fill="#161211"/>
-  <rect x="150" y="236" width="40" height="24" fill="#B32C38" opacity="0.85"/>
-  <circle cx="170" cy="248" r="34" fill="#B32C38" opacity="0.12"/>
+  <rect x="150" y="236" width="40" height="24" fill="#8C1015" opacity="0.85"/>
+  <circle cx="170" cy="248" r="34" fill="#8C1015" opacity="0.12"/>
 
   <rect x="624" y="260" width="12" height="120" fill="#161211"/>
-  <rect x="610" y="236" width="40" height="24" fill="#B32C38" opacity="0.85"/>
-  <circle cx="630" cy="248" r="34" fill="#B32C38" opacity="0.12"/>
+  <rect x="610" y="236" width="40" height="24" fill="#8C1015" opacity="0.85"/>
+  <circle cx="630" cy="248" r="34" fill="#8C1015" opacity="0.12"/>
 
   <!-- antenna -->
-  <rect x="398" y="148" width="4" height="24" fill="#E3D9D0"/>
-  <rect x="388" y="146" width="24" height="4" fill="#E3D9D0"/>
+  <rect x="398" y="148" width="4" height="24" fill="#FAE3AC"/>
+  <rect x="388" y="146" width="24" height="4" fill="#FAE3AC"/>
 
   <!-- building -->
   <rect x="250" y="200" width="300" height="180" fill="#241A18"/>
 
   <!-- awning, striped -->
-  <rect x="230" y="170" width="340" height="30" fill="#E63946"/>
-  <rect x="230" y="170" width="34" height="30" fill="#8C1D26"/>
-  <rect x="298" y="170" width="34" height="30" fill="#8C1D26"/>
-  <rect x="366" y="170" width="34" height="30" fill="#8C1D26"/>
-  <rect x="434" y="170" width="34" height="30" fill="#8C1D26"/>
-  <rect x="502" y="170" width="34" height="30" fill="#8C1D26"/>
-  <rect x="230" y="170" width="340" height="6" fill="#E3D9D0" opacity="0.4"/>
+  <rect x="230" y="170" width="340" height="30" fill="#D12128"/>
+  <rect x="230" y="170" width="34" height="30" fill="#8C1015"/>
+  <rect x="298" y="170" width="34" height="30" fill="#8C1015"/>
+  <rect x="366" y="170" width="34" height="30" fill="#8C1015"/>
+  <rect x="434" y="170" width="34" height="30" fill="#8C1015"/>
+  <rect x="502" y="170" width="34" height="30" fill="#8C1015"/>
+  <rect x="230" y="170" width="340" height="6" fill="#FAE3AC" opacity="0.4"/>
 
   <!-- sign -->
-  <rect x="350" y="138" width="100" height="30" fill="#B32C38"/>
-  <rect x="362" y="148" width="76" height="10" fill="#E3D9D0" opacity="0.8"/>
+  <rect x="350" y="138" width="100" height="30" fill="#8C1015"/>
+  <rect x="362" y="148" width="76" height="10" fill="#FAE3AC" opacity="0.8"/>
 
   <!-- upper windows, 3 symmetric -->
-  <rect x="310" y="214" width="30" height="22" fill="#E3D9D0" opacity="0.75"/>
-  <rect x="385" y="214" width="30" height="22" fill="#E3D9D0" opacity="0.75"/>
-  <rect x="460" y="214" width="30" height="22" fill="#E3D9D0" opacity="0.75"/>
+  <rect x="310" y="214" width="30" height="22" fill="#FAE3AC" opacity="0.75"/>
+  <rect x="385" y="214" width="30" height="22" fill="#FAE3AC" opacity="0.75"/>
+  <rect x="460" y="214" width="30" height="22" fill="#FAE3AC" opacity="0.75"/>
 
   <!-- main windows, mirrored pair -->
-  <rect x="295" y="255" width="60" height="60" fill="#E3D9D0"/>
+  <rect x="295" y="255" width="60" height="60" fill="#FAE3AC"/>
   <rect x="322" y="255" width="4" height="60" fill="#241A18"/>
   <rect x="295" y="283" width="60" height="4" fill="#241A18"/>
 
-  <rect x="445" y="255" width="60" height="60" fill="#E3D9D0"/>
+  <rect x="445" y="255" width="60" height="60" fill="#FAE3AC"/>
   <rect x="472" y="255" width="4" height="60" fill="#241A18"/>
   <rect x="445" y="283" width="60" height="4" fill="#241A18"/>
 
   <!-- door -->
   <rect x="376" y="316" width="48" height="64" fill="#161211"/>
-  <rect x="376" y="316" width="48" height="6" fill="#E3D9D0" opacity="0.4"/>
+  <rect x="376" y="316" width="48" height="6" fill="#FAE3AC" opacity="0.4"/>
 
   <!-- flower pots, mirrored -->
-  <rect x="336" y="358" width="24" height="18" fill="#E63946"/>
+  <rect x="336" y="358" width="24" height="18" fill="#D12128"/>
   <rect x="340" y="346" width="16" height="14" fill="#3A1418"/>
 
-  <rect x="440" y="358" width="24" height="18" fill="#E63946"/>
+  <rect x="440" y="358" width="24" height="18" fill="#D12128"/>
   <rect x="444" y="346" width="16" height="14" fill="#3A1418"/>
 </svg>

@@ -32,7 +32,7 @@ function setMenu(isOpen) {
     navLinks.classList.toggle('dark:bg-night', isOpen);
     navLinks.classList.toggle('border-b-[3px]', isOpen);
     navLinks.classList.toggle('border-ink', isOpen);
-    navLinks.classList.toggle('dark:border-cream', isOpen);
+    navLinks.classList.toggle('dark:border-mutedd', isOpen);
     navLinks.classList.toggle('p-5', isOpen);
     navLinks.classList.toggle('z-[99]', isOpen);
 

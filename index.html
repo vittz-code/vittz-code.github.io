@@ -8,7 +8,7 @@
     <link rel="icon" type="image/svg+xml" href="assets/logo.svg">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -16,17 +16,14 @@
             theme: {
                 extend: {
                     colors: {
-                        ink:       '#1A1816',
-                        paper:     '#F0EAE0',
-                        surface:   '#E3D9D0',
-                        night:     '#1A1816',
-                        nightsurf: '#2A211E',
-                        olive:     '#3A1418',
-                        accent:    '#E63946',
-                        accent2:   '#B32C38',
-                        tagbg:     '#E3D9D0',
-                        muted:     '#8A7F79',
-                        mutedd:    '#B8AEA8',
+                        /* light — restrito à light-palette: vermelho / marinho / creme */
+                        paper:   '#FAE3AC',
+                        ink:     '#01344F',
+                        accent:  '#D12128',
+                        /* dark — preto + vermelho, com o mesmo off-white do tema claro */
+                        night:   '#141414',
+                        mutedd:  '#FAE3AC',
+                        accentd: '#D12128',
                     },
                     fontFamily: {
                         sans: ['Inter', 'system-ui', 'sans-serif'],
@@ -40,105 +37,161 @@
         [data-animate] { opacity: 0; transform: translateY(18px); transition: opacity .55s ease, transform .55s ease; }
         [data-animate].visible { opacity: 1; transform: translateY(0); }
 
-        /* grain texture — old-CRT/old-PC feel */
-        body::before {
-            content: '';
-            position: fixed; inset: 0; z-index: 9999; pointer-events: none;
-            opacity: .035; mix-blend-mode: multiply;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-        }
-        [data-theme="dark"] body::before { opacity: .06; mix-blend-mode: overlay; }
+        /* bloco neo-brutalista: borda grossa + sombra "offset" dura, sem blur — só cores da paleta */
+        /* estático por padrão (cards, cabeçalhos) — sem custo de animação nenhum */
+        /* dark mode: regra única — borda escura, sombra off-white, em tudo */
+        .brutal { border: 3px solid #01344F; box-shadow: 6px 6px 0 0 #01344F; }
+        [data-theme="dark"] .brutal { border-color: #141414; box-shadow: 6px 6px 0 0 #FAE3AC; }
 
-        /* scanlines */
-        body::after {
-            content: '';
-            position: fixed; inset: 0; z-index: 9998; pointer-events: none;
-            opacity: .3;
-            background-image: repeating-linear-gradient(rgba(0,0,0,0.35) 0px, rgba(0,0,0,0.35) 1px, transparent 1px, transparent 3px);
-        }
-        [data-theme="dark"] body::after { opacity: .18; }
+        .brutal-sm { border: 2px solid #01344F; box-shadow: 4px 4px 0 0 #01344F; }
+        [data-theme="dark"] .brutal-sm { border-color: #141414; box-shadow: 4px 4px 0 0 #FAE3AC; }
 
-        /* letreiro de loja — placa sólida de dia, acende à noite (paleta do site) */
-        .sign-board {
-            display: inline-flex;
-            padding: 0.3em 0.9em;
-            border-radius: 0.2em;
-            background: #E3D9D0;
-            color: #E63946;
-            box-shadow: 0 8px 16px rgba(0,0,0,0.28);
-        }
-        [data-theme="dark"] .sign-board {
-            background: #2A211E;
-            color: #F0EAE0;
-            text-shadow: 0 0 2px #F0EAE0, 0 0 7px #E63946;
-            box-shadow: 0 10px 22px rgba(0,0,0,0.5);
-            animation: neon-flicker 5s infinite;
-        }
-        .neon-name { color: #E63946; }
-        [data-theme="dark"] .neon-name {
-            color: #F0EAE0;
-            text-shadow: 0 0 2px #F0EAE0, 0 0 8px #E63946;
-            animation: neon-flicker 4.5s infinite;
-        }
-        @keyframes neon-flicker {
-            0%, 18%, 22%, 25%, 53%, 57%, 100% { opacity: 1; }
-            20%, 24%, 55% { opacity: 0.55; }
-        }
+        .brutal-onaccent { border: 3px solid #01344F; box-shadow: 6px 6px 0 0 #01344F; }
+        [data-theme="dark"] .brutal-onaccent { border-color: #141414; box-shadow: 6px 6px 0 0 #FAE3AC; }
+
+        .btn-whatsapp { border: 3px solid #01344F; box-shadow: 6px 6px 0 0 #01344F; }
+        [data-theme="dark"] .btn-whatsapp { border-color: #141414; box-shadow: 6px 6px 0 0 #FAE3AC; }
+
+        /* animação de hover/clique — só nos botões (.btn-anim)
+           box-shadow direto: tentei a técnica de ::after parado + transform (mais leve
+           em teoria), mas transform cria contexto de empilhamento próprio no elemento,
+           o que quebra o truque de z-index negativo (o fundo do botão nunca fica na
+           frente do pseudo-elemento). Pra um punhado de botões isso não pesa nada. */
+        .btn-anim { transition: transform .15s ease, box-shadow .15s ease; }
+        .btn-anim:hover  { transform: translate(-2px,-2px); }
+        .btn-anim:active { transform: translate(2px,2px); }
+
+        .btn-anim.brutal:hover  { box-shadow: 8px 8px 0 0 #01344F; }
+        .btn-anim.brutal:active { box-shadow: 3px 3px 0 0 #01344F; }
+        [data-theme="dark"] .btn-anim.brutal:hover  { box-shadow: 8px 8px 0 0 #FAE3AC; }
+        [data-theme="dark"] .btn-anim.brutal:active { box-shadow: 3px 3px 0 0 #FAE3AC; }
+
+        .btn-anim.brutal-sm:hover  { box-shadow: 6px 6px 0 0 #01344F; }
+        .btn-anim.brutal-sm:active { box-shadow: 2px 2px 0 0 #01344F; }
+        [data-theme="dark"] .btn-anim.brutal-sm:hover  { box-shadow: 6px 6px 0 0 #FAE3AC; }
+        [data-theme="dark"] .btn-anim.brutal-sm:active { box-shadow: 2px 2px 0 0 #FAE3AC; }
+
+        .btn-anim.brutal-onaccent:hover  { box-shadow: 8px 8px 0 0 #01344F; }
+        .btn-anim.brutal-onaccent:active { box-shadow: 3px 3px 0 0 #01344F; }
+        [data-theme="dark"] .btn-anim.brutal-onaccent:hover  { box-shadow: 8px 8px 0 0 #FAE3AC; }
+        [data-theme="dark"] .btn-anim.brutal-onaccent:active { box-shadow: 3px 3px 0 0 #FAE3AC; }
+
+        .btn-anim.btn-whatsapp:hover  { box-shadow: 8px 8px 0 0 #01344F; }
+        .btn-anim.btn-whatsapp:active { box-shadow: 3px 3px 0 0 #01344F; }
+        [data-theme="dark"] .btn-anim.btn-whatsapp:hover  { box-shadow: 8px 8px 0 0 #FAE3AC; }
+        [data-theme="dark"] .btn-anim.btn-whatsapp:active { box-shadow: 3px 3px 0 0 #FAE3AC; }
+
+        /* legenda vertical, estilo margem editorial japonesa */
+        .vlabel { writing-mode: vertical-rl; text-orientation: mixed; }
+
+        /* nuvens flutuando devagar perto da lua */
+        @keyframes drift { 0%, 100% { transform: translateX(0); } 50% { transform: translateX(12px); } }
+        .cloud-1 { animation: drift 9s ease-in-out infinite; }
+        .cloud-2 { animation: drift 12s ease-in-out infinite reverse; }
+
+        /* marca de registro (crop mark), motivo de grade impressa */
+        .crop-mark { position: absolute; width: 16px; height: 16px; pointer-events: none; }
+        .crop-mark::before, .crop-mark::after { content: ''; position: absolute; background: currentColor; }
+        .crop-mark::before { top: 50%; left: 0; width: 100%; height: 2px; transform: translateY(-50%); }
+        .crop-mark::after  { left: 50%; top: 0; height: 100%; width: 2px; transform: translateX(-50%); }
+
+        /* cabeçalho de seção — editorial, alinhado à esquerda, numerado */
+        .sec-head { display: flex; align-items: baseline; gap: 1rem; margin-bottom: 3rem; }
+        .sec-head .n { font-family: 'JetBrains Mono', monospace; font-weight: 800; font-size: clamp(1.4rem,3vw,2rem); color: #D12128; }
+        [data-theme="dark"] .sec-head .n { color: #D12128; }
+        .sec-head .rule { flex: 1; height: 3px; background: #01344F; }
+        [data-theme="dark"] .sec-head .rule { background: #FAE3AC; }
     </style>
 </head>
 <body class="relative font-sans bg-paper dark:bg-night text-ink dark:text-mutedd transition-colors duration-300 overflow-x-hidden">
 
-    <!-- NAV — titlebar de app antigo -->
-    <nav class="nav font-mono sticky top-0 z-[100] flex items-center justify-between gap-4 px-5 sm:px-10 py-3 bg-olive text-paper shadow-[0_2px_10px_rgba(0,0,0,0.25)]">
+    <!-- NAV -->
+    <nav class="nav font-mono sticky top-0 z-[100] flex items-center justify-between gap-4 px-5 sm:px-10 py-3 bg-ink dark:bg-mutedd text-paper dark:text-night border-b-[3px] border-ink dark:border-night">
         <div class="flex items-center gap-3">
             <span class="flex gap-1.5" aria-hidden="true">
-                <span class="w-2.5 h-2.5 rounded-full bg-paper/40"></span>
-                <span class="w-2.5 h-2.5 rounded-full bg-paper/40"></span>
-                <span class="w-2.5 h-2.5 rounded-full bg-paper/40"></span>
+                <span class="w-2.5 h-2.5 bg-accent dark:bg-accentd"></span>
+                <span class="w-2.5 h-2.5 bg-paper/50 dark:bg-night/50"></span>
+                <span class="w-2.5 h-2.5 bg-paper/50 dark:bg-night/50"></span>
             </span>
             <a href="#" aria-label="Início" class="flex items-center opacity-100 hover:opacity-70 transition-opacity">
-                <svg width="30" height="30" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                    <rect x="4" y="4" width="92" height="92" rx="18" fill="#F0EAE0"/>
-                    <text x="50" y="66" text-anchor="middle" font-family="Arial Black, Impact, sans-serif" font-size="42" font-weight="900" fill="#E63946">VO</text>
+                <svg class="dark:hidden" width="30" height="30" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <rect x="3" y="3" width="94" height="94" fill="#D12128" stroke="#01344F" stroke-width="5"/>
+                    <text x="50" y="67" text-anchor="middle" font-family="Arial Black, Impact, sans-serif" font-size="42" font-weight="900" fill="#FAE3AC">VO</text>
+                </svg>
+                <svg class="hidden dark:block" width="30" height="30" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <rect x="3" y="3" width="94" height="94" fill="#D12128" stroke="#141414" stroke-width="5"/>
+                    <text x="50" y="67" text-anchor="middle" font-family="Arial Black, Impact, sans-serif" font-size="42" font-weight="900" fill="#141414">VO</text>
                 </svg>
             </a>
             <span class="text-xs font-semibold tracking-[0.04em] opacity-80 hidden sm:inline">vittz-code.github.io</span>
         </div>
         <div class="flex items-center gap-3 sm:gap-8">
             <ul id="navLinks" class="hidden sm:flex gap-7 list-none">
-                <li><a href="#projetos" class="text-[0.8rem] font-semibold tracking-[0.04em] opacity-85 hover:opacity-100 transition-opacity py-1">Projetos</a></li>
-                <li><a href="#habilidades" class="text-[0.8rem] font-semibold tracking-[0.04em] opacity-85 hover:opacity-100 transition-opacity py-1">Habilidades</a></li>
-                <li><a href="#contato" class="text-[0.8rem] font-semibold tracking-[0.04em] opacity-85 hover:opacity-100 transition-opacity py-1">Contato</a></li>
+                <li><a href="#projetos" class="text-[0.8rem] font-bold uppercase tracking-[0.06em] opacity-85 hover:opacity-100 hover:text-accent dark:hover:text-accentd transition-colors py-1">Projetos</a></li>
+                <li><a href="#habilidades" class="text-[0.8rem] font-bold uppercase tracking-[0.06em] opacity-85 hover:opacity-100 hover:text-accent dark:hover:text-accentd transition-colors py-1">Habilidades</a></li>
+                <li><a href="#contato" class="text-[0.8rem] font-bold uppercase tracking-[0.06em] opacity-85 hover:opacity-100 hover:text-accent dark:hover:text-accentd transition-colors py-1">Contato</a></li>
             </ul>
             <button id="themeToggle" aria-label="Alternar modo escuro" title="Alternar modo escuro"
-                class="w-9 h-9 rounded-full flex items-center justify-center shrink-0 bg-paper/15 text-paper hover:bg-paper/25 transition-colors">◐</button>
+                class="w-9 h-9 flex items-center justify-center shrink-0 border-2 border-paper/40 dark:border-night/40 text-paper dark:text-night hover:bg-paper/15 dark:hover:bg-night/15 transition-colors">◐</button>
             <button id="navHamburger" aria-label="Abrir menu" aria-expanded="false"
                 class="nav__hamburger sm:hidden flex flex-col gap-[5px] w-9 h-9 items-center justify-center shrink-0">
-                <span class="block w-[20px] h-[2px] rounded-full bg-paper transition-transform duration-200"></span>
-                <span class="block w-[20px] h-[2px] rounded-full bg-paper transition-all duration-200"></span>
-                <span class="block w-[20px] h-[2px] rounded-full bg-paper transition-transform duration-200"></span>
+                <span class="block w-[20px] h-[2px] bg-paper dark:bg-night transition-transform duration-200"></span>
+                <span class="block w-[20px] h-[2px] bg-paper dark:bg-night transition-all duration-200"></span>
+                <span class="block w-[20px] h-[2px] bg-paper dark:bg-night transition-transform duration-200"></span>
             </button>
         </div>
-        <div aria-hidden="true" class="pointer-events-none absolute left-0 right-0 -bottom-8 h-8 opacity-25 dark:opacity-45" style="background: linear-gradient(to bottom, #E63946, transparent);"></div>
     </nav>
 
-    <!-- HERO — centralizado -->
+    <!-- HERO -->
     <section class="relative flex flex-col items-center justify-center text-center px-5 sm:px-10 py-20 sm:py-28 overflow-hidden min-h-[calc(100vh-58px)]">
         <div aria-hidden="true" class="pointer-events-none select-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 font-black leading-none text-transparent text-[45vw] sm:text-[30vw] whitespace-nowrap
-            [-webkit-text-stroke:2px_rgba(230,57,70,0.09)] dark:[-webkit-text-stroke:2px_rgba(230,57,70,0.18)]" style="font-family: 'Arial Black', Impact, sans-serif; letter-spacing:-0.03em;">VO</div>
+            [-webkit-text-stroke:2px_rgba(209,33,40,0.12)] dark:[-webkit-text-stroke:2px_rgba(209,33,40,0.22)]" style="font-family: 'Arial Black', Impact, sans-serif; letter-spacing:-0.03em;">VO</div>
+
+        <!-- marcas de registro, cantos -->
+        <span aria-hidden="true" class="crop-mark hidden sm:block top-6 left-6 text-ink/30 dark:text-mutedd/30"></span>
+        <span aria-hidden="true" class="crop-mark hidden sm:block bottom-6 right-6 text-ink/30 dark:text-mutedd/30"></span>
+
+        <!-- lua minguante + nuvens, topo direito -->
+        <div aria-hidden="true" class="hidden sm:block absolute top-10 right-8 sm:top-14 sm:right-14 w-32 h-24 sm:w-40 sm:h-28 pointer-events-none select-none">
+            <svg viewBox="0 0 160 100" class="w-full h-full overflow-visible">
+                <mask id="moonCut">
+                    <rect width="160" height="100" fill="#fff"/>
+                    <circle cx="34" cy="22" r="15" fill="#000"/>
+                </mask>
+                <circle cx="26" cy="18" r="18" class="fill-ink dark:fill-mutedd" mask="url(#moonCut)"/>
+                <g class="cloud-1 fill-ink/25 dark:fill-mutedd/25">
+                    <ellipse cx="92" cy="52" rx="22" ry="10"/>
+                    <ellipse cx="112" cy="47" rx="16" ry="9"/>
+                    <ellipse cx="76" cy="49" rx="14" ry="8"/>
+                </g>
+                <g class="cloud-2 fill-ink/15 dark:fill-mutedd/15">
+                    <ellipse cx="128" cy="76" rx="18" ry="8"/>
+                    <ellipse cx="145" cy="73" rx="12" ry="7"/>
+                    <ellipse cx="112" cy="78" rx="10" ry="6"/>
+                </g>
+            </svg>
+        </div>
+
+        <!-- legenda vertical, margem editorial -->
+        <div aria-hidden="true" class="hidden lg:flex absolute left-8 top-1/2 -translate-y-1/2 flex-col items-center gap-4">
+            <span class="w-px h-20 bg-ink/40 dark:bg-mutedd/40"></span>
+            <span class="vlabel font-mono text-[0.66rem] font-semibold tracking-[0.35em] uppercase text-ink/70 dark:text-mutedd/70">Portfólio — Est. 2026</span>
+        </div>
 
         <div class="relative z-[1] max-w-[680px] flex flex-col items-center">
             <div class="flex flex-wrap justify-center gap-2 mb-3">
-                <span class="font-mono inline-block px-3.5 py-1.5 rounded-full bg-surface dark:bg-nightsurf text-ink dark:text-mutedd text-xs font-semibold tracking-[0.03em] shadow-md">Dev Front-End</span>
-                <span class="font-mono inline-block px-3.5 py-1.5 rounded-full bg-surface dark:bg-nightsurf text-ink dark:text-mutedd text-xs font-semibold tracking-[0.03em] shadow-md">Game Designer</span>
+                <span class="font-mono inline-block px-3.5 py-1.5 border-2 border-ink dark:border-night bg-paper dark:bg-night text-ink dark:text-mutedd text-xs font-bold uppercase tracking-[0.05em]">Dev Front-End</span>
+                <span class="font-mono inline-block px-3.5 py-1.5 border-2 border-ink dark:border-night bg-paper dark:bg-night text-ink dark:text-mutedd text-xs font-bold uppercase tracking-[0.05em]">Game Designer</span>
             </div>
-            <a href="#nineties-fall" class="font-mono inline-block text-[0.78rem] font-medium text-muted dark:text-mutedd hover:text-accent mb-7 py-2 transition-colors">quer saber mais? clica aqui ↓</a>
-            <h1 style="animation-delay:-0.4s" class="neon-name font-mono text-[clamp(2.6rem,9vw,7rem)] font-black leading-[0.95] tracking-normal mb-3">Victor<br>Oliveira.</h1>
-            <p class="text-[0.85rem] font-normal text-muted dark:text-mutedd mb-6">mas pode me chamar de vittz!</p>
+            <a href="#nineties-fall" class="font-mono inline-block text-[0.78rem] font-bold uppercase tracking-[0.04em] text-ink/70 dark:text-mutedd/70 hover:text-accent dark:hover:text-accentd mb-7 py-2 transition-colors">quer saber mais? clica aqui ↓</a>
+
+            <h1 class="font-mono text-[clamp(2.6rem,9vw,7rem)] font-black leading-[0.92] tracking-tight uppercase mb-3 text-ink dark:text-mutedd">Victor<br><span class="text-accent dark:text-accentd">Oliveira.</span></h1>
+
+            <p class="text-[0.85rem] font-normal text-ink/70 dark:text-mutedd/70 mb-6">mas pode me chamar de vittz!</p>
             <p class="text-[1.05rem] text-ink/80 dark:text-mutedd/90 max-w-[420px] mb-10 leading-[1.75]">Construo interfaces web e mundos jogáveis. Este é o meu hub — projetos passados, presentes e futuros.</p>
             <div class="flex gap-4 flex-wrap justify-center">
-                <a href="#projetos" class="font-mono inline-flex items-center justify-center min-h-[44px] px-6 py-3 rounded-xl font-semibold text-sm bg-accent text-paper shadow-lg shadow-accent/25 hover:shadow-xl hover:-translate-y-0.5 transition-all">Ver Projetos</a>
-                <a href="https://wa.me/5581988684392" target="_blank" rel="noopener noreferrer" class="font-mono inline-flex items-center justify-center min-h-[44px] px-6 py-3 rounded-xl font-semibold text-sm bg-surface dark:bg-nightsurf text-ink dark:text-mutedd shadow-md hover:shadow-lg hover:-translate-y-0.5 transition-all">WhatsApp →</a>
+                <a href="#projetos" class="brutal btn-anim relative font-mono inline-flex items-center justify-center min-h-[44px] px-6 py-3 font-bold uppercase text-sm bg-paper text-ink dark:bg-night dark:text-mutedd">Ver Projetos</a>
+                <a href="https://wa.me/5581988684392" target="_blank" rel="noopener noreferrer" class="btn-whatsapp btn-anim relative font-mono inline-flex items-center justify-center min-h-[44px] px-6 py-3 font-bold uppercase text-sm bg-[#25D366] text-ink dark:text-night">WhatsApp →</a>
             </div>
         </div>
     </section>
@@ -146,71 +199,73 @@
     <!-- PROJETOS -->
     <section class="py-16 sm:py-20" id="projetos">
         <div class="max-w-[1100px] mx-auto px-5 sm:px-10">
-            <h2 data-animate class="font-mono flex items-center justify-center text-[clamp(1.4rem,3.2vw,2.4rem)] font-bold tracking-normal leading-none mb-12 text-center">
-                <span class="sign-board font-black" style="animation-delay:-1.6s">Projetos</span>
+            <h2 class="sec-head font-mono uppercase tracking-tight">
+                <span class="n">01</span>
+                <span class="text-[clamp(1.3rem,3vw,2.1rem)] font-black">Projetos</span>
+                <span class="rule" aria-hidden="true"></span>
             </h2>
 
             <!-- 90s-fall — destaque -->
-            <article id="nineties-fall" data-animate class="flex flex-col sm:flex-row rounded-2xl bg-surface dark:bg-nightsurf text-ink dark:text-mutedd shadow-lg hover:shadow-2xl hover:-translate-y-0.5 transition-all overflow-hidden mb-6">
-                <div class="sm:w-[45%] aspect-video sm:aspect-auto shrink-0 overflow-hidden bg-[#1C1A16]">
-                    <img src="assets/images/preview-90s-fall.svg?v=11" alt="Preview do jogo 90s-fall" loading="lazy" class="w-full h-full object-cover">
+            <article id="nineties-fall" class="brutal flex flex-col sm:flex-row bg-paper dark:bg-night text-ink dark:text-mutedd overflow-hidden mb-8">
+                <div class="sm:w-[45%] aspect-video sm:aspect-auto shrink-0 overflow-hidden border-b-[3px] sm:border-b-0 sm:border-r-[3px] border-ink dark:border-night bg-[#161211]">
+                    <img src="assets/images/preview-90s-fall.svg?v=13" alt="Preview do jogo 90s-fall" loading="lazy" class="w-full h-full object-cover">
                 </div>
                 <div class="flex-1 flex flex-col gap-4 p-7">
                     <div class="flex items-start justify-between gap-3">
-                        <span class="font-mono text-xs font-bold text-muted mt-0.5">01</span>
+                        <span class="font-mono text-lg font-black text-accent dark:text-accentd mt-0.5">①</span>
                         <div class="flex flex-wrap gap-1.5 justify-end">
-                            <span class="font-mono px-2.5 py-1 rounded-full bg-accent2 text-paper text-[0.65rem] font-bold tracking-[0.03em]">Em Desenvolvimento</span>
-                            <span class="font-mono px-2.5 py-1 rounded-full bg-paper dark:bg-night text-ink dark:text-mutedd text-[0.65rem] font-bold tracking-[0.03em]">s&amp;box</span>
-                            <span class="font-mono px-2.5 py-1 rounded-full bg-paper dark:bg-night text-ink dark:text-mutedd text-[0.65rem] font-bold tracking-[0.03em]">C#</span>
+                            <span class="font-mono px-2.5 py-1 bg-ink dark:bg-mutedd text-paper dark:text-night text-[0.65rem] font-bold uppercase tracking-[0.03em]">Em Desenvolvimento</span>
+                            <span class="font-mono px-2.5 py-1 border-2 border-ink dark:border-night text-ink dark:text-mutedd text-[0.65rem] font-bold tracking-[0.03em]">s&amp;box</span>
+                            <span class="font-mono px-2.5 py-1 border-2 border-ink dark:border-night text-ink dark:text-mutedd text-[0.65rem] font-bold tracking-[0.03em]">C#</span>
                         </div>
                     </div>
-                    <h3 class="font-mono text-2xl font-bold tracking-normal text-accent">90s-fall</h3>
+                    <h3 class="font-mono text-2xl font-black uppercase tracking-tight text-accent dark:text-accentd">90s-fall</h3>
                     <p class="text-sm text-ink/75 dark:text-mutedd/85 leading-[1.7] flex-1">Jogo 3D de exploração ambientado em uma cidade oriental fictícia dos anos 90. Você explora um mundo misterioso, sendo dono de uma loja de conveniência secreta, um sistema de construção de gôndolas e câmera que alterna entre primeira pessoa e isométrica. Desenvolvido em s&amp;box.</p>
                     <div class="pt-1">
-                        <a href="#contato" class="font-mono inline-flex items-center justify-center min-h-[40px] px-4 py-2 rounded-xl font-semibold text-[0.8rem] bg-paper dark:bg-night text-ink dark:text-mutedd shadow-md hover:shadow-lg hover:-translate-y-0.5 transition-all">Quer jogar e me ajudar a testar? →</a>
+                        <a href="#contato" data-animate class="brutal-sm btn-anim relative font-mono inline-flex items-center justify-center min-h-[40px] px-4 py-2 font-bold text-[0.8rem] bg-paper dark:bg-night text-ink dark:text-mutedd">Quer jogar e me ajudar a testar? →</a>
                     </div>
                 </div>
             </article>
 
-            <div class="flex flex-wrap justify-center gap-6">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
 
                 <!-- Site Institucional -->
-                <article data-animate class="flex-[0_1_420px] min-w-[280px] flex flex-col rounded-2xl bg-surface dark:bg-nightsurf text-ink dark:text-mutedd shadow-lg hover:shadow-2xl hover:-translate-y-0.5 transition-all overflow-hidden">
-                    <div class="aspect-video overflow-hidden bg-[#1C1A16] shrink-0">
-                        <img src="assets/images/preview-site-institucional.svg?v=7" alt="Preview do site institucional" loading="lazy" class="w-full h-full object-cover">
+                <article class="brutal flex flex-col bg-paper dark:bg-night text-ink dark:text-mutedd overflow-hidden">
+                    <div class="aspect-video overflow-hidden border-b-[3px] border-ink dark:border-night bg-[#161211] shrink-0">
+                        <img src="assets/images/preview-site-institucional.svg?v=9" alt="Preview do site institucional" loading="lazy" class="w-full h-full object-cover">
                     </div>
                     <div class="flex-1 flex flex-col gap-3.5 p-7">
                         <div class="flex items-start justify-between gap-3">
-                            <span class="font-mono text-xs font-bold text-muted mt-0.5">02</span>
+                            <span class="font-mono text-lg font-black text-accent dark:text-accentd mt-0.5">②</span>
                             <div class="flex flex-wrap gap-1.5 justify-end">
-                                <span class="font-mono px-2.5 py-1 rounded-full bg-paper dark:bg-night text-ink dark:text-mutedd text-[0.65rem] font-bold tracking-[0.03em]">HTML</span>
-                                <span class="font-mono px-2.5 py-1 rounded-full bg-paper dark:bg-night text-ink dark:text-mutedd text-[0.65rem] font-bold tracking-[0.03em]">CSS</span>
-                                <span class="font-mono px-2.5 py-1 rounded-full bg-paper dark:bg-night text-ink dark:text-mutedd text-[0.65rem] font-bold tracking-[0.03em]">JS</span>
+                                <span class="font-mono px-2.5 py-1 border-2 border-ink dark:border-night text-ink dark:text-mutedd text-[0.65rem] font-bold tracking-[0.03em]">HTML</span>
+                                <span class="font-mono px-2.5 py-1 border-2 border-ink dark:border-night text-ink dark:text-mutedd text-[0.65rem] font-bold tracking-[0.03em]">CSS</span>
+                                <span class="font-mono px-2.5 py-1 border-2 border-ink dark:border-night text-ink dark:text-mutedd text-[0.65rem] font-bold tracking-[0.03em]">JS</span>
                             </div>
                         </div>
-                        <h3 class="font-mono text-xl font-bold tracking-normal leading-[1.2] text-accent">Site Institucional</h3>
+                        <h3 class="font-mono text-xl font-black uppercase tracking-tight leading-[1.2] text-accent dark:text-accentd">Site Institucional</h3>
                         <p class="text-sm text-ink/75 dark:text-mutedd/85 leading-[1.7] flex-1">Site para empresa de serviços digitais — navegação responsiva, galeria de projetos e formulário de contato.</p>
-                        <a href="https://vittz-code.github.io/site-institucional/" target="_blank" rel="noopener noreferrer" class="inline-flex items-end self-start min-h-[44px] text-[0.82rem] font-semibold text-accent2 hover:opacity-60 transition-opacity py-1">Ver site →</a>
+                        <a href="https://vittz-code.github.io/site-institucional/" target="_blank" rel="noopener noreferrer" data-animate class="brutal-sm btn-anim relative self-start font-mono inline-flex items-center justify-center min-h-[40px] px-4 py-2 font-bold text-[0.8rem] uppercase bg-paper dark:bg-night text-ink dark:text-mutedd">Ver site →</a>
                     </div>
                 </article>
 
                 <!-- Portfolio ldelboux -->
-                <article data-animate class="flex-[0_1_420px] min-w-[280px] flex flex-col rounded-2xl bg-surface dark:bg-nightsurf text-ink dark:text-mutedd shadow-lg hover:shadow-2xl hover:-translate-y-0.5 transition-all overflow-hidden">
-                    <div class="aspect-video overflow-hidden bg-[#1C1A16] shrink-0">
-                        <img src="assets/images/preview-portfolio-ldelboux.svg?v=8" alt="Preview do portfólio ldelboux" loading="lazy" class="w-full h-full object-cover">
+                <article class="brutal flex flex-col bg-paper dark:bg-night text-ink dark:text-mutedd overflow-hidden">
+                    <div class="aspect-video overflow-hidden border-b-[3px] border-ink dark:border-night bg-[#161211] shrink-0">
+                        <img src="assets/images/preview-portfolio-ldelboux.svg?v=10" alt="Preview do portfólio ldelboux" loading="lazy" class="w-full h-full object-cover">
                     </div>
                     <div class="flex-1 flex flex-col gap-3.5 p-7">
                         <div class="flex items-start justify-between gap-3">
-                            <span class="font-mono text-xs font-bold text-muted mt-0.5">03</span>
+                            <span class="font-mono text-lg font-black text-accent dark:text-accentd mt-0.5">③</span>
                             <div class="flex flex-wrap gap-1.5 justify-end">
-                                <span class="font-mono px-2.5 py-1 rounded-full bg-paper dark:bg-night text-ink dark:text-mutedd text-[0.65rem] font-bold tracking-[0.03em]">HTML</span>
-                                <span class="font-mono px-2.5 py-1 rounded-full bg-paper dark:bg-night text-ink dark:text-mutedd text-[0.65rem] font-bold tracking-[0.03em]">CSS</span>
-                                <span class="font-mono px-2.5 py-1 rounded-full bg-paper dark:bg-night text-ink dark:text-mutedd text-[0.65rem] font-bold tracking-[0.03em]">JS</span>
+                                <span class="font-mono px-2.5 py-1 border-2 border-ink dark:border-night text-ink dark:text-mutedd text-[0.65rem] font-bold tracking-[0.03em]">HTML</span>
+                                <span class="font-mono px-2.5 py-1 border-2 border-ink dark:border-night text-ink dark:text-mutedd text-[0.65rem] font-bold tracking-[0.03em]">CSS</span>
+                                <span class="font-mono px-2.5 py-1 border-2 border-ink dark:border-night text-ink dark:text-mutedd text-[0.65rem] font-bold tracking-[0.03em]">JS</span>
                             </div>
                         </div>
-                        <h3 class="font-mono text-xl font-bold tracking-normal leading-[1.2] text-accent">Portifólio — Editor de Vídeos</h3>
+                        <h3 class="font-mono text-xl font-black uppercase tracking-tight leading-[1.2] text-accent dark:text-accentd">Portifólio — Editor de Vídeos</h3>
                         <p class="text-sm text-ink/75 dark:text-mutedd/85 leading-[1.7] flex-1">Portifólio desenvolvido para profissional de edição de vídeos — apresentação de projetos, habilidades e contato.</p>
-                        <a href="https://leodelboux.github.io" target="_blank" rel="noopener noreferrer" class="inline-flex items-end self-start min-h-[44px] text-[0.82rem] font-semibold text-accent2 hover:opacity-60 transition-opacity py-1">Ver site →</a>
+                        <a href="https://leodelboux.github.io" target="_blank" rel="noopener noreferrer" data-animate class="brutal-sm btn-anim relative self-start font-mono inline-flex items-center justify-center min-h-[40px] px-4 py-2 font-bold text-[0.8rem] uppercase bg-paper dark:bg-night text-ink dark:text-mutedd">Ver site →</a>
                     </div>
                 </article>
 
@@ -219,32 +274,34 @@
     </section>
 
     <!-- HABILIDADES -->
-    <section class="py-16 sm:py-20 bg-surface/60 dark:bg-nightsurf/50" id="habilidades">
+    <section class="py-16 sm:py-20 border-y-[3px] border-ink dark:border-night" id="habilidades">
         <div class="max-w-[1100px] mx-auto px-5 sm:px-10">
-            <h2 data-animate class="font-mono flex items-center justify-center text-[clamp(1.4rem,3.2vw,2.4rem)] font-bold tracking-normal leading-none mb-12 text-center">
-                <span class="sign-board font-black" style="animation-delay:-2.9s">Habilidades</span>
+            <h2 data-animate class="sec-head font-mono uppercase tracking-tight">
+                <span class="n">02</span>
+                <span class="text-[clamp(1.3rem,3vw,2.1rem)] font-black">Habilidades</span>
+                <span class="rule" aria-hidden="true"></span>
             </h2>
             <div data-animate class="grid grid-cols-1 sm:grid-cols-2 gap-10">
                 <div>
-                    <h3 class="text-xs font-bold tracking-[0.06em] uppercase text-muted dark:text-mutedd mb-4">Desenvolvimento Web</h3>
+                    <h3 class="text-xs font-bold tracking-[0.1em] uppercase text-ink/70 dark:text-mutedd/70 mb-4">Desenvolvimento Web</h3>
                     <div class="grid grid-cols-2 sm:grid-cols-3 gap-2">
-                        <span class="font-mono text-center px-3 py-2 rounded-lg bg-tagbg dark:bg-night text-ink dark:text-mutedd shadow-sm text-[0.78rem] font-semibold">HTML5</span>
-                        <span class="font-mono text-center px-3 py-2 rounded-lg bg-tagbg dark:bg-night text-ink dark:text-mutedd shadow-sm text-[0.78rem] font-semibold">CSS3</span>
-                        <span class="font-mono text-center px-3 py-2 rounded-lg bg-tagbg dark:bg-night text-ink dark:text-mutedd shadow-sm text-[0.78rem] font-semibold">JavaScript</span>
-                        <span class="font-mono text-center px-3 py-2 rounded-lg bg-tagbg dark:bg-night text-ink dark:text-mutedd shadow-sm text-[0.78rem] font-semibold">Responsivo</span>
-                        <span class="font-mono text-center px-3 py-2 rounded-lg bg-tagbg dark:bg-night text-ink dark:text-mutedd shadow-sm text-[0.78rem] font-semibold">Git</span>
-                        <span class="font-mono text-center px-3 py-2 rounded-lg bg-tagbg dark:bg-night text-ink dark:text-mutedd shadow-sm text-[0.78rem] font-semibold">VS Code</span>
+                        <span class="font-mono text-center px-3 py-2 border-2 border-ink dark:border-night bg-paper dark:bg-night text-ink dark:text-mutedd text-[0.78rem] font-bold">HTML5</span>
+                        <span class="font-mono text-center px-3 py-2 border-2 border-ink dark:border-night bg-paper dark:bg-night text-ink dark:text-mutedd text-[0.78rem] font-bold">CSS3</span>
+                        <span class="font-mono text-center px-3 py-2 border-2 border-ink dark:border-night bg-paper dark:bg-night text-ink dark:text-mutedd text-[0.78rem] font-bold">JavaScript</span>
+                        <span class="font-mono text-center px-3 py-2 border-2 border-ink dark:border-night bg-paper dark:bg-night text-ink dark:text-mutedd text-[0.78rem] font-bold">Responsivo</span>
+                        <span class="font-mono text-center px-3 py-2 border-2 border-ink dark:border-night bg-paper dark:bg-night text-ink dark:text-mutedd text-[0.78rem] font-bold">Git</span>
+                        <span class="font-mono text-center px-3 py-2 border-2 border-ink dark:border-night bg-paper dark:bg-night text-ink dark:text-mutedd text-[0.78rem] font-bold">VS Code</span>
                     </div>
                 </div>
                 <div>
-                    <h3 class="text-xs font-bold tracking-[0.06em] uppercase text-muted dark:text-mutedd mb-4">Game Design</h3>
+                    <h3 class="text-xs font-bold tracking-[0.1em] uppercase text-ink/70 dark:text-mutedd/70 mb-4">Game Design</h3>
                     <div class="grid grid-cols-2 sm:grid-cols-3 gap-2">
-                        <span class="font-mono text-center px-3 py-2 rounded-lg bg-tagbg dark:bg-night text-ink dark:text-mutedd shadow-sm text-[0.78rem] font-semibold">s&amp;box</span>
-                        <span class="font-mono text-center px-3 py-2 rounded-lg bg-tagbg dark:bg-night text-ink dark:text-mutedd shadow-sm text-[0.78rem] font-semibold">Game Design</span>
-                        <span class="font-mono text-center px-3 py-2 rounded-lg bg-tagbg dark:bg-night text-ink dark:text-mutedd shadow-sm text-[0.78rem] font-semibold">Level Design</span>
-                        <span class="font-mono text-center px-3 py-2 rounded-lg bg-tagbg dark:bg-night text-ink dark:text-mutedd shadow-sm text-[0.78rem] font-semibold">Prototipagem</span>
-                        <span class="font-mono text-center px-3 py-2 rounded-lg bg-tagbg dark:bg-night text-ink dark:text-mutedd shadow-sm text-[0.78rem] font-semibold">Unity 3D</span>
-                        <span class="font-mono text-center px-3 py-2 rounded-lg bg-tagbg dark:bg-night text-ink dark:text-mutedd shadow-sm text-[0.78rem] font-semibold">C#</span>
+                        <span class="font-mono text-center px-3 py-2 border-2 border-ink dark:border-night bg-paper dark:bg-night text-ink dark:text-mutedd text-[0.78rem] font-bold">s&amp;box</span>
+                        <span class="font-mono text-center px-3 py-2 border-2 border-ink dark:border-night bg-paper dark:bg-night text-ink dark:text-mutedd text-[0.78rem] font-bold">Game Design</span>
+                        <span class="font-mono text-center px-3 py-2 border-2 border-ink dark:border-night bg-paper dark:bg-night text-ink dark:text-mutedd text-[0.78rem] font-bold">Level Design</span>
+                        <span class="font-mono text-center px-3 py-2 border-2 border-ink dark:border-night bg-paper dark:bg-night text-ink dark:text-mutedd text-[0.78rem] font-bold">Prototipagem</span>
+                        <span class="font-mono text-center px-3 py-2 border-2 border-ink dark:border-night bg-paper dark:bg-night text-ink dark:text-mutedd text-[0.78rem] font-bold">Unity 3D</span>
+                        <span class="font-mono text-center px-3 py-2 border-2 border-ink dark:border-night bg-paper dark:bg-night text-ink dark:text-mutedd text-[0.78rem] font-bold">C#</span>
                     </div>
                 </div>
             </div>
@@ -254,19 +311,21 @@
     <!-- CONTATO -->
     <section class="py-16 sm:py-20" id="contato">
         <div class="max-w-[1100px] mx-auto px-5 sm:px-10">
-            <h2 data-animate class="font-mono flex items-center justify-center text-[clamp(1.4rem,3.2vw,2.4rem)] font-bold tracking-normal leading-none mb-12 text-center">
-                <span class="sign-board font-black" style="animation-delay:-3.7s">Contato</span>
+            <h2 data-animate class="sec-head font-mono uppercase tracking-tight">
+                <span class="n">03</span>
+                <span class="text-[clamp(1.3rem,3vw,2.1rem)] font-black">Contato</span>
+                <span class="rule" aria-hidden="true"></span>
             </h2>
             <div data-animate class="grid grid-cols-1 md:grid-cols-[1fr_1.6fr] gap-10 md:gap-16 items-start">
                 <div>
                     <p class="text-base text-ink/75 dark:text-mutedd/85 leading-[1.75] mb-8">Tem um projeto em mente ou quer trocar uma ideia? Me manda uma mensagem.</p>
                     <div class="flex flex-col gap-3">
-                        <a href="mailto:victor.olv00@gmail.com" class="flex flex-col justify-center gap-0.5 rounded-xl bg-surface dark:bg-nightsurf p-4 shadow-md hover:shadow-lg hover:-translate-y-0.5 transition-all">
-                            <span class="text-[0.68rem] font-bold tracking-[0.06em] uppercase text-muted dark:text-mutedd">Email</span>
+                        <a href="mailto:victor.olv00@gmail.com" class="brutal-sm btn-anim relative flex flex-col justify-center gap-0.5 bg-paper dark:bg-night p-4">
+                            <span class="text-[0.68rem] font-bold tracking-[0.08em] uppercase text-ink/70 dark:text-mutedd/70">Email</span>
                             <span class="text-[0.9rem] font-semibold">victor.olv00@gmail.com →</span>
                         </a>
-                        <a href="https://wa.me/5581988684392" target="_blank" rel="noopener noreferrer" class="flex flex-col justify-center gap-0.5 rounded-xl bg-surface dark:bg-nightsurf p-4 shadow-md hover:shadow-lg hover:-translate-y-0.5 transition-all">
-                            <span class="text-[0.68rem] font-bold tracking-[0.06em] uppercase text-muted dark:text-mutedd">WhatsApp</span>
+                        <a href="https://wa.me/5581988684392" target="_blank" rel="noopener noreferrer" class="brutal-sm btn-anim relative flex flex-col justify-center gap-0.5 bg-paper dark:bg-night p-4">
+                            <span class="text-[0.68rem] font-bold tracking-[0.08em] uppercase text-ink/70 dark:text-mutedd/70">WhatsApp</span>
                             <span class="text-[0.9rem] font-semibold">+55 81 98868-4392 →</span>
                         </a>
                     </div>
@@ -274,21 +333,21 @@
                 <form id="contact-form" action="https://formspree.io/f/xvzlqqbl" method="POST" novalidate class="flex flex-col gap-5">
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
                         <div class="flex flex-col gap-1.5">
-                            <label class="text-xs font-bold tracking-[0.04em] text-muted dark:text-mutedd" for="f-name">Nome</label>
-                            <input class="font-sans text-base px-4 py-3 min-h-[48px] w-full rounded-xl bg-surface dark:bg-nightsurf text-ink dark:text-mutedd shadow-inner focus:outline-none focus:shadow-md transition-shadow placeholder:text-muted" type="text" id="f-name" name="name" required placeholder="Seu nome" autocomplete="name">
+                            <label class="text-xs font-bold tracking-[0.05em] uppercase text-ink/70 dark:text-mutedd/70" for="f-name">Nome</label>
+                            <input class="font-sans text-base px-4 py-3 min-h-[48px] w-full border-2 border-ink dark:border-night bg-paper dark:bg-night text-ink dark:text-mutedd focus:outline-none focus:shadow-[4px_4px_0_0_#01344F] dark:focus:shadow-[4px_4px_0_0_#FAE3AC] transition-shadow placeholder:text-ink/45 dark:placeholder:text-mutedd/45" type="text" id="f-name" name="name" required placeholder="Seu nome" autocomplete="name">
                         </div>
                         <div class="flex flex-col gap-1.5">
-                            <label class="text-xs font-bold tracking-[0.04em] text-muted dark:text-mutedd" for="f-email">Email</label>
-                            <input class="font-sans text-base px-4 py-3 min-h-[48px] w-full rounded-xl bg-surface dark:bg-nightsurf text-ink dark:text-mutedd shadow-inner focus:outline-none focus:shadow-md transition-shadow placeholder:text-muted" type="email" id="f-email" name="email" required placeholder="seu@email.com" autocomplete="email">
+                            <label class="text-xs font-bold tracking-[0.05em] uppercase text-ink/70 dark:text-mutedd/70" for="f-email">Email</label>
+                            <input class="font-sans text-base px-4 py-3 min-h-[48px] w-full border-2 border-ink dark:border-night bg-paper dark:bg-night text-ink dark:text-mutedd focus:outline-none focus:shadow-[4px_4px_0_0_#01344F] dark:focus:shadow-[4px_4px_0_0_#FAE3AC] transition-shadow placeholder:text-ink/45 dark:placeholder:text-mutedd/45" type="email" id="f-email" name="email" required placeholder="seu@email.com" autocomplete="email">
                         </div>
                     </div>
                     <div class="flex flex-col gap-1.5">
-                        <label class="text-xs font-bold tracking-[0.04em] text-muted dark:text-mutedd" for="f-message">Mensagem</label>
-                        <textarea class="font-sans text-base px-4 py-3 min-h-[130px] w-full rounded-xl bg-surface dark:bg-nightsurf text-ink dark:text-mutedd shadow-inner focus:outline-none focus:shadow-md transition-shadow resize-y placeholder:text-muted" id="f-message" name="message" rows="5" required placeholder="Sua mensagem..."></textarea>
+                        <label class="text-xs font-bold tracking-[0.05em] uppercase text-ink/70 dark:text-mutedd/70" for="f-message">Mensagem</label>
+                        <textarea class="font-sans text-base px-4 py-3 min-h-[130px] w-full border-2 border-ink dark:border-night bg-paper dark:bg-night text-ink dark:text-mutedd focus:outline-none focus:shadow-[4px_4px_0_0_#01344F] dark:focus:shadow-[4px_4px_0_0_#FAE3AC] transition-shadow resize-y placeholder:text-ink/45 dark:placeholder:text-mutedd/45" id="f-message" name="message" rows="5" required placeholder="Sua mensagem..."></textarea>
                     </div>
                     <div class="flex items-center gap-5 flex-wrap">
-                        <button type="submit" class="font-mono inline-flex items-center justify-center min-h-[44px] px-6 py-3 rounded-xl font-semibold text-sm bg-accent text-paper shadow-lg shadow-accent/25 hover:shadow-xl hover:-translate-y-0.5 transition-all">Enviar Mensagem →</button>
-                        <span id="form-status" class="text-[0.82rem] font-semibold text-muted"></span>
+                        <button type="submit" class="brutal-onaccent btn-anim font-mono inline-flex items-center justify-center min-h-[44px] px-6 py-3 font-bold uppercase text-sm bg-accent text-paper dark:bg-accentd dark:text-mutedd">Enviar Mensagem →</button>
+                        <span id="form-status" class="text-[0.82rem] font-semibold text-ink/70 dark:text-mutedd/70"></span>
                     </div>
                 </form>
             </div>
@@ -296,16 +355,71 @@
     </section>
 
     <!-- SKYLINE -->
-    <div class="w-full h-[110px] sm:h-[150px] overflow-hidden">
-        <img src="assets/images/skyline.svg?v=2" alt="" aria-hidden="true" class="w-full h-full object-cover object-bottom">
+    <div class="w-full h-[110px] sm:h-[150px] overflow-hidden border-t-[3px] border-ink dark:border-night">
+        <svg viewBox="0 0 1600 220" preserveAspectRatio="none" shape-rendering="crispEdges" aria-hidden="true" class="w-full h-full">
+            <!-- silhuetas distantes -->
+            <g class="fill-ink dark:fill-mutedd" opacity="0.4">
+                <rect x="0" y="120" width="90" height="100"/>
+                <rect x="100" y="90" width="70" height="130"/>
+                <rect x="190" y="140" width="110" height="80"/>
+                <rect x="340" y="70" width="60" height="150"/>
+                <rect x="430" y="110" width="100" height="110"/>
+                <rect x="560" y="60" width="80" height="160"/>
+                <rect x="670" y="130" width="120" height="90"/>
+                <rect x="820" y="95" width="70" height="125"/>
+                <rect x="920" y="140" width="100" height="80"/>
+                <rect x="1050" y="75" width="60" height="145"/>
+                <rect x="1140" y="115" width="110" height="105"/>
+                <rect x="1280" y="55" width="80" height="165"/>
+                <rect x="1390" y="125" width="90" height="95"/>
+                <rect x="1500" y="100" width="100" height="120"/>
+            </g>
+            <!-- prédios próximos, silhueta principal -->
+            <g class="fill-ink dark:fill-mutedd">
+                <rect x="40" y="160" width="120" height="60"/>
+                <rect x="200" y="120" width="90" height="100"/>
+                <rect x="330" y="150" width="140" height="70"/>
+                <rect x="520" y="100" width="100" height="120"/>
+                <rect x="660" y="145" width="130" height="75"/>
+                <rect x="830" y="115" width="95" height="105"/>
+                <rect x="970" y="155" width="150" height="65"/>
+                <rect x="1160" y="105" width="110" height="115"/>
+                <rect x="1310" y="140" width="120" height="80"/>
+                <rect x="1470" y="120" width="100" height="100"/>
+            </g>
+            <!-- janelas acesas -->
+            <g class="fill-paper dark:fill-night">
+                <rect x="60" y="175" width="10" height="10"/>
+                <rect x="90" y="175" width="10" height="10"/>
+                <rect x="225" y="140" width="10" height="10"/>
+                <rect x="255" y="160" width="10" height="10"/>
+                <rect x="360" y="170" width="10" height="10"/>
+                <rect x="395" y="185" width="10" height="10"/>
+                <rect x="550" y="130" width="10" height="10"/>
+                <rect x="580" y="150" width="10" height="10"/>
+                <rect x="690" y="165" width="10" height="10"/>
+            </g>
+            <g class="fill-accent dark:fill-accentd" opacity="0.85">
+                <rect x="860" y="140" width="10" height="10"/>
+                <rect x="1000" y="175" width="10" height="10"/>
+                <rect x="1030" y="190" width="10" height="10"/>
+                <rect x="1190" y="130" width="10" height="10"/>
+                <rect x="1350" y="160" width="10" height="10"/>
+                <rect x="1500" y="145" width="10" height="10"/>
+            </g>
+        </svg>
     </div>
 
     <!-- FOOTER -->
-    <footer class="font-mono py-5 bg-olive text-paper">
+    <footer class="font-mono py-5 bg-ink dark:bg-mutedd text-paper dark:text-night">
         <div class="max-w-[1100px] mx-auto px-5 sm:px-10 flex items-center justify-center gap-3">
-            <svg width="24" height="24" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                <rect x="4" y="4" width="92" height="92" rx="18" fill="#F0EAE0"/>
-                <text x="50" y="66" text-anchor="middle" font-family="Arial Black, Impact, sans-serif" font-size="42" font-weight="900" fill="#E63946">VO</text>
+            <svg class="dark:hidden" width="24" height="24" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <rect x="3" y="3" width="94" height="94" fill="#D12128" stroke="#01344F" stroke-width="5"/>
+                <text x="50" y="67" text-anchor="middle" font-family="Arial Black, Impact, sans-serif" font-size="42" font-weight="900" fill="#FAE3AC">VO</text>
+            </svg>
+            <svg class="hidden dark:block" width="24" height="24" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <rect x="3" y="3" width="94" height="94" fill="#D12128" stroke="#141414" stroke-width="5"/>
+                <text x="50" y="67" text-anchor="middle" font-family="Arial Black, Impact, sans-serif" font-size="42" font-weight="900" fill="#141414">VO</text>
             </svg>
             <span class="text-[0.78rem] font-medium opacity-80">© 2026 Victor Oliveira</span>
         </div>
@@ -313,8 +427,8 @@
 
     <!-- FLOATING CTA -->
     <a href="#contato" aria-label="Ir para o formulário de contato"
-        class="fixed bottom-7 right-7 z-[200] flex items-center max-w-[280px] rounded-2xl bg-surface dark:bg-nightsurf text-ink dark:text-mutedd shadow-xl hover:shadow-2xl hover:-translate-y-0.5 px-4 py-3 text-[0.78rem] font-semibold leading-[1.4] transition-all">
-        <span aria-hidden="true" class="absolute -top-1.5 -right-1.5 w-3.5 h-3.5 bg-accent2 rounded-full animate-pulse"></span>
+        class="brutal btn-anim fixed bottom-7 right-7 z-[200] flex items-center max-w-[280px] bg-paper dark:bg-night text-ink dark:text-mutedd px-4 py-3 text-[0.78rem] font-semibold leading-[1.4]">
+        <span aria-hidden="true" class="absolute -top-2 -right-2 w-3.5 h-3.5 bg-accent dark:bg-accentd rounded-full animate-pulse border-2 border-ink dark:border-night"></span>
         <span>Estou fazendo um jogo — quer descobrir e me ajudar a testá-lo?</span>
     </a>
 
