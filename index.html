@@ -14,7 +14,9 @@
          JS no navegador de quem visita. Isso causava flash/inconsistência de estilo (a própria
          Tailwind avisa no console pra não usar o CDN em produção) — trocado por um arquivo .css
          fixo, sem JS rodando na hora de carregar a página. -->
-    <link rel="stylesheet" href="assets/tailwind.css">
+    <!-- ?v= muda a cada `npm run build:css` publicado, pra navegador não segurar
+         cache velho do tailwind.css (foi o que me confundiu enquanto testava hoje). -->
+    <link rel="stylesheet" href="assets/tailwind.css?v=2">
     <style>
         [data-animate] { opacity: 0; transform: translateY(18px); transition: opacity .55s ease, transform .55s ease; }
         [data-animate].visible { opacity: 1; transform: translateY(0); }
@@ -221,11 +223,11 @@
             <div class="flex gap-4 flex-wrap justify-center">
                 <a href="#projetos" class="btn-anim">
                     <span class="shadow-block" aria-hidden="true"></span>
-                    <span class="face-block font-mono inline-flex items-center justify-center min-h-[44px] px-6 py-3 font-bold uppercase text-sm bg-paper text-ink dark:bg-night dark:text-mutedd">Ver Projetos</span>
+                    <span class="face-block font-mono inline-flex items-center justify-center min-h-[44px] w-[160px] px-6 py-3 font-bold uppercase text-sm bg-paper text-ink dark:bg-night dark:text-mutedd">Ver Projetos</span>
                 </a>
                 <a href="https://wa.me/5581988684392" target="_blank" rel="noopener noreferrer" class="btn-anim">
                     <span class="shadow-block" aria-hidden="true"></span>
-                    <span class="face-block dark-border font-mono inline-flex items-center justify-center min-h-[44px] px-6 py-3 font-bold uppercase text-sm bg-[#25D366] text-ink dark:text-night">WhatsApp →</span>
+                    <span class="face-block dark-border font-mono inline-flex items-center justify-center min-h-[44px] w-[160px] px-6 py-3 font-bold uppercase text-sm bg-[#25D366] text-ink dark:text-night">WhatsApp →</span>
                 </a>
             </div>
         </div>
