@@ -1,0 +1,101 @@
+/* CSS própria do site — tudo que não é utilitário do Tailwind (assets/tailwind.css).
+   Antes vivia inline em <style> no <head> do index.html; extraído pra cá pra separar
+   estrutura (HTML) de apresentação (CSS) e deixar esse arquivo cacheável à parte —
+   o HTML muda mais que essas regras, então um <link> separado evita reenviar o CSS
+   inteiro a cada edição de conteúdo. */
+
+[data-animate] { opacity: 0; transform: translateY(18px); transition: opacity .55s ease, transform .55s ease; }
+[data-animate].visible { opacity: 1; transform: translateY(0); }
+
+/* bloco neo-brutalista estático (cards de projeto): borda grossa + sombra "offset"
+   dura via box-shadow direto — sem transform em cima, sem problema nenhum, não
+   precisa da estrutura de baixo.
+   #5F5A3F no dark = cinza escuro puxado pro amarelo (mesmo tom do creme #FAE3AC,
+   só com L bem mais baixo) — pedido do Victor pra sombra combinar com a paleta
+   quente em vez de ficar um cinza neutro/azulado sem relação com o resto. */
+.brutal { border: 3px solid #01344F; box-shadow: 6px 6px 0 0 #01344F; }
+[data-theme="dark"] .brutal { border-color: #FAE3AC; box-shadow: 6px 6px 0 0 #5F5A3F; }
+
+/* botões que animam (.btn-anim): duas tentativas anteriores erraram por motivos
+   diferentes — box-shadow move junto com transform (preso na própria caixa), e
+   um ::after resolvia a sombra mas o TEXTO (conteúdo real do elemento) ficava
+   sempre parado com ela, "descolado" da borda que deslizava sozinha. Pseudo-
+   elemento não carrega texto, esse é o limite de tentar resolver com só 1 elemento.
+   Fix de verdade: 2 elementos reais empilhados por grid (mesma célula, um em
+   cima do outro) — .shadow-block (só cor, nunca se move) e .face-block (borda +
+   fundo + o texto TODO dentro dele — único que anima). O link/botão em si
+   (.btn-anim) só posiciona os dois; hover/active nele desloca só o .face-block.
+   Por padrão a face já fica -6px/-6px da sombra (dá pra ver ela saindo por
+   baixo); hover aumenta o deslocamento, active zera — a face cobre a sombra
+   inteira e ela some de vez (só transform anima, GPU, sem repaint). */
+.btn-anim { display: inline-grid; }
+.btn-anim > * { grid-area: 1 / 1; }
+
+.shadow-block { background-color: #01344F; transition: background-color .3s; }
+[data-theme="dark"] .shadow-block { background-color: #5F5A3F; }
+
+.face-block {
+    border: 3px solid #01344F;
+    transform: translate(-6px,-6px);
+    transition: transform .12s ease-out, border-color .3s;
+    /* o texto borra de leve durante a transição (zoom 100%) — é o Chrome
+       reamostrando a camada composta em posições fracionárias de pixel no meio
+       do trajeto (-6px pra -8px passa por -6.3, -6.7...), não dá pra evitar isso
+       de verdade numa transição suave, mas backface-visibility força o navegador
+       a manter a camada estável em vez de recriá-la a cada frame, que é o que
+       deixa o borrão bem mais forte que o normal. */
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    will-change: transform;
+}
+.btn-anim:hover  .face-block { transform: translate(-8px,-8px); }
+.btn-anim:active .face-block { transform: translate(0,0); }
+/* pedido do Victor: os botões "escuros" (fundo = fundo da página) incomodavam
+   com borda off-white no dark — inverteu pra ficarem iguais ao WhatsApp/Enviar
+   Mensagem (fundo colorido): sempre borda escura #141414, nunca off-white. Isso
+   deixou a antiga variante .dark-border redundante (todo mundo já usa #141414
+   agora), removida. A sombra (.shadow-block) não mudou, só a face. */
+[data-theme="dark"] .face-block { border-color: #141414; }
+
+.face-block.sm { border-width: 2px; transform: translate(-4px,-4px); }
+.btn-anim:hover  .face-block.sm { transform: translate(-6px,-6px); }
+.btn-anim:active .face-block.sm { transform: translate(0,0); }
+
+/* o ponto final de "Oliveira." pesa uma célula inteira de largura no
+   monoespaçado — sem isso, a palavra fica ~32px puxada pra esquerda do centro
+   óptico (a caixa do h1 centraliza incluindo o ponto, mas o olho centraliza
+   pelas letras). -1ch cancela exatamente essa célula, então o ponto "pendura"
+   na margem em vez de contar na centralização — igual a hanging-punctuation
+   editorial, e acompanha o clamp() do tamanho da fonte automaticamente. */
+.dot-hang { display: inline-block; margin-right: -1ch; }
+
+/* respeita quem pediu menos movimento no SO — trava toda animação/transição
+   da página (inclusive as do Tailwind, tipo animate-pulse) numa passada só. */
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* legenda vertical, estilo margem editorial japonesa */
+.vlabel { writing-mode: vertical-rl; text-orientation: mixed; }
+
+/* nuvens flutuando devagar perto da lua */
+@keyframes drift { 0%, 100% { transform: translateX(0); } 50% { transform: translateX(12px); } }
+.cloud-1 { animation: drift 9s ease-in-out infinite; }
+.cloud-2 { animation: drift 12s ease-in-out infinite reverse; }
+
+/* marca de registro (crop mark), motivo de grade impressa */
+.crop-mark { position: absolute; width: 16px; height: 16px; pointer-events: none; }
+.crop-mark::before, .crop-mark::after { content: ''; position: absolute; background: currentColor; }
+.crop-mark::before { top: 50%; left: 0; width: 100%; height: 2px; transform: translateY(-50%); }
+.crop-mark::after  { left: 50%; top: 0; height: 100%; width: 2px; transform: translateX(-50%); }
+
+/* cabeçalho de seção — editorial, alinhado à esquerda, numerado */
+.sec-head { display: flex; align-items: baseline; gap: 1rem; margin-bottom: 3rem; }
+.sec-head .n { font-family: 'JetBrains Mono', monospace; font-weight: 800; font-size: clamp(1.4rem,3vw,2rem); color: #D12128; }
+[data-theme="dark"] .sec-head .n { color: #D12128; }
+.sec-head .rule { flex: 1; height: 3px; background: #01344F; }
+[data-theme="dark"] .sec-head .rule { background: #FAE3AC; }
